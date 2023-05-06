@@ -1,0 +1,105 @@
+/* You can add global styles to this file, and also import other style files */
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+@import './typography.scss';
+@import './buttons.scss';
+
+@for $i from 2 through 10 {
+    .truncate-#{$i} {
+        word-break: break-word;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        -webkit-box-orient: vertical;
+        display: -webkit-box;
+        white-space: pre-line;
+        -webkit-line-clamp: $i;
+    }
+}
+
+@keyframes zoomIn {
+    0% {
+        opacity: 0;
+        transform: scale(0);
+    }
+
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+@keyframes zoomOut {
+    0% {
+        opacity: 0;
+        transform: scale(1);
+    }
+
+    100% {
+        opacity: 1;
+        transform: scale(0);
+    }
+}
+
+* {
+    // CUSTOM SCROLLBAR
+    // width
+    ::-webkit-scrollbar {
+        @apply w-[6px] h-2 rounded-xl;
+    }
+
+    // track
+    ::-webkit-scrollbar-track {
+        @apply bg-transparent;
+    }
+
+    // handle
+    ::-webkit-scrollbar-thumb {
+        @apply border-0 bg-scrollbar rounded-2xl;
+    }
+
+    // handle on hover
+    ::-webkit-scrollbar-thumb:hover {
+        @apply border-0 opacity-80 bg-scrollbar-hover;
+    }
+
+    ::-webkit-scrollbar-corner {
+        @apply bg-transparent;
+    }
+
+    // hide highlight border on mobile devices
+    -webkit-tap-highlight-color: transparent;
+
+    // prevent to adjust text size on mobile devices
+    -webkit-text-size-adjust: none;
+}
+
+// Hide password reveal button on MS Edge
+::-ms-reveal {
+    @apply hidden;
+}
+
+body {
+    @apply bg-bg-primary text-fs-default text-txt-default overflow-hidden;
+}
+
+.cursor-pointer {
+    @apply focus-visible:ring-2 outline-none;
+}
+
+.animation-zoom-in {
+    animation-duration: 0.5s;
+    animation-name: zoomIn;
+}
+
+.gradient-1 {
+    @apply text-transparent bg-gradient-to-r bg-clip-text from-loading-gradient-fr to-loading-gradient-to;
+}
+
+.app-disabled {
+    @apply opacity-disable pointer-events-none cursor-default;
+}
+
+.text-hover {
+    @apply hover:text-primary hover:cursor-pointer;
+}

@@ -1,0 +1,117 @@
+// /* noto-sans-jp-100 - thin */
+// @font-face {
+//     font-family: 'Dongle';
+//     font-display: swap;
+//     font-style: normal;
+//     font-weight: 100;
+//     src: local(''), url('../font/NotoSansJP-Thin.otf') format('opentype');
+// }
+
+// /* noto-sans-jp-300 - light */
+// @font-face {
+//     font-family: 'Dongle';
+//     font-display: swap;
+//     font-weight: 300;
+//     src: local(''), url('../font/NotoSansJP-Light.otf') format('opentype');
+// }
+
+// /* noto-sans-jp-400 - regular */
+// @font-face {
+//     font-family: 'Dongle';
+//     font-display: swap;
+//     font-style: normal;
+//     font-weight: 400;
+//     src: local(''), url('../font/NotoSansJP-Regular.otf') format('opentype');
+// }
+
+// /* noto-sans-jp-500 - medium */
+// @font-face {
+//     font-family: 'Dongle';
+//     font-display: swap;
+//     font-weight: 500;
+//     src: local(''), url('../font/NotoSansJP-Medium.otf') format('opentype');
+// }
+
+// /* noto-sans-jp-700 - bold */
+// @font-face {
+//     font-family: 'Dongle';
+//     font-display: swap;
+//     font-weight: 700;
+//     src: local(''), url('../font/NotoSansJP-Bold.otf') format('opentype');
+// }
+
+// /* noto-sans-jp-900 - black */
+// @font-face {
+//     font-family: 'Dongle';
+//     font-display: swap;
+//     font-weight: 900;
+//     src: local(''), url('../font/NotoSansJP-Black.otf') format('opentype');
+// }
+
+// /* noto-sans-100 - thin */
+// @font-face {
+//     font-family: 'Dynapuff';
+//     font-display: swap;
+//     font-style: normal;
+//     // size-adjust: 90%;
+//     font-weight: 100;
+//     src: local(''), url('../font/NotoSans-Thin.ttf') format('truetype');
+//     unicode-range: U+30-39;
+// }
+
+// /* noto-sans-300 - light */
+// @font-face {
+//     font-family: 'Dynapuff';
+//     font-display: swap;
+//     // size-adjust: 90%;
+//     font-weight: 300;
+//     src: local(''), url('../font/NotoSans-Light.ttf') format('truetype');
+//     unicode-range: U+30-39;
+// }
+
+// /* noto-sans-400 - regular */
+// @font-face {
+//     font-family: 'Dynapuff';
+//     font-display: swap;
+//     font-style: normal;
+//     // size-adjust: 90%;
+//     font-weight: 400;
+//     src: local(''), url('../font/NotoSans-Regular.ttf') format('truetype');
+//     unicode-range: U+30-39;
+// }
+
+// /* noto-sans-500 - medium */
+// @font-face {
+//     font-family: 'Dynapuff';
+//     font-display: swap;
+//     // size-adjust: 90%;
+//     font-weight: 500;
+//     src: local(''), url('../font/NotoSans-Medium.ttf') format('truetype');
+//     unicode-range: U+30-39;
+// }
+
+// /* noto-sans-700 - bold */
+// @font-face {
+//     font-family: 'Dynapuff';
+//     font-display: swap;
+//     // size-adjust: 90%;
+//     font-weight: 700;
+//     src: local(''), url('../font/NotoSans-Bold.ttf') format('truetype');
+//     unicode-range: U+30-39;
+// }
+
+// /* noto-sans-900 - black */
+// @font-face {
+//     font-family: 'Dynapuff';
+//     font-display: swap;
+//     // size-adjust: 90%;
+//     font-weight: 900;
+//     src: local(''), url('../font/NotoSans-Black.ttf') format('truetype');
+//     unicode-range: U+30-39;
+// }
+
+/*---------------- Global styles ---------------- */
+
+* {
+    font-family: 'Dynapuff', 'Dongle', sans-serif;
+}

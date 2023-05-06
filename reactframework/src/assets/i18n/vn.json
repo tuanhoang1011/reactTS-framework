@@ -1,0 +1,43 @@
+{
+    "MSG": {
+        "TITLE_001": "Thành công",
+        "TITLE_002": "Lỗi",
+        "TITLE_003": "Cảnh báo",
+        "TITLE_004": "Confirmation",
+        "TITLE_005": "Thông tin",
+        "EXAMPLE_ERR0001": "Đây là thông tin mẫu. Gồm 2 thông tin: %s và %s.",
+        "APP_ERR0001": "Trang web xảy ra sự cố. Vui lòng liên hệ chủ sở hữu.",
+        "APP_ERR0002": "Mạng không khả dụng. Vui lòng kiểm tra lại kết nối.",
+        "APP_ERR0003": "",
+        "APP_ERR0004": "Tài khoản hoặc mật khẩu không đúng."
+    },
+    "ERRPAGE": {
+        "400": {
+            "TITLE": "BAD REQUEST",
+            "MSG": "Trình duyệt đang gửi nội dung không đúng đến máy chủ. \nVui lòng liên hệ chủ sở hữu."
+        },
+        "403": {
+            "TITLE": "FORBIDDEN",
+            "MSG": "Xin lỗi. \nBạn không có quyền truy cập vào trang này."
+        },
+        "404": {
+            "TITLE": "PAGE NOT FOUND",
+            "MSG": "Trang này không tồn tại."
+        },
+        "500": {
+            "TITLE": "INTERNAL SERVER ERROR",
+            "MSG": "Xin lỗi. \nHiện máy chủ đang gặp sự cố. Vui lòng tải lại trang hoặc liên hệ chủ sở hữu."
+        }
+    },
+    "BTN_0001": "Đồng ý",
+    "BTN_0002": "Không",
+    "BTN_0003": "Đóng",
+    "BTN_0004": "Hủy",
+    "BTN_0005": "Quay lại",
+    "BTN_0006": "Trang chủ",
+    "EXAMPLE_0001": "© 2023 Phát triển bởi Phạm Hoàng Tuấn",
+    "LBL_0001": "Nam",
+    "LBL_0002": "Nữ",
+    "LBL_0003": "Hoạt động",
+    "LBL_0004": "Không hoạt động"
+}

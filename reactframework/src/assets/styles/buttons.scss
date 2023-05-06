@@ -1,0 +1,24 @@
+.btn {
+    @apply text-txt-btn h-[35px] outline-none rounded-[18px] text-fs-default border-[2px] min-w-[120px] px-[10px];
+    @apply hover:opacity-hover active:opacity-active focus-visible:ring-2;
+}
+
+.btn-primary {
+    @apply text-txt-btn bg-btn-primary border-btn-primary;
+    @apply hover:opacity-hover active:opacity-active;
+}
+
+.btn-secondary {
+    @apply text-txt-btn border-btn-secondary;
+    @apply hover:opacity-hover active:opacity-active;
+}
+
+.btn-danger {
+    @apply text-txt-btn bg-btn-danger border-btn-danger;
+    @apply hover:opacity-hover active:opacity-active;
+}
+
+.btn-icon {
+    @apply text-txt-default bg-btn-icon border-none rounded-[50%] leading-[35px] min-w-icon-btn min-h-icon-btn;
+    @apply hover:opacity-hover active:opacity-active;
+}

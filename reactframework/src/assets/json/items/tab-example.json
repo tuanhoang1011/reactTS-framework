@@ -1,0 +1,28 @@
+{
+    "menu": [
+        {
+            "id": "tab1",
+            "label": "BTN_0001",
+            "screen": "tab1",
+            "activated": false,
+            "rendered": true,
+            "icon": "pi pi-user"
+        },
+        {
+            "id": "tab2",
+            "label": "BTN_0002",
+            "screen": "tab2",
+            "activated": false,
+            "rendered": false,
+            "imgIcon": "../../../../assets/images/fw-user.svg",
+            "imgIconAlt": ""
+        },
+        {
+            "id": "tab3",
+            "label": "BTN_0003",
+            "screen": "tab3",
+            "activated": false,
+            "rendered": false
+        }
+    ]
+}
