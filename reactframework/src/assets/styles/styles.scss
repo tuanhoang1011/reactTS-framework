@@ -4,6 +4,9 @@
 @import 'tailwindcss/utilities';
 @import './typography.scss';
 @import './buttons.scss';
+@import 'primeicons/primeicons.css';
+@import './primeng/theme.scss';
+@import 'primereact/resources/primereact.min.css';
 
 @for $i from 2 through 10 {
     .truncate-#{$i} {

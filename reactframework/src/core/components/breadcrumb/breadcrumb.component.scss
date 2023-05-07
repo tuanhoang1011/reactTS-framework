@@ -1,0 +1,11 @@
+.breadcrumb-container {
+    @apply flex items-center gap-x-2;
+
+    .bc-item {
+        @apply flex flex-row justify-center items-center px-2 gap-x-2 font-medium;
+
+        &.bc-anchor {
+            @apply cursor-pointer;
+        }
+    }
+}

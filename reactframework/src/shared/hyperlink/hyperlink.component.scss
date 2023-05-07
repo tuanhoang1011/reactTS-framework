@@ -1,0 +1,9 @@
+.hyper-link {
+    @apply text-hyperlink cursor-pointer underline truncate hover:underline focus:underline;
+    @apply hover:opacity-hover active:opacity-active;
+}
+
+a {
+    @apply outline-none;
+    @apply focus-visible:ring-2;
+}
