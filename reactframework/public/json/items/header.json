@@ -1,49 +1,49 @@
 {
-    "menu": [
+  "menu": [
+    {
+      "id": "gr1",
+      "label": "Group 1",
+      "icon": "pi-user"
+    },
+    {
+      "id": "gr",
+      "label": "Group 2",
+      "icon": "pi-user",
+      "disabled": true,
+      "styleClass": "group-2"
+    },
+    {
+      "id": "gr3",
+      "label": "Group 3",
+      "icon": "pi-user",
+      "subMenu": [
         {
-            "id": "gr1",
-            "label": "Group 1",
-            "icon": "pi-user"
+          "id": "gr1",
+          "label": "Group 1",
+          "icon": "pi-user"
         },
         {
-            "id": "gr",
-            "label": "Group 2",
-            "icon": "pi-user",
-            "disabled": true,
-            "styleClass": "group-2"
+          "id": "gr",
+          "label": "Group 2",
+          "icon": "pi-user",
+          "styleClass": "group-2"
         },
         {
-            "id": "gr3",
-            "label": "Group 3",
-            "icon": "pi-user",
-            "subMenu": [
-                {
-                    "id": "gr1",
-                    "label": "Group 1",
-                    "icon": "pi-user"
-                },
-                {
-                    "id": "gr",
-                    "label": "Group 2",
-                    "icon": "pi-user",
-                    "styleClass": "group-2"
-                },
-                {
-                    "id": "gr3",
-                    "label": "Group 3",
-                    "icon": "pi-user"
-                },
-                {
-                    "id": "contact",
-                    "label": "Contact",
-                    "icon": "pi-user"
-                }
-            ]
+          "id": "gr3",
+          "label": "Group 3",
+          "icon": "pi-user"
         },
         {
-            "id": "contact",
-            "label": "Contact",
-            "icon": "pi-user"
+          "id": "contact",
+          "label": "Contact",
+          "icon": "pi-user"
         }
-    ]
+      ]
+    },
+    {
+      "id": "contact",
+      "label": "Contact",
+      "icon": "pi-user"
+    }
+  ]
 }

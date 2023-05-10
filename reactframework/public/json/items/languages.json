@@ -1,12 +1,12 @@
 {
-    "menu": [
-        {
-            "id": "en",
-            "label": "English"
-        },
-        {
-            "id": "vn",
-            "label": "Tiếng Việt"
-        }
-    ]
+  "menu": [
+    {
+      "id": "en",
+      "label": "English"
+    },
+    {
+      "id": "vn",
+      "label": "Tiếng Việt"
+    }
+  ]
 }

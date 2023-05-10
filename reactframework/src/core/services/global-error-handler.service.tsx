@@ -1,6 +1,6 @@
 import { Component, memo } from 'react';
 
-import { CommonProps } from '../../models/common-props.model';
+import { CommonProps } from '../models/common-props.model';
 
 class ErrorBoundary extends Component<CommonProps> {
     state = { hasError: false };

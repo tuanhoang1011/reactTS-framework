@@ -14,11 +14,11 @@ export const CommonConstant = Object.freeze({
         Dark: { value: 1, label: 'dark' }
     },
 
-    Gender: [
-        { value: 0, label: 'LBL_0001' },
-        { value: 1, label: 'LBL_0002' },
-        { value: 2, label: 'N/A' }
-    ],
+    Gender: {
+        Male: { value: 0, label: 'LBL_0001' },
+        Female: { value: 1, label: 'LBL_0002' },
+        Undefined: { value: 2, label: 'N/A' }
+    },
 
     ActiveStatus: {
         Active: { value: 0, label: 'LBL_0003' },
@@ -30,7 +30,7 @@ export const CommonConstant = Object.freeze({
     ImageRatio: {
         Square: { ratio: 1 / 1, width: 1, height: 1 },
         Thumbnail: { ratio: 300 / 200, width: 300, height: 200 },
-        Preview: { ratio: 900 / 600, width: 900, height: 600 }
+        Preview: { ratio: 800 / 600, width: 800, height: 600 }
     },
 
     // PDFCommon: {

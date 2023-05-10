@@ -22,7 +22,7 @@ export const AppRouting = (
         </Route>
 
         <Route
-            path={AppRoutes.Error}
+            path={`${AppRoutes.Error}/:code`}
             Component={lazy(() => import('../components/error-page/error-page.component'))}
         ></Route>
 

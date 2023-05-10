@@ -1,6 +1,6 @@
 import './public.component.scss';
 
-import { memo } from 'react';
+import { memo, useEffect } from 'react';
 import { Outlet } from 'react-router';
 
 import FooterComponent from '../footer/footer.component';

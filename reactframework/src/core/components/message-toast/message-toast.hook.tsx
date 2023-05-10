@@ -7,7 +7,7 @@ import { GlobalVariables } from '../../utils/global-variables.ultility';
 import { setProps } from './message-toast.reducer';
 
 const useMessageToast = () => {
-    const [messages, isClearAll] = useAppSelector((state) => [state.msgToast.messages, state.msgToast.clearAll]);
+    const [messages, isClearAll] = useAppSelector((state) => [state.msgToast.messages ?? [], state.msgToast.clearAll]);
     const dispatch = useAppDispatch();
 
     const show = (id: string, type: 'success' | 'info' | 'warn' | 'error', options?: MessageOptions) => {

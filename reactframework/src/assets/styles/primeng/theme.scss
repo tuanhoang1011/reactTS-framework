@@ -2066,22 +2066,23 @@ p-treeselect.p-treeselect-clearable .p-treeselect-clear-icon {
 .p-buttonset.p-button-secondary > .p-button.p-button-text,
 .p-splitbutton.p-button-secondary > .p-button.p-button-text {
     background-color: transparent;
-    color: #d4ea93;
     border-color: transparent;
+
+    @apply text-primary;
 }
 .p-button.p-button-secondary.p-button-text:enabled:hover,
 .p-buttonset.p-button-secondary > .p-button.p-button-text:enabled:hover,
 .p-splitbutton.p-button-secondary > .p-button.p-button-text:enabled:hover {
-    background: rgba(212, 234, 147, 0.04);
     border-color: transparent;
-    color: #d4ea93;
+
+    @apply bg-primary bg-opacity-hover text-opacity-hover;
 }
 .p-button.p-button-secondary.p-button-text:enabled:active,
 .p-buttonset.p-button-secondary > .p-button.p-button-text:enabled:active,
 .p-splitbutton.p-button-secondary > .p-button.p-button-text:enabled:active {
-    background: rgba(212, 234, 147, 0.16);
     border-color: transparent;
-    color: #d4ea93;
+
+    @apply bg-opacity-active text-opacity-active;
 }
 
 .p-button.p-button-info,

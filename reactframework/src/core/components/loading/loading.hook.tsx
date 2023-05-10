@@ -1,39 +1,36 @@
+import { useState } from 'react';
+
 import { useAppDispatch, useAppSelector } from '../../store/stores/store';
 import { setProps } from './loading.reducer';
 
+let apiReqCount = 0;
+let isPendingAPI = false;
+
 const useLoading = () => {
-    const state = useAppSelector((state) => state.loading);
+    const isOn = useAppSelector((state) => state.loading.isOn);
     const dispatch = useAppDispatch();
 
-    const show = (isPendingAPI = true) => {
+    const show = (pendingAPI = true) => {
         try {
             dispatch(setProps({ isOn: true }));
 
-            if (!isPendingAPI) {
-                dispatch(
-                    setProps({
-                        apiReqCount: 0,
-                        isPendingAPI: false
-                    })
-                );
+            if (!pendingAPI) {
+                apiReqCount = 0;
+                isPendingAPI = false;
             }
         } catch (error) {
             throw error;
         }
     };
 
-    const hide = (isPendingAPI = true) => {
+    const hide = (pendingAPI = true) => {
         try {
-            if (state.apiReqCount === 0) {
+            if (apiReqCount === 0) {
                 dispatch(setProps({ isOn: false }));
             }
 
-            if (isPendingAPI) {
-                dispatch(
-                    setProps({
-                        isPendingAPI: true
-                    })
-                );
+            if (pendingAPI) {
+                isPendingAPI = true;
             }
         } catch (error) {
             throw error;
@@ -48,11 +45,11 @@ const useLoading = () => {
                     `${process.env['REACT_APP_API_HOST']}${process.env['REACT_APP_API_PREFIX']}`.toLowerCase()
                 )
             ) {
-                if (state.apiReqCount && state.apiReqCount > 0) {
-                    state.apiReqCount--;
+                if (apiReqCount && apiReqCount > 0) {
+                    apiReqCount--;
                 }
 
-                if (state.apiReqCount === 0) {
+                if (apiReqCount === 0) {
                     hide();
                 }
             }
@@ -61,11 +58,17 @@ const useLoading = () => {
         }
     };
 
+    const incrementAPIReqCount = () => {
+        apiReqCount++;
+    };
+
     return {
-        ...state,
+        isOn,
+        isPendingAPI,
         show,
         hide,
-        hideByZeroCount
+        hideByZeroCount,
+        incrementAPIReqCount
     };
 };
 

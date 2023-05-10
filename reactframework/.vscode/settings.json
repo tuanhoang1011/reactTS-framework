@@ -3,6 +3,9 @@
   "[json]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
+  "[jsonc]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
   "[javascript]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
@@ -21,30 +24,49 @@
   "[javascriptreact]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
+
+  // format import
+  "editor.codeActionsOnSave": {
+    "source.removeUnusedImports": true
+  },
+
+  // common
+  "security.workspace.trust.untrustedFiles": "open",
+  "editor.formatOnSave": true,
+  "editor.codeLens": true,
+  "diffEditor.codeLens": true,
+  "typescript.updateImportsOnFileMove.enabled": "always",
+  "javascript.updateImportsOnFileMove.enabled": "always",
   "explorer.decorations.colors": false,
   "explorer.compactFolders": false,
-  "gitlens.views.searchAndCompare.files.compact": false,
   "diffEditor.ignoreTrimWhitespace": false,
-  "errorLens.exclude": [
-    "Unknown at rule @apply",
-    "at-rule or selector expected"
-  ],
-  "editor.formatOnSave": true,
+  "search.exclude": {
+    "**/.angular": true,
+    "**/.git": true,
+    "**/bower_components": true,
+    "**/node_modules": true,
+    "**/README.md": true,
+    "**/tmp": true
+  },
+  "files.associations": {
+    "*.json": "jsonc"
+  },
+
+  // prettier
+  "prettier.configPath": "src/.prettierrc",
+
+  // typescriptHero
+  "typescriptHero.imports.organizeOnSave": true,
+  "typescriptHero.imports.organizeSortsByFirstSpecifier": true,
+  "typescriptHero.imports.grouping": ["Plains", "Modules", "Workspace", "Remaining"],
+
+  // git
+  "gitlens.views.searchAndCompare.files.compact": false,
+  "git.mergeEditor": false,
   "workbench.editorAssociations": {
     "git-rebase-todo": "gitlens.rebase"
   },
-  "search.exclude": {
-    "**/.git": true,
-    "**/node_modules": true,
-    "**/.angular": true,
-    "**/bower_components": true,
-    "**/tmp": true
-  },
-  "prettier.configPath": "src\\.prettierrc",
-  "files.associations": {
-    "*.js": "javascript",
-    "*.jsx": "javascriptreact",
-    "*.ts": "typescript",
-    "*.tsx": "typescriptreact"
-  }
+
+  // error lens
+  "errorLens.exclude": ["Unknown at rule @apply", "at-rule or selector expected"]
 }

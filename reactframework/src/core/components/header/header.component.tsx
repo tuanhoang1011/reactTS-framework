@@ -6,7 +6,9 @@ import { Navigate } from 'react-router';
 
 import MenuComponent from '../../../shared/menu/menu.component';
 import { CommonConstant } from '../../constants/common.const';
+import { FormatTextType } from '../../enums/format-text.enum';
 import { MenuItem } from '../../models/item.model';
+import { formatText } from '../../utils/format-text.ultility';
 import { GlobalVariables } from '../../utils/global-variables.ultility';
 import useSidebar from '../sidebar/sidebar.hook';
 import useHeader from './header.hook';
@@ -23,80 +25,112 @@ const HeaderComponent = () => {
     const [language, setLanguage] = useState(GlobalVariables.language);
 
     useEffect(() => {
-        getNavMenu();
-        getUserMenu();
-        getLanguages();
+        try {
+            getNavMenu();
+            getUserMenu();
+            getLanguages();
+        } catch (error) {
+            throw error;
+        }
     }, []);
 
     const getNavMenu = async () => {
-        const items = (await headerHook.getNavMenu()).menu;
-        setNavMenu(items);
+        try {
+            const items = (await headerHook.getNavMenu()).menu;
+            setNavMenu(items);
+        } catch (error) {
+            throw error;
+        }
     };
 
     const getUserMenu = async () => {
-        const items = [
-            {
-                id: 'profile',
-                label: 'LBL_0005',
-                click: () => {
-                    // check later
-                    // view user profile
-                    console.log('View profile');
+        try {
+            const items = [
+                {
+                    id: 'profile',
+                    label: 'LBL_0005',
+                    click: () => {
+                        // check later
+                        // view user profile
+                        console.log('View profile');
+                    }
+                },
+                {
+                    id: 'signout',
+                    label: 'LBL_0007',
+                    click: () => {
+                        // check later
+                        // sign out
+                        console.log('Sign out');
+                    }
                 }
-            },
-            {
-                id: 'signout',
-                label: 'LBL_0007',
-                click: () => {
-                    // check later
-                    // sign out
-                    console.log('Sign out');
-                }
-            }
-        ];
-        setUserMenu(items);
+            ];
+            setUserMenu(items);
+        } catch (error) {
+            throw error;
+        }
     };
 
     const getLanguages = async () => {
-        const items = (await headerHook.getLanguages()).menu;
-        setLanguages(items);
+        try {
+            const items = (await headerHook.getLanguages()).menu;
+            setLanguages(items);
+        } catch (error) {
+            throw error;
+        }
     };
 
     const changeTheme = () => {
-        let newTheme;
-        if (GlobalVariables.theme === CommonConstant.Theme.Light.label) {
-            newTheme = CommonConstant.Theme.Dark.label;
-        } else {
-            newTheme = CommonConstant.Theme.Light.label;
-        }
+        try {
+            let newTheme;
+            if (GlobalVariables.theme === CommonConstant.Theme.Light.label) {
+                newTheme = CommonConstant.Theme.Dark.label;
+            } else {
+                newTheme = CommonConstant.Theme.Light.label;
+            }
 
-        headerHook.setTheme(GlobalVariables.theme, newTheme);
-        setTheme(newTheme);
+            headerHook.setTheme(GlobalVariables.theme, newTheme);
+            setTheme(newTheme);
+        } catch (error) {
+            throw error;
+        }
     };
 
     const clickMenu = (selectedItem: MenuItem | { menu: MenuItem; subMenu: MenuItem }) => {
-        // select menu
-        if (!(selectedItem as any).menu && (selectedItem as MenuItem).url) {
-            Navigate({ to: (selectedItem as MenuItem).url! });
-        }
+        try {
+            // select menu
+            if (!(selectedItem as any).menu && (selectedItem as MenuItem).url) {
+                Navigate({ to: (selectedItem as MenuItem).url! });
+            }
 
-        // select submenu
-        if ((selectedItem as any).menu && (selectedItem as any).subMenu.url) {
-            Navigate({ to: (selectedItem as any).subMenu.url! });
+            // select submenu
+            if ((selectedItem as any).menu && (selectedItem as any).subMenu.url) {
+                Navigate({ to: (selectedItem as any).subMenu.url! });
+            }
+        } catch (error) {
+            throw error;
         }
     };
 
     const changeLanguage = (langOpt: MenuItem) => {
-        if (langOpt && langOpt.id) {
-            headerHook.setLanguage(langOpt.id);
-            setLanguage(langOpt.id);
-        }
+        try {
+            if (langOpt && langOpt.id) {
+                headerHook.setLanguage(langOpt.id);
+                setLanguage(langOpt.id);
+            }
 
-        lang.current?.hide();
+            lang.current?.hide();
+        } catch (error) {
+            throw error;
+        }
     };
 
     const clickSidebarMenu = () => {
-        sidebarHook.setSidebarStatus(!sidebarHook.expandSidebar);
+        try {
+            sidebarHook.setSidebarStatus(!sidebarHook.expandSidebar);
+        } catch (error) {
+            throw error;
+        }
     };
 
     return (
@@ -166,7 +200,9 @@ const HeaderComponent = () => {
                     onKeyUp={($event) => lang.current?.toggle($event)}
                 >
                     <i className="pi pi-globe"></i>
-                    <span className="h-lang-main">{language}</span>
+                    <span className="h-lang-main">
+                        {formatText(language, { formatTextType: FormatTextType.Language })}
+                    </span>
                 </div>
                 <OverlayPanel ref={lang}>
                     <MenuComponent

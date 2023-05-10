@@ -1,0 +1,19 @@
+.img-thumbnail-container {
+    @apply hover:opacity-hover;
+}
+
+.img-preview-container {
+    @apply z-[99999] fixed top-0 left-0 w-full h-full bg-mask flex justify-center items-center;
+
+    .preview-btn {
+        @apply flex gap-x-2 absolute right-5 top-5;
+    }
+
+    .preview-img {
+        @apply flex;
+
+        animation-duration: 0.5s;
+        animation-name: zoomIn;
+        transition: transform 0.15s;
+    }
+}

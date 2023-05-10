@@ -1,2 +1,2 @@
-import React from 'react';
-
+// remove later
+export const func1 = () => {};

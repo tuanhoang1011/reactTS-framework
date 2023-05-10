@@ -1,65 +1,61 @@
 import { format } from 'date-fns';
 import { isEmpty } from 'lodash';
-import { LogLevel } from '../../constants/log.const';
-import { LogContent, LogRequest } from '../../models/log.model';
-import { GlobalVariables } from '../../utils/global-variables.ultility';
-import { IndexedDBService } from '../storage/indexed-db.service';
+import { useEffect } from 'react';
 
-export class LogService {
-    public screenIdentifer = '';
-    private isPushingLog = false;
-    private pendingKey: IDBValidKey = '';
+import { LogLevel } from '../constants/log.const';
+import { LogContent, LogRequest } from '../models/log.model';
+import { GlobalVariables } from '../utils/global-variables.ultility';
+import useIndexedDB from './indexed-db.hook';
 
-    private logDB = {
-        ...GlobalVariables.logConfig,
-        objectStore: process.env['REACT_APP_INDEXEDDB_OBJSTORE_LOG'] ?? '',
-        maxBundleSize: GlobalVariables.logMaxBundleSize
-    };
-    private idxDBService = IndexedDBService.getInstance();
-    private static instance?: LogService;
+const logDB = {
+    ...GlobalVariables.logConfig,
+    objectStore: process.env['REACT_APP_INDEXEDDB_OBJSTORE_LOG'] ?? '',
+    maxBundleSize: GlobalVariables.logMaxBundleSize
+};
+const screenIdentifer = '';
 
-    constructor() {
-        if (LogService.instance) return;
+let isCreatedStore = false;
+let isPushingLog = false;
+let pendingKey: IDBValidKey = '';
 
-        this.idxDBService.createObjectStore(this.logDB.objectStore);
-    }
+const useLog = () => {
+    const indexedDBHook = useIndexedDB();
 
-    static getInstance() {
+    useEffect(() => {
         try {
-            if (!this.instance) {
-                this.instance = new LogService();
+            if (!isCreatedStore) {
+                indexedDBHook.createObjectStore(logDB.objectStore);
+                isCreatedStore = true;
             }
-
-            return this.instance;
         } catch (error) {
             throw error;
         }
-    }
+    }, []);
 
-    pushingLogs(): Promise<void> {
+    const pushingLogs = (): Promise<void> => {
         return new Promise(async (resolve) => {
             const finishPushingLogs = () => {
-                this.isPushingLog = false;
-                this.pendingKey = '';
+                isPushingLog = false;
+                pendingKey = '';
                 resolve();
             };
 
             try {
                 // logs are pushing -> stop
-                if (this.isPushingLog) {
+                if (isPushingLog) {
                     resolve();
                     return;
                 }
 
-                this.isPushingLog = true;
+                isPushingLog = true;
 
                 // don't get and push log bundles which are created from the start of calling pushingLogs until the end of pushingLogs
-                let keys = (await this.idxDBService.keys(this.logDB.objectStore)) ?? [];
-                keys = keys.filter((key) => key !== this.pendingKey);
+                let keys = (await indexedDBHook.keys(logDB.objectStore)) ?? [];
+                keys = keys.filter((key) => key !== pendingKey);
                 let totalLogs: LogRequest[] = [];
 
                 for (let i = 0; i < keys.length; i++) {
-                    const logs = ((await this.idxDBService.get(this.logDB.objectStore, keys[i])) as LogRequest[]) ?? [];
+                    const logs = ((await indexedDBHook.get(logDB.objectStore, keys[i])) as LogRequest[]) ?? [];
                     totalLogs = [...totalLogs, ...logs];
                 }
 
@@ -76,7 +72,7 @@ export class LogService {
                 // remove later
                 setTimeout(async () => {
                     for (let i = 0; i < keys.length; i++) {
-                        await this.idxDBService.delete(this.logDB.objectStore, keys[i]);
+                        await indexedDBHook.remove(logDB.objectStore, keys[i]);
                     }
                     finishPushingLogs();
                 }, 3000);
@@ -85,7 +81,7 @@ export class LogService {
                 // this.logAPIService.pushingLogs(totalLogs).subscribe({
                 //     next: async (res) => {
                 // for (let i = 0; i < keys.length; i++) {
-                //     await this.idxDBService.delete(this.logDB.objectStore, keys[i]);
+                //     await indexedDBHook.remove(this.logDB.objectStore, keys[i]);
                 // }
                 // finishPushingLogs();
                 //     },
@@ -103,31 +99,31 @@ export class LogService {
                 throw error;
             }
         });
-    }
+    };
 
-    error(type: string, log: LogContent) {
-        this.writeLog(LogLevel.Error, type, log);
-    }
+    const error = (type: string, log: LogContent) => {
+        writeLog(LogLevel.Error, type, log);
+    };
 
-    operation(type: string, log: LogContent) {
-        this.writeLog(LogLevel.Operation, type, log);
-    }
+    const operation = (type: string, log: LogContent) => {
+        writeLog(LogLevel.Operation, type, log);
+    };
 
-    info(type: string, log: LogContent) {
-        this.writeLog(LogLevel.Info, type, log);
-    }
+    const info = (type: string, log: LogContent) => {
+        writeLog(LogLevel.Info, type, log);
+    };
 
-    debug(type: string, log: LogContent) {
-        this.writeLog(LogLevel.Debug, type, log);
-    }
+    const debug = (type: string, log: LogContent) => {
+        writeLog(LogLevel.Debug, type, log);
+    };
 
-    warn(type: string, log: LogContent) {
-        this.writeLog(LogLevel.Warn, type, log);
-    }
+    const warn = (type: string, log: LogContent) => {
+        writeLog(LogLevel.Warn, type, log);
+    };
 
-    private async writeLog(level: string, type: string, log: LogContent) {
+    const writeLog = async (level: string, type: string, log: LogContent) => {
         try {
-            if (!log || !this.logDB.levels?.includes(level)) {
+            if (!log || !logDB.levels?.includes(level)) {
                 return Promise.resolve();
             }
 
@@ -139,11 +135,11 @@ export class LogService {
              * always add new logs into newest created bundle
              * -> this bundle will be ignore in pushing logs processing
              */
-            if (this.isPushingLog) {
-                key = this.pendingKey || `bundle-${today.toISOString()}`;
-                this.pendingKey = key;
+            if (isPushingLog) {
+                key = pendingKey || `bundle-${today.toISOString()}`;
+                pendingKey = key;
             } else {
-                const keys = await this.idxDBService.keys(this.logDB.objectStore);
+                const keys = await indexedDBHook.keys(logDB.objectStore);
 
                 if (isEmpty(keys)) {
                     key = `bundle-${today.toISOString()}`;
@@ -160,26 +156,30 @@ export class LogService {
                 level: level,
                 type: type,
                 subType: log.subType,
-                date: format(today, this.logDB.dateFormat ?? 'yyyyMMdd hh:mm:ss'),
+                date: format(today, logDB.dateFormat ?? 'yyyyMMdd hh:mm:ss'),
                 accountID: 'GUEST', // or ID of logged in account
                 identifier: log.identifier,
-                screen: this.screenIdentifer,
+                screen: screenIdentifer,
                 destinationScreen: log.destinationScreen || undefined,
                 apiName: log.apiName || undefined,
                 errorContent: log.errorContent || undefined
             };
             let logBundle: LogRequest[] = [];
-            logBundle = ((await this.idxDBService.get(this.logDB.objectStore, key)) as LogRequest[]) ?? [];
+            logBundle = ((await indexedDBHook.get(logDB.objectStore, key)) as LogRequest[]) ?? [];
             logBundle.push(newLog);
 
-            await this.idxDBService.set(this.logDB.objectStore, key, logBundle);
+            await indexedDBHook.set(logDB.objectStore, key, logBundle);
 
             // logBundle is always first bundle which has most logs -> use it to compare with logMaxBundleSize
-            if (logBundle.length >= this.logDB.maxBundleSize) {
-                this.pushingLogs();
+            if (logBundle.length >= logDB.maxBundleSize) {
+                pushingLogs();
             }
         } catch (error) {
             throw error;
         }
-    }
-}
+    };
+
+    return { pushingLogs, error, operation, info, debug, warn };
+};
+
+export default useLog;

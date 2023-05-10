@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { MessageState } from '../../models/state.model';
+import { MessageToastState } from '../../models/state.model';
 
-const initialState: MessageState = {
+const initialState: MessageToastState = {
     messages: [],
     clearAll: false
 };
@@ -10,7 +10,7 @@ export const MessageToastSlice = createSlice({
     name: 'msgToast',
     initialState: initialState,
     reducers: {
-        setProps: (state, actions: PayloadAction<MessageState>) => {
+        setProps: (state, actions: PayloadAction<MessageToastState>) => {
             state = {
                 ...state,
                 ...actions.payload
