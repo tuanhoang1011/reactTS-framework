@@ -15,6 +15,12 @@
   "[typescript]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
+  "[typescriptreact]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[javascriptreact]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
   "explorer.decorations.colors": false,
   "explorer.compactFolders": false,
   "gitlens.views.searchAndCompare.files.compact": false,
@@ -34,5 +40,11 @@
     "**/bower_components": true,
     "**/tmp": true
   },
-  "prettier.configPath": "src\\.prettierrc"
+  "prettier.configPath": "src\\.prettierrc",
+  "files.associations": {
+    "*.js": "javascript",
+    "*.jsx": "javascriptreact",
+    "*.ts": "typescript",
+    "*.tsx": "typescriptreact"
+  }
 }

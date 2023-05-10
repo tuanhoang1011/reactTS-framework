@@ -3,8 +3,8 @@
     <defs>
         <radialGradient id="paint0_diamond_262_1256" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" 
             gradientTransform="translate(179 1.5) rotate(90) scale(0.5 178)">
-            <stop stop-color="#00f0fc"></stop>
-            <stop offset="1" stop-color="#bcfd02" stop-opacity="0.1"></stop>
+            <stop stop-color="#23a6d5"></stop>
+            <stop offset="1" stop-color="#23d5ab" stop-opacity="0.1"></stop>
         </radialGradient>
     </defs>
 </svg>

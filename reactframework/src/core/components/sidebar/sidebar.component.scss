@@ -1,0 +1,23 @@
+.sidebar-container {
+    @apply flex flex-col h-full bg-bg-secondary min-w-sidebar-collapse max-w-sidebar-collapse divide-y-[2px] divide-border;
+
+    &.expanded {
+        @apply min-w-sidebar-expand max-w-sidebar-expand;
+    }
+
+    .sidebar-nav {
+        @apply flex-1;
+
+        .sidebar-nav-menu {
+            @apply flex flex-col;
+
+            li {
+                @apply h-fit;
+            }
+        }
+    }
+
+    .sidebar-info {
+        @apply text-center max-h-max p-5;
+    }
+}

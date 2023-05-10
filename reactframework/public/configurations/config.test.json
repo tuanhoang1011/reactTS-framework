@@ -1,0 +1,11 @@
+{
+    "messageLifeTimeMilSecond": 3000,
+    "version": "2023.2104.1",
+    "defaultTheme": "dark",
+    "logMaxBundleSize": 500,
+    "requestHTTPTimeoutMilSecond": 60000,
+    "autoSignOutIntervalMilSecond": 2000,
+    "autoSignOutDurationMinute": 15,
+    "splashScreenDurationMilSecond": 2000,
+    "imageCarouselNumVisible": 5
+}
