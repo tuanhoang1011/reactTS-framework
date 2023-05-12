@@ -150,16 +150,16 @@ module.exports = {
                 // common
                 'bg-primary': '#000',
                 'bg-secondary': '#1e222d',
-                primary: '#23a6d5',
+                primary: '#149eca',
                 secondary: '#a0a3ad',
                 danger: '#F23645',
                 border: '#50535e',
-                hyperlink: '#23a6d5',
+                hyperlink: '#149eca',
 
                 // loading
                 mask: '#1e222dcc',
-                'loading-gradient-fr': '#23a6d5',
-                'loading-gradient-to': '#23d5ab',
+                'loading-gradient-fr': '#149eca',
+                'loading-gradient-to': '#c56dba',
 
                 // text
                 'txt-default': '#C8CCD8',
@@ -183,13 +183,13 @@ module.exports = {
                 'dialog-content': '#707070',
 
                 // button
-                'btn-primary': '#23a6d5',
-                'btn-secondary': '#23a6d5',
+                'btn-primary': '#149eca',
+                'btn-secondary': '#149eca',
                 'btn-danger': '#F23645',
                 'btn-icon': '#1e222d',
 
                 // message
-                success: '#23a6d5',
+                success: '#149eca',
                 warn: '#cc8925',
                 error: '#FC6161',
                 info: '#696cff',

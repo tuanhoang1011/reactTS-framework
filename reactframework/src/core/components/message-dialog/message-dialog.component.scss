@@ -1,0 +1,49 @@
+.dlg-success {
+    @apply bg-success #{!important};
+}
+
+.dlg-error {
+    @apply bg-error #{!important};
+}
+
+.dlg-warn {
+    @apply bg-warn #{!important};
+}
+
+.dlg-info {
+    @apply bg-info #{!important};
+}
+
+.dlg-confirm {
+    @apply bg-confirm #{!important};
+}
+
+.p-dialog-mask {
+    @apply z-[100000] #{!important};
+}
+
+.p-dialog {
+    @apply bg-bg-secondary;
+
+    .p-dialog-content {
+        @apply flex justify-center;
+
+        .dlg-content {
+            @apply whitespace-pre-line px-[20px] flex items-center;
+
+            .msg-icon {
+                @apply bg-cover;
+            }
+
+            .msg-content {
+                @apply flex items-center text-fs-msg text-txt-default break-words whitespace-pre-line h-full;
+            }
+        }
+    }
+
+    .p-dialog-footer {
+        .dlg-footer {
+            @apply flex justify-end gap-x-3;
+        }
+    }
+}

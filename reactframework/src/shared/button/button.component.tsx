@@ -1,11 +1,10 @@
 import { memo } from 'react';
-import { useTranslation, withTranslation } from 'react-i18next';
-import { compose } from 'redux';
+import { useTranslation } from 'react-i18next';
 import { sprintf } from 'sprintf-js';
-import { LogIdentiferFormat, LogSubType, LogType } from '../../core/constants/log.const';
 
+import { LogIdentiferFormat, LogSubType, LogType } from '../../core/constants/log.const';
+import useLog from '../../core/hooks/log.hook';
 import { CommonProps } from '../../core/models/common-props.model';
-import { LogService } from '../../core/services/log/log.service';
 
 interface Props extends CommonProps {
     content?: string;
@@ -15,9 +14,8 @@ interface Props extends CommonProps {
     onClickAction: () => void;
 }
 
-const logService = LogService.getInstance();
-
 const ButtonComponent = (props: Props) => {
+    const logHook = useLog();
     const { t } = useTranslation();
 
     const clickAction = (e: any) => {
@@ -27,7 +25,7 @@ const ButtonComponent = (props: Props) => {
             const writeLog = () => {
                 if (props.isWriteLog && props.content) {
                     // write log
-                    logService.operation(LogType.Action, {
+                    logHook.operation(LogType.Action, {
                         subType: LogSubType.Button,
                         identifier: sprintf(LogIdentiferFormat.Button, t(props.content ?? ''))
                     });
@@ -63,6 +61,7 @@ const ButtonComponent = (props: Props) => {
             onKeyUp={($event) => clickAction($event)}
         >
             {t(props.content ?? '')}
+            {props.children}
         </button>
     );
 };
@@ -72,4 +71,4 @@ ButtonComponent.defaultProps = {
     onClickAction: () => {}
 };
 
-export default compose(withTranslation())(memo(ButtonComponent));
+export default memo(ButtonComponent);

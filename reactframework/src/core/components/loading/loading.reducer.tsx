@@ -3,8 +3,6 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { LoadingState } from '../../models/state.model';
 
 const initialState: LoadingState = {
-    apiReqCount: 0,
-    isPendingAPI: false,
     isOn: false
 };
 

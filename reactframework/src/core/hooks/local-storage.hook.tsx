@@ -1,31 +1,21 @@
 import { isEmpty } from 'lodash';
 
-import { StorageItem } from '../../models/item.model';
+import { StorageItem } from '../models/item.model';
 
-export class LocalStorageService {
-    mainKey = process.env['REACT_APP_LOCAL_STORAGE_KEY'] ?? '';
+const mainKey = process.env['REACT_APP_LOCAL_STORAGE_KEY'] ?? '';
 
-    private static instance?: LocalStorageService;
-
-    constructor() {
-        if (LocalStorageService.instance) return;
+const getAppCache = () => {
+    try {
+        return localStorage.getItem(mainKey) || '';
+    } catch (error) {
+        throw error;
     }
+};
 
-    static getInstance() {
+const useLocalStorage = () => {
+    const get = (key: string): string => {
         try {
-            if (!this.instance) {
-                this.instance = new LocalStorageService();
-            }
-
-            return this.instance;
-        } catch (error) {
-            throw error;
-        }
-    }
-
-    get(key: string): string {
-        try {
-            const storageItems: string = this.getAppCache();
+            const storageItems: string = getAppCache();
             let val = '';
 
             if (isEmpty(storageItems)) {
@@ -43,9 +33,9 @@ export class LocalStorageService {
         } catch (error) {
             throw error;
         }
-    }
+    };
 
-    set(key: string, value: string) {
+    const set = (key: string, value: string) => {
         try {
             const item: StorageItem = {
                 key: key,
@@ -53,7 +43,7 @@ export class LocalStorageService {
             };
 
             let objItems: Array<StorageItem> = new Array<StorageItem>();
-            const storageItems: string = this.getAppCache() || '';
+            const storageItems: string = getAppCache() || '';
             if (!isEmpty(storageItems)) {
                 objItems = JSON.parse(storageItems);
             }
@@ -67,55 +57,57 @@ export class LocalStorageService {
                 objItems.push(item);
             }
 
-            localStorage.setItem(this.mainKey, JSON.stringify(objItems));
+            localStorage.setItem(mainKey, JSON.stringify(objItems));
         } catch (error) {
             throw error;
         }
-    }
+    };
 
-    remove(key: string) {
+    const remove = (key: string) => {
         try {
-            const storageItems: string = this.getAppCache();
+            const storageItems: string = getAppCache();
 
             if (!isEmpty(storageItems)) {
                 const objItems: Array<StorageItem> = JSON.parse(storageItems);
                 const remainItems = objItems.filter((x) => x.key !== key);
 
-                localStorage.setItem(this.mainKey, JSON.stringify(remainItems));
+                localStorage.setItem(mainKey, JSON.stringify(remainItems));
             }
         } catch (error) {
             throw error;
         }
-    }
+    };
 
-    removeMulti(keys: Array<string>) {
+    const removeMulti = (keys: Array<string>) => {
         try {
-            const storageItems: string = this.getAppCache();
+            const storageItems: string = getAppCache();
 
             if (!isEmpty(storageItems)) {
                 const objItems: Array<StorageItem> = JSON.parse(storageItems);
                 const remainItems = objItems.filter((x) => keys.indexOf(x.key!) === -1);
 
-                localStorage.setItem(this.mainKey, JSON.stringify(remainItems));
+                localStorage.setItem(mainKey, JSON.stringify(remainItems));
             }
         } catch (error) {
             throw error;
         }
-    }
+    };
 
-    clear() {
+    const clear = () => {
         try {
             localStorage.clear();
         } catch (error) {
             throw error;
         }
-    }
+    };
 
-    private getAppCache() {
-        try {
-            return localStorage.getItem(this.mainKey) || '';
-        } catch (error) {
-            throw error;
-        }
-    }
-}
+    return {
+        get,
+        set,
+        remove,
+        removeMulti,
+        clear
+    };
+};
+
+export default useLocalStorage;

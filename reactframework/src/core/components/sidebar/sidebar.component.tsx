@@ -10,12 +10,16 @@ const SidebarComponent = () => {
     const [navMenu, setNavMenu] = useState([] as MenuItem[]);
 
     useEffect(() => {
-        const getNavMenu = async () => {
-            const menu = (await sidebarHook.getNavMenu()).menu;
-            setNavMenu(menu);
-        };
+        try {
+            const getNavMenu = async () => {
+                const menu = (await sidebarHook.getNavMenu()).menu;
+                setNavMenu(menu);
+            };
 
-        getNavMenu();
+            getNavMenu();
+        } catch (error) {
+            throw error;
+        }
     }, []);
 
     return (

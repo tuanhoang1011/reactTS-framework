@@ -1,49 +1,49 @@
 {
-    "MSG": {
-        "TITLE_001": "Success",
-        "TITLE_002": "Error",
-        "TITLE_003": "Warning",
-        "TITLE_004": "Xác nhận",
-        "TITLE_005": "Information",
-        "EXAMPLE_ERR0001": "This is example message. Include 2 parameters: %s and %s.",
-        "APP_ERR0001": "There is a problem with the website. Please contact the site owner.",
-        "APP_ERR0002": "No network. Please check again.",
-        "APP_ERR0003": "",
-        "APP_ERR0004": "Username or Password is wrong."
+  "MSG": {
+    "TITLE_001": "Success",
+    "TITLE_002": "Error",
+    "TITLE_003": "Warning",
+    "TITLE_004": "Xác nhận",
+    "TITLE_005": "Information",
+    "EXAMPLE_ERR0001": "This is example message. Include 2 parameters: %s and %s.",
+    "APP_ERR0001": "There is a problem with the website. Please contact the site owner.",
+    "APP_ERR0002": "No network. Please check again.",
+    "APP_ERR0003": "",
+    "APP_ERR0004": "Username or Password is wrong."
+  },
+  "ERRPAGE": {
+    "400": {
+      "TITLE": "BAD REQUEST",
+      "MSG": "Your browser sent a request that this server could not understand. \nPlease contact the site owner."
     },
-    "ERRPAGE": {
-        "400": {
-            "TITLE": "BAD REQUEST",
-            "MSG": "Your browser sent a request that this server could not understand. \nPlease contact the site owner."
-        },
-        "403": {
-            "TITLE": "FORBIDDEN",
-            "MSG": "We are sorry. \nBut you do not have access to this page."
-        },
-        "404": {
-            "TITLE": "PAGE NOT FOUND",
-            "MSG": "We looked everywhere for this page. \nAre you sure the website URL is connect?."
-        },
-        "500": {
-            "TITLE": "INTERNAL SERVER ERROR",
-            "MSG": "We are sorry. \nAn internal server error has occured. Try to refresh this page again or contact the owner site."
-        }
+    "403": {
+      "TITLE": "FORBIDDEN",
+      "MSG": "We are sorry. \nBut you do not have access to this page."
     },
-    "BTN_0001": "Yes",
-    "BTN_0002": "No",
-    "BTN_0003": "Close",
-    "BTN_0004": "Cancel",
-    "BTN_0005": "Back",
-    "BTN_0006": "Go to home",
-    "EXAMPLE_0001": "© 2023 Develop by Pham Hoang Tuan",
-    "LBL_0001": "Male",
-    "LBL_0002": "Female",
-    "LBL_0003": "Active",
-    "LBL_0004": "Inactive",
-    "LBL_0005": "Profile",
-    "LBL_0006": "Sign in",
-    "LBL_0007": "Sign out",
-    "LBL_0008": "From",
-    "LBL_0009": "To",
-    "LBL_0010": "{{day}} days"
+    "404": {
+      "TITLE": "PAGE NOT FOUND",
+      "MSG": "We looked everywhere for this page. \nAre you sure the website URL is connect?."
+    },
+    "500": {
+      "TITLE": "INTERNAL SERVER ERROR",
+      "MSG": "We are sorry. \nAn internal server error has occured. Try to refresh this page again or contact the owner site."
+    }
+  },
+  "BTN_0001": "Yes",
+  "BTN_0002": "No",
+  "BTN_0003": "Close",
+  "BTN_0004": "Cancel",
+  "BTN_0005": "Back",
+  "BTN_0006": "Go to home",
+  "EXAMPLE_0001": "© 2023 Develop by Pham Hoang Tuan",
+  "LBL_0001": "Male",
+  "LBL_0002": "Female",
+  "LBL_0003": "Active",
+  "LBL_0004": "Inactive",
+  "LBL_0005": "Profile",
+  "LBL_0006": "Sign in",
+  "LBL_0007": "Sign out",
+  "LBL_0008": "From",
+  "LBL_0009": "To",
+  "LBL_0010": "{{day}} days"
 }

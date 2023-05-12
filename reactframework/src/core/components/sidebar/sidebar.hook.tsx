@@ -1,5 +1,5 @@
 import { MenuItem } from '../../models/item.model';
-import HttpBaseService from '../../services/communicate-server/http-base.service';
+import HttpBaseService from '../../services/http-base.service';
 import { useAppDispatch, useAppSelector } from '../../store/stores/store';
 import { setProps } from './sidebar.reducer';
 

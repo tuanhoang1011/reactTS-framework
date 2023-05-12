@@ -13,7 +13,7 @@ const HTTPInterceptor = ({ children }) => {
 
         axios.interceptors.response.use(
             (response) => {
-                return response.data;
+                return response && response.data;
             },
             (error) => {
                 return Promise.reject(error);

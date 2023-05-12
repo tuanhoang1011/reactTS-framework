@@ -7,34 +7,41 @@ import { Navigate } from 'react-router';
 import sprintf from 'sprintf-js';
 
 import { LogIdentiferFormat, LogSubType, LogType } from '../../constants/log.const';
+import useLog from '../../hooks/log.hook';
 import { BreadcrumbItem } from '../../models/breadcrumb.model';
-import { LogService } from '../../services/log/log.service';
 import { isNullOrUndefined } from '../../utils/common-func.ultility';
 import useBreadcrumb from './breadcrumb.hook';
 
-const logService = LogService.getInstance();
-
 const BreadcrumbComponent = () => {
+    const logHook = useLog();
     const breadcrumbHook = useBreadcrumb();
     const [items, setItems] = useState([] as BreadcrumbItem[]);
     const { t } = useTranslation();
 
     useEffect(() => {
-        if (!isNullOrUndefined(breadcrumbHook.breadcrumbs?.items)) {
-            setItems(cloneDeep(breadcrumbHook.breadcrumbs?.items) ?? []);
+        try {
+            if (!isNullOrUndefined(breadcrumbHook.breadcrumbs?.items)) {
+                setItems(cloneDeep(breadcrumbHook.breadcrumbs?.items) ?? []);
+            }
+        } catch (error) {
+            throw error;
         }
     }, [breadcrumbHook.breadcrumbs?.items]);
 
     const redirectPage = (item: BreadcrumbItem) => {
-        if (item.url) {
-            // write log
-            logService.operation(LogType.Action, {
-                subType: LogSubType.ScreenTransition,
-                identifier: sprintf(LogIdentiferFormat.Breadcrumb, t(item.label ?? '')),
-                destinationScreen: item.destinationScreen
-            });
+        try {
+            if (item.url) {
+                // write log
+                logHook.operation(LogType.Action, {
+                    subType: LogSubType.ScreenTransition,
+                    identifier: sprintf(LogIdentiferFormat.Breadcrumb, t(item.label ?? '')),
+                    destinationScreen: item.destinationScreen
+                });
 
-            Navigate({ to: item.url });
+                Navigate({ to: item.url });
+            }
+        } catch (error) {
+            throw error;
         }
     };
 

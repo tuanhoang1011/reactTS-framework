@@ -2,18 +2,19 @@ import i18next from 'i18next';
 import { addLocale, locale } from 'primereact/api';
 
 import { StorageKey } from '../../constants/storage-key.const';
+import useLocalStorage from '../../hooks/local-storage.hook';
 import { MenuItem } from '../../models/item.model';
-import HttpBaseService from '../../services/communicate-server/http-base.service';
-import { LocalStorageService } from '../../services/storage/local-storage.service';
+import HttpBaseService from '../../services/http-base.service';
 import { GlobalVariables } from '../../utils/global-variables.ultility';
 
 const root = '../json/';
 const headerJSON = `${root}items/header.json`;
 const languagesJSON = `${root}items/languages.json`;
 const httpBaseService = HttpBaseService.getInstance();
-const localStorageService = LocalStorageService.getInstance();
 
 const useHeader = () => {
+    const localStorageHook = useLocalStorage();
+
     const getNavMenu = async () => {
         try {
             return await httpBaseService.getLocalFile<{ menu: MenuItem[] }>(headerJSON);
@@ -36,7 +37,7 @@ const useHeader = () => {
                 document.body.classList.remove(`theme-${oldTheme}`);
             }
 
-            localStorageService.set(StorageKey.Theme, newTheme);
+            localStorageHook.set(StorageKey.Theme, newTheme);
             document.body.classList.add(`theme-${newTheme}`);
             GlobalVariables.theme = newTheme;
         } catch (error) {
@@ -54,7 +55,7 @@ const useHeader = () => {
                 locale(lang);
             }
 
-            localStorageService.set(StorageKey.Language, lang);
+            localStorageHook.set(StorageKey.Language, lang);
             i18next.changeLanguage(lang);
             GlobalVariables.language = lang;
         } catch (error) {

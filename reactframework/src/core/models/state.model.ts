@@ -1,9 +1,14 @@
-import { BreadcrumbItemList } from './breadcrumb.model';
+import { HttpStatusCode } from 'axios';
 import { ToastMessage } from 'primereact/toast';
 
+import { BreadcrumbItemList } from './breadcrumb.model';
+import { MessageItem } from './message.model';
+
+export interface GlobalState {
+    errorPage?: HttpStatusCode;
+}
+
 export interface LoadingState {
-    apiReqCount?: number;
-    isPendingAPI?: boolean;
     isOn?: boolean;
 }
 
@@ -16,7 +21,11 @@ export interface LayoutState {
     breadcrumbs?: BreadcrumbItemList;
 }
 
-export interface MessageState {
-    messages?: ToastMessage | ToastMessage[];
+export interface MessageToastState {
+    messages?: ToastMessage[];
     clearAll?: boolean;
+}
+
+export interface MessageDialogState {
+    messages?: MessageItem[];
 }

@@ -17,27 +17,34 @@ const MessageToastComponent = () => {
     const styleClass = '';
 
     useEffect(() => {
-        if (!isEmpty(msgToastHook.messages)) {
-            toast.current?.show(msgToastHook.messages);
-
-            // clear message state
-            dispatch(
-                setProps({
-                    messages: []
-                })
-            );
+        try {
+            if (!isEmpty(msgToastHook.messages)) {
+                toast.current?.show(msgToastHook.messages);
+                // clear message state
+                dispatch(
+                    setProps({
+                        messages: []
+                    })
+                );
+            }
+        } catch (error) {
+            throw error;
         }
     }, [msgToastHook.messages]);
 
     useEffect(() => {
-        if (msgToastHook.isClearAll) {
-            toast.current?.clear();
-            // clear message state
-            dispatch(
-                setProps({
-                    clearAll: false
-                })
-            );
+        try {
+            if (msgToastHook.isClearAll) {
+                toast.current?.clear();
+                // clear message state
+                dispatch(
+                    setProps({
+                        clearAll: false
+                    })
+                );
+            }
+        } catch (error) {
+            throw error;
         }
     }, [msgToastHook.isClearAll]);
 

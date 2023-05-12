@@ -1,14 +1,12 @@
-// import './hyperlink.component.scss';
 import './hyperlink.component.scss';
-import { sprintf } from 'sprintf-js';
 
 import { memo } from 'react';
-import { useTranslation, withTranslation } from 'react-i18next';
-import { compose } from 'redux';
+import { useTranslation } from 'react-i18next';
+import { sprintf } from 'sprintf-js';
 
-import { CommonProps } from '../../core/models/common-props.model';
 import { LogIdentiferFormat, LogSubType, LogType } from '../../core/constants/log.const';
-import { LogService } from '../../core/services/log/log.service';
+import useLog from '../../core/hooks/log.hook';
+import { CommonProps } from '../../core/models/common-props.model';
 
 interface Props extends CommonProps {
     content?: string;
@@ -18,9 +16,8 @@ interface Props extends CommonProps {
     onClickAction: () => void;
 }
 
-const logService = LogService.getInstance();
-
 const HyperlinkComponent = (props: Props) => {
+    const logHook = useLog();
     const { t } = useTranslation();
 
     const onClick = (event: any) => {
@@ -29,7 +26,7 @@ const HyperlinkComponent = (props: Props) => {
 
             if (props.isWriteLog) {
                 // write log
-                logService.operation(LogType.Action, {
+                logHook.operation(LogType.Action, {
                     subType: LogSubType.HyperLink,
                     identifier: sprintf(LogIdentiferFormat.Hyperlink, t(props.content ?? ''))
                 });
@@ -60,4 +57,4 @@ HyperlinkComponent.defaultProps = {
     onClickAction: () => {}
 };
 
-export default compose(withTranslation())(memo(HyperlinkComponent));
+export default memo(HyperlinkComponent);

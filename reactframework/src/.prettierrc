@@ -1,4 +1,18 @@
 {
+    "overrides": [
+        {
+            "files": "*.json",
+            "options": {
+                "tabWidth": 2
+            }
+        },
+        {
+            "files": "*.jsonc",
+            "options": {
+                "tabWidth": 2
+            }
+        }
+    ],
     "trailingComma": "none",
     "tabWidth": 4,
     "semi": true,

@@ -1,132 +1,445 @@
 import './example.component.scss';
 
 import { cloneDeep } from 'lodash';
-import { memo, useCallback, useEffect } from 'react';
+import { memo, useCallback, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import BreadcrumbComponent from '../../core/components/breadcrumb/breadcrumb.component';
 import useBreadcrumb from '../../core/components/breadcrumb/breadcrumb.hook';
 import useLoading from '../../core/components/loading/loading.hook';
+import useMessageDialog from '../../core/components/message-dialog/message-dialog.hook';
 import useMessageToast from '../../core/components/message-toast/message-toast.hook';
 import useSplashScreen from '../../core/components/splash-screen/splash-screen.hook';
 import { Breadcrumb, BreadcrumbRoutes } from '../../core/constants/breadcrumb.const';
+import useIndexedDB from '../../core/hooks/indexed-db.hook';
+import { TabItem } from '../../core/models/item.model';
+import HttpBaseService from '../../core/services/http-base.service';
 import { GlobalVariables } from '../../core/utils/global-variables.ultility';
 import ButtonComponent from '../../shared/button/button.component';
+import RangeDateSelectorComponent from '../../shared/calendar-range-selector/range-date-selector.component';
+import DynamicTabViewComponent from '../../shared/dynamic-tab-view/dynamic-tab-view.component';
 import HyperlinkComponent from '../../shared/hyperlink/hyperlink.component';
+import Component1Component from './components/component1.component';
+import Component2Component from './components/component2.component';
+import Component3Component from './components/component3.component';
+import ImageViewComponent from '../../shared/image-view/image-view.component';
+import { CommonConstant } from '../../core/constants/common.const';
+import { useNavigate } from 'react-router';
+import { useAppDispatch } from '../../core/store/stores/store';
+import { HttpStatusCode } from 'axios';
+import { useErrorPage } from '../../core/components/error-page/error-page.hook';
 
 const ExampleComponent = () => {
     const loadingHook = useLoading();
     const splashScreenHook = useSplashScreen();
+    const errorPagehook = useErrorPage();
     const breadcrumbHook = useBreadcrumb();
     const msgToastHook = useMessageToast();
+    const msgDialogHook = useMessageDialog();
+    const indexedDBHook = useIndexedDB();
+
+    const dispatch = useAppDispatch();
+    const navigate = useNavigate();
+
+    const [tabItems, setTabItems] = useState([] as TabItem[]);
+
     const { t } = useTranslation();
 
     useEffect(() => {
-        buildBreadcrumbData();
+        try {
+            generateImages();
+            buildBreadcrumbData();
+            getTabItem();
+        } catch (error) {
+            throw error;
+        }
     }, []);
 
     const lineModule = () => {
-        return (
-            <img
-                className="module-line"
-                alt=""
-                src="../images/dummy-line.svg"
-            />
-        );
+        try {
+            return (
+                <img
+                    className="module-line"
+                    alt=""
+                    src="../images/dummy-line.svg"
+                />
+            );
+        } catch (error) {
+            throw error;
+        }
+    };
+
+    const generateImages = () => {
+        try {
+            // for (let i = 0; i < 20; i++) {
+            //     this.thumbnailImages.push({
+            //         src: '../../../assets/images/dummy-angular.png',
+            //         width: CommonConstant.ImageRatio.Thumbnail.width,
+            //         height: CommonConstant.ImageRatio.Thumbnail.width
+            //     });
+            // }
+            // this.thumbnailImages = cloneDeep(this.thumbnailImages);
+        } catch (error) {
+            throw error;
+        }
     };
 
     const buildBreadcrumbData = () => {
-        const bc = cloneDeep(BreadcrumbRoutes).find((x) => x.id === Breadcrumb.Screen1.Id);
+        try {
+            const bc = cloneDeep(BreadcrumbRoutes).find((x) => x.id === Breadcrumb.Screen1.Id);
 
-        if (bc) {
-            bc.items = bc.items.filter((item) => {
-                switch (item.id) {
-                    case Breadcrumb.Screen1.Child.ScreenList1:
-                        item.url = item.id;
-                        break;
+            if (bc) {
+                bc.items = bc.items.filter((item) => {
+                    switch (item.id) {
+                        case Breadcrumb.Screen1.Child.ScreenList1:
+                            item.url = item.id;
+                            break;
 
-                    case Breadcrumb.Screen1.Child.ScreenDetail1:
-                        item.url = item.id;
-                        break;
+                        case Breadcrumb.Screen1.Child.ScreenDetail1:
+                            item.url = item.id;
+                            break;
 
-                    case Breadcrumb.Screen1.Child.ScreenList2:
-                        item.url = item.id;
-                        break;
+                        case Breadcrumb.Screen1.Child.ScreenList2:
+                            item.url = item.id;
+                            break;
 
-                    case Breadcrumb.Screen1.Child.ScreenDetail2:
-                        item.url = item.id;
-                        break;
-                }
-                return [
-                    Breadcrumb.Screen1.Child.ScreenList1,
-                    Breadcrumb.Screen1.Child.ScreenDetail1,
-                    Breadcrumb.Screen1.Child.ScreenList2,
-                    Breadcrumb.Screen1.Child.ScreenDetail2
-                ].includes(item.id);
-            });
+                        case Breadcrumb.Screen1.Child.ScreenDetail2:
+                            item.url = item.id;
+                            break;
+                    }
+                    return [
+                        Breadcrumb.Screen1.Child.ScreenList1,
+                        Breadcrumb.Screen1.Child.ScreenDetail1,
+                        Breadcrumb.Screen1.Child.ScreenList2,
+                        Breadcrumb.Screen1.Child.ScreenDetail2
+                    ].includes(item.id);
+                });
 
-            breadcrumbHook.setBreadcrumb(cloneDeep(bc));
+                breadcrumbHook.setBreadcrumb(cloneDeep(bc));
+            }
+        } catch (error) {
+            throw error;
+        }
+    };
+
+    const getTabItem = async () => {
+        try {
+            const res = await HttpBaseService.getInstance().getLocalFile<{ menu: TabItem[] }>(
+                '../json/items/tab-example.json'
+            );
+            setTabItems(res.menu);
+        } catch (error) {
+            throw error;
         }
     };
 
     const clickButton = (type: 'Primary' | 'Secondary' | 'Danger') =>
         useCallback(() => {
-            alert(`Click ${type} button`);
+            try {
+                alert(`Click ${type} button`);
+            } catch (error) {
+                throw error;
+            }
         }, []);
 
     const clickHyperlink = () =>
         useCallback(() => {
-            window.open('https://www.google.com/', '_blank');
+            try {
+                window.open('https://www.google.com/', '_blank');
+            } catch (error) {
+                throw error;
+            }
         }, []);
+
+    const openDialogA = () =>
+        useCallback(() => {
+            try {
+                // const dialog: DialogInfo = {
+                //     dialogId: 'Dialog A',
+                //     component: DialogAComponent
+                // };
+                // this.dialogService.open(dialog);
+                // this.dialogAService.updateState({ activeDialog: 'A', activeScreen: 'A' } as GlobalState);
+            } catch (error) {
+                throw error;
+            }
+        }, []);
+
+    const openDialogB = () =>
+        useCallback(() => {
+            try {
+                // const dialog: DialogInfo = {
+                //     dialogId: 'Dialog B',
+                //     component: DialogBComponent
+                // };
+                // this.dialogService.open(dialog);
+            } catch (error) {
+                throw error;
+            }
+        }, []);
+
+    const updateDialogA = () =>
+        useCallback(() => {
+            try {
+                // this.dialogAService.updateState({ activeDialog: 'B', activeScreen: 'B' } as GlobalState);
+            } catch (error) {
+                throw error;
+            }
+        }, []);
+
+    const removeDialogA = () =>
+        useCallback(() => {
+            try {
+                // this.dialogService.close('Dialog A');
+            } catch (error) {
+                throw error;
+            }
+        }, []);
+
+    const redirectErrorPage = (code: HttpStatusCode) => {
+        try {
+            errorPagehook.setErrorPage(code);
+        } catch (error) {
+            throw error;
+        }
+    };
 
     const showMessageToast = (type: string) =>
         useCallback(() => {
-            switch (type) {
-                case 'success':
-                    msgToastHook.success('MSG.EXAMPLE_ERR0001', {
-                        variables: ['Angular', 'ReactJS']
-                    });
-                    break;
+            try {
+                switch (type) {
+                    case 'success':
+                        msgToastHook.success('MSG.EXAMPLE_ERR0001', {
+                            variables: ['Angular', 'ReactJS']
+                        });
+                        break;
 
-                case 'error':
-                    msgToastHook.error('MSG.EXAMPLE_ERR0001', {
-                        variables: ['Angular', 'ReactJS']
-                    });
-                    break;
+                    case 'error':
+                        msgToastHook.error('MSG.EXAMPLE_ERR0001', {
+                            variables: ['Angular', 'ReactJS']
+                        });
+                        break;
 
-                case 'info':
-                    msgToastHook.info('MSG.EXAMPLE_ERR0001', {
-                        variables: ['Angular', 'ReactJS']
-                    });
-                    break;
+                    case 'info':
+                        msgToastHook.info('MSG.EXAMPLE_ERR0001', {
+                            variables: ['Angular', 'ReactJS']
+                        });
+                        break;
 
-                case 'warn':
-                    msgToastHook.warn('MSG.EXAMPLE_ERR0001', {
-                        variables: ['Angular', 'ReactJS']
-                    });
-                    break;
+                    case 'warn':
+                        msgToastHook.warn('MSG.EXAMPLE_ERR0001', {
+                            variables: ['Angular', 'ReactJS']
+                        });
+                        break;
 
-                default:
-                    msgToastHook.clearAll();
-                    break;
+                    default:
+                        msgToastHook.clearAll();
+                        break;
+                }
+            } catch (error) {
+                throw error;
+            }
+        }, []);
+
+    const showMessageDialog = (type: string) =>
+        useCallback(() => {
+            try {
+                switch (type) {
+                    case 'success':
+                        msgDialogHook.success(
+                            'MSG.EXAMPLE_ERR0001',
+                            {
+                                variables: ['Angular', 'ReactJS']
+                            },
+                            () => {
+                                alert('Click Close');
+                            }
+                        );
+                        break;
+
+                    case 'error':
+                        msgDialogHook.error(
+                            'MSG.EXAMPLE_ERR0001',
+                            {
+                                variables: ['Angular', 'ReactJS']
+                            },
+                            () => {
+                                alert('Click Close');
+                            }
+                        );
+                        break;
+
+                    case 'info':
+                        msgDialogHook.info(
+                            'MSG.EXAMPLE_ERR0001',
+                            {
+                                variables: ['Angular', 'ReactJS']
+                            },
+                            () => {
+                                alert('Click Close');
+                            }
+                        );
+                        break;
+
+                    case 'warn':
+                        msgDialogHook.warn(
+                            'MSG.EXAMPLE_ERR0001',
+                            {
+                                variables: ['Angular', 'ReactJS']
+                            },
+                            () => {
+                                alert('Click Close');
+                            }
+                        );
+                        break;
+
+                    case 'confirm':
+                        msgDialogHook.confirm(
+                            'MSG.EXAMPLE_ERR0001',
+                            {
+                                variables: ['Angular', 'ReactJS']
+                            },
+                            () => {
+                                alert('Click Yes');
+                            },
+                            () => {
+                                alert('Click No');
+                            },
+                            () => {
+                                alert('Click Cancel');
+                            }
+                        );
+                        break;
+
+                    case 'custom':
+                        msgDialogHook.custom('MSG.EXAMPLE_ERR0001', {
+                            header: 'MSG.TITLE_001',
+                            variables: ['Angular', 'ReactJS'],
+                            actions: [
+                                {
+                                    label: 'BTN_0005',
+                                    styleClass: 'btn-secondary',
+                                    click: () => {
+                                        alert(`Click ${t('BTN_0005')}`);
+                                    }
+                                },
+                                {
+                                    label: 'BTN_0006',
+                                    styleClass: 'btn-danger',
+                                    click: () => {
+                                        alert(`Click ${t('BTN_0006')}`);
+                                    }
+                                },
+                                {
+                                    label: 'BTN_0001',
+                                    styleClass: 'btn-primary',
+                                    isDefault: true,
+                                    click: () => {
+                                        alert(`Click ${t('BTN_0001')}`);
+                                    }
+                                }
+                            ]
+                        });
+                        break;
+                }
+            } catch (error) {
+                throw error;
             }
         }, []);
 
     const showLoadingSplashScreen = (isLoading: boolean) =>
         useCallback(() => {
-            if (isLoading) {
-                loadingHook.show();
-            } else {
-                splashScreenHook.show();
-            }
-
-            setTimeout(() => {
+            try {
                 if (isLoading) {
-                    loadingHook.hide();
+                    loadingHook.show();
                 } else {
-                    splashScreenHook.hide();
+                    splashScreenHook.show();
                 }
-            }, GlobalVariables.splashScreenDurationMilSecond);
+
+                setTimeout(() => {
+                    if (isLoading) {
+                        loadingHook.hide();
+                    } else {
+                        splashScreenHook.hide();
+                    }
+                }, GlobalVariables.splashScreenDurationMilSecond);
+            } catch (error) {
+                throw error;
+            }
+        }, []);
+
+    const processLog = (type: 'write' | 'push' | 'clear') =>
+        useCallback(() => {
+            try {
+                switch (type) {
+                    case 'write':
+                        {
+                            let msg = 'Log function has:\n';
+                            msg += '+ 7 levels: All, Error, Operation, Info, Warn, Debug, Off\n';
+                            msg += '+ 2 type: Action, Error\n';
+                            msg +=
+                                '+ 7 sub type: Hyperlink, Button, Table Item Selection, Menu, Screen Transittion, API Error, Exception\n';
+                            msg +=
+                                '+ Logs will write to indexed db of browser (Open Developer Tools -> Application -> Indexed DB)\n';
+                            msg +=
+                                '+ Example: If you click on any button. A log information includes Operation (Level), Action (Type), Button (Sub type) will be saved into Indexed DB.\n';
+                            msg +=
+                                '+ If you want more information. Please check source code: LogService (log.service.ts)';
+                            msgDialogHook.info(msg);
+                        }
+                        break;
+
+                    case 'push':
+                        msgDialogHook.info('The time that you push log to server will depend on your requirements.');
+                        break;
+
+                    case 'clear':
+                        indexedDBHook.clear(process.env['REACT_APP_INDEXEDDB_OBJSTORE_LOG'] ?? '');
+                        msgDialogHook.info('Current logs are cleared. Please check Indexed DB.');
+                        break;
+                }
+            } catch (error) {
+                throw error;
+            }
+        }, []);
+
+    const exportPDF = () =>
+        useCallback(async () => {
+            // try {
+            //     this.LoadingService.show(false);
+            //     let doc = new wjPdf.PdfDocument({
+            //         footer: CommonConstant.PDFCommon.Footer,
+            //         pageSettings: CommonConstant.PDFCommon.PageSetting.Default,
+            //         ended: (sender: wjPdf.PdfDocument, args: wjPdf.PdfDocumentEndedEventArgs) => {
+            //             // revert after exporting successfully
+            //             wjPdf.saveBlob(new Blob([args.blob], { type: 'application/octet-stream' }), 'example.pdf');
+            //             this.LoadingService.hide(true);
+            //         }
+            //     });
+            //     // draw img from canvas for pdf
+            //     const drawImg = (canvas: HTMLCanvasElement, width?: number, height?: number) => {
+            //         const img = canvas.toDataURL();
+            //         doc.drawImage(img, undefined, undefined, {
+            //             width: width ? width : doc.width,
+            //             height: height ? height : doc.height,
+            //             stretchProportionally: true,
+            //             align: wjPdf.PdfImageHorizontalAlign.Center
+            //         });
+            //     };
+            //     const el = document.body.getElementsByClassName('ex-container')[0]! as HTMLCanvasElement;
+            //     el.style.maxWidth = el.clientWidth + 'px';
+            //     const canvas = await this.canvasService.toCanvas(
+            //         document.body.getElementsByClassName('ex-container')[0]! as HTMLCanvasElement,
+            //         {
+            //             pixelRatio: 4
+            //         }
+            //     );
+            //     drawImg(canvas);
+            //     canvas.remove();
+            //     doc.end();
+            // } catch (error) {
+            //     throw error;
+            // }
         }, []);
 
     return (
@@ -157,6 +470,13 @@ const ExampleComponent = () => {
                     />
                 </div>
 
+                <img
+                    src="../images/dummy-logo-react.svg"
+                    width="60"
+                    height="60"
+                    className="h-[60px]"
+                    alt=""
+                />
                 <h1 className="header header-title gradient-1">ReactJS</h1>
                 <h1 className="header header-title gradient-1">Base Project Framework</h1>
                 <h3 className="header header-info gradient-1">{t('EXAMPLE_0001')}</h3>
@@ -184,21 +504,21 @@ const ExampleComponent = () => {
                             content="Secondary"
                             styleClass="btn-secondary"
                             onClickAction={clickButton('Secondary')}
-                        ></ButtonComponent>
+                        />
                         <ButtonComponent
                             content="Primary"
                             styleClass="btn-primary"
                             onClickAction={clickButton('Primary')}
-                        ></ButtonComponent>
+                        />
                         <ButtonComponent
                             content="Danger"
                             styleClass="btn-danger"
                             onClickAction={clickButton('Danger')}
-                        ></ButtonComponent>
+                        />
                         <HyperlinkComponent
                             content="Hyperlink"
                             onClickAction={clickHyperlink()}
-                        ></HyperlinkComponent>
+                        />
                     </div>
 
                     <p className="module-info mt-4">Disabled</p>
@@ -208,24 +528,24 @@ const ExampleComponent = () => {
                             styleClass="btn-secondary"
                             disabled={true}
                             onClickAction={clickButton('Secondary')}
-                        ></ButtonComponent>
+                        />
                         <ButtonComponent
                             content="Primary"
                             styleClass="btn-primary"
                             disabled={true}
                             onClickAction={clickButton('Primary')}
-                        ></ButtonComponent>
+                        />
                         <ButtonComponent
                             content="Danger"
                             styleClass="btn-danger"
                             disabled={true}
                             onClickAction={clickButton('Danger')}
-                        ></ButtonComponent>
+                        />
                         <HyperlinkComponent
                             content="Hyperlink"
                             disabled={true}
                             onClickAction={clickHyperlink()}
-                        ></HyperlinkComponent>
+                        />
                     </div>
                 </div>
 
@@ -239,22 +559,26 @@ const ExampleComponent = () => {
                             content="Open Dialog A"
                             styleClass="btn-primary"
                             disabled={true}
-                        ></ButtonComponent>
+                            onClickAction={openDialogA()}
+                        />
                         <ButtonComponent
                             content="Open Dialog B"
                             styleClass="btn-primary"
                             disabled={true}
-                        ></ButtonComponent>
+                            onClickAction={openDialogB()}
+                        />
                         <ButtonComponent
                             content="Update Dialog A"
                             styleClass="btn-primary"
                             disabled={true}
-                        ></ButtonComponent>
+                            onClickAction={updateDialogA()}
+                        />
                         <ButtonComponent
                             content="Remove Dialog A"
                             styleClass="btn-danger"
                             disabled={true}
-                        ></ButtonComponent>
+                            onClickAction={removeDialogA()}
+                        />
                     </div>
                 </div>
 
@@ -264,7 +588,36 @@ const ExampleComponent = () => {
                 <div className="module err-page-module">
                     <h1 className="module-title">Error Page</h1>
                     <p className="module-info">Click on image to redirect to error page</p>
-                    <div className="module-img"></div>
+                    <div className="module-img">
+                        <ImageViewComponent
+                            src="../images/dummy-error-400.png"
+                            width={CommonConstant.ImageRatio.Thumbnail.width}
+                            height={CommonConstant.ImageRatio.Thumbnail.height}
+                            previewMode={false}
+                            onClickImageView={(isClickThumb) => isClickThumb && redirectErrorPage(400)}
+                        />
+                        <ImageViewComponent
+                            src="../images/dummy-error-403.png"
+                            width={CommonConstant.ImageRatio.Thumbnail.width}
+                            height={CommonConstant.ImageRatio.Thumbnail.height}
+                            previewMode={false}
+                            onClickImageView={(isClickThumb) => isClickThumb && redirectErrorPage(403)}
+                        />
+                        <ImageViewComponent
+                            src="../images/dummy-error-404.png"
+                            width={CommonConstant.ImageRatio.Thumbnail.width}
+                            height={CommonConstant.ImageRatio.Thumbnail.height}
+                            previewMode={false}
+                            onClickImageView={(isClickThumb) => isClickThumb && redirectErrorPage(404)}
+                        />
+                        <ImageViewComponent
+                            src="../images/dummy-error-500.png"
+                            width={CommonConstant.ImageRatio.Thumbnail.width}
+                            height={CommonConstant.ImageRatio.Thumbnail.height}
+                            previewMode={false}
+                            onClickImageView={(isClickThumb) => isClickThumb && redirectErrorPage(500)}
+                        />
+                    </div>
                 </div>
 
                 {lineModule()}
@@ -277,27 +630,27 @@ const ExampleComponent = () => {
                             content="Success"
                             styleClass="btn-primary"
                             onClickAction={showMessageToast('success')}
-                        ></ButtonComponent>
+                        />
                         <ButtonComponent
                             content="Error"
                             styleClass="btn-danger"
                             onClickAction={showMessageToast('error')}
-                        ></ButtonComponent>
+                        />
                         <ButtonComponent
                             content="Info"
                             styleClass="btn-primary !bg-info !border-[#696cff]"
                             onClickAction={showMessageToast('info')}
-                        ></ButtonComponent>
+                        />
                         <ButtonComponent
                             content="Warn"
                             styleClass="btn-primary !bg-warn !border-warn"
                             onClickAction={showMessageToast('warn')}
-                        ></ButtonComponent>
+                        />
                         <ButtonComponent
                             content="Close All"
                             styleClass="btn-danger"
                             onClickAction={showMessageToast('')}
-                        ></ButtonComponent>
+                        />
                     </div>
                 </div>
 
@@ -310,33 +663,33 @@ const ExampleComponent = () => {
                         <ButtonComponent
                             content="Success"
                             styleClass="btn-primary"
-                            disabled={true}
-                        ></ButtonComponent>
+                            onClickAction={showMessageDialog('success')}
+                        />
                         <ButtonComponent
                             content="Error"
                             styleClass="btn-danger"
-                            disabled={true}
-                        ></ButtonComponent>
+                            onClickAction={showMessageDialog('error')}
+                        />
                         <ButtonComponent
                             content="Info"
                             styleClass="btn-primary !bg-info !border-info"
-                            disabled={true}
-                        ></ButtonComponent>
+                            onClickAction={showMessageDialog('info')}
+                        />
                         <ButtonComponent
                             content="Warn"
                             styleClass="btn-primary !bg-warn !border-warn"
-                            disabled={true}
-                        ></ButtonComponent>
+                            onClickAction={showMessageDialog('warn')}
+                        />
                         <ButtonComponent
                             content="Confirm"
                             styleClass="btn-primary !bg-confirm !border-confirm"
-                            disabled={true}
-                        ></ButtonComponent>
+                            onClickAction={showMessageDialog('confirm')}
+                        />
                         <ButtonComponent
                             content="Custom"
                             styleClass="btn-primary !bg-bg-secondary !border-bg-secondary"
-                            disabled={true}
-                        ></ButtonComponent>
+                            onClickAction={showMessageDialog('custom')}
+                        />
                     </div>
                 </div>
 
@@ -350,12 +703,12 @@ const ExampleComponent = () => {
                             content="Loading"
                             styleClass="btn-primary"
                             onClickAction={showLoadingSplashScreen(true)}
-                        ></ButtonComponent>
+                        />
                         <ButtonComponent
                             content="Splash Screen"
                             styleClass="btn-primary"
                             onClickAction={showLoadingSplashScreen(false)}
-                        ></ButtonComponent>
+                        />
                     </div>
                 </div>
 
@@ -377,18 +730,18 @@ const ExampleComponent = () => {
                         <ButtonComponent
                             content="Write Log"
                             styleClass="btn-primary"
-                            disabled={true}
-                        ></ButtonComponent>
+                            onClickAction={processLog('write')}
+                        />
                         <ButtonComponent
                             content="Push Logs"
                             styleClass="btn-primary"
-                            disabled={true}
-                        ></ButtonComponent>
+                            onClickAction={processLog('push')}
+                        />
                         <ButtonComponent
                             content="Clear Logs"
                             styleClass="btn-danger"
-                            disabled={true}
-                        ></ButtonComponent>
+                            onClickAction={processLog('clear')}
+                        />
                     </div>
                 </div>
 
@@ -397,7 +750,29 @@ const ExampleComponent = () => {
                 {/* DYNAMIC TAB */}
                 <div className="module">
                     <h1 className="module-title">Dynamic Tab</h1>
-                    <div className="module-btn"></div>
+                    <div className="module-btn">
+                        <DynamicTabViewComponent
+                            items={tabItems}
+                            queryParamKey="tab"
+                            layout="horizontal"
+                            styleClass="dynamic-tab"
+                        >
+                            <Component1Component key={'tab1'} />
+                            <Component2Component key={'tab2'} />
+                            <Component3Component key={'tab3'} />
+                        </DynamicTabViewComponent>
+
+                        <DynamicTabViewComponent
+                            items={tabItems}
+                            queryParamKey="tab"
+                            layout="vertical"
+                            styleClass="dynamic-tab"
+                        >
+                            <Component1Component key={'tab1'} />
+                            <Component2Component key={'tab2'} />
+                            <Component3Component key={'tab3'} />
+                        </DynamicTabViewComponent>
+                    </div>
                 </div>
 
                 {lineModule()}
@@ -410,7 +785,8 @@ const ExampleComponent = () => {
                             content="Export"
                             styleClass="btn-primary"
                             disabled={true}
-                        ></ButtonComponent>
+                            onClickAction={exportPDF()}
+                        />
                     </div>
                 </div>
 
@@ -424,17 +800,17 @@ const ExampleComponent = () => {
                             content="API"
                             styleClass="btn-primary"
                             disabled={true}
-                        ></ButtonComponent>
+                        />
                         <ButtonComponent
                             content="GraphQL"
                             styleClass="btn-primary"
                             disabled={true}
-                        ></ButtonComponent>
+                        />
                         <ButtonComponent
                             content="WebSocket"
                             styleClass="btn-primary"
                             disabled={true}
-                        ></ButtonComponent>
+                        />
                     </div>
                 </div>
 
@@ -443,7 +819,9 @@ const ExampleComponent = () => {
                 {/* RANGE DATE SELECTOR */}
                 <div className="module">
                     <h1 className="module-title">Range Date Selector</h1>
-                    <div className="module-btn"></div>
+                    <div className="module-btn">
+                        <RangeDateSelectorComponent />
+                    </div>
                 </div>
 
                 {lineModule()}
@@ -456,7 +834,7 @@ const ExampleComponent = () => {
                             content="Create Form"
                             styleClass="btn-primary"
                             disabled={true}
-                        ></ButtonComponent>
+                        />
                     </div>
                 </div>
 
@@ -470,12 +848,12 @@ const ExampleComponent = () => {
                             content="Static Table"
                             styleClass="btn-primary"
                             disabled={true}
-                        ></ButtonComponent>
+                        />
                         <ButtonComponent
                             content="Editable Table"
                             styleClass="btn-primary"
                             disabled={true}
-                        ></ButtonComponent>
+                        />
                     </div>
                 </div>
 
