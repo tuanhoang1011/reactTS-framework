@@ -1,35 +1,39 @@
 import './example.component.scss';
 
+import * as wjPdf from '@grapecity/wijmo.pdf';
+import { HttpStatusCode } from 'axios';
 import { cloneDeep } from 'lodash';
 import { memo, useCallback, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import BreadcrumbComponent from '../../core/components/breadcrumb/breadcrumb.component';
 import useBreadcrumb from '../../core/components/breadcrumb/breadcrumb.hook';
+import { useErrorPage } from '../../core/components/error-page/error-page.hook';
 import useLoading from '../../core/components/loading/loading.hook';
 import useMessageDialog from '../../core/components/message-dialog/message-dialog.hook';
 import useMessageToast from '../../core/components/message-toast/message-toast.hook';
 import useSplashScreen from '../../core/components/splash-screen/splash-screen.hook';
 import { Breadcrumb, BreadcrumbRoutes } from '../../core/constants/breadcrumb.const';
+import { CommonConstant } from '../../core/constants/common.const';
+import useCanvas from '../../core/hooks/canvas.hook';
+import useCommonFunc from '../../core/hooks/common-func.hook';
+import useHttpBase from '../../core/hooks/http-base.hook';
 import useIndexedDB from '../../core/hooks/indexed-db.hook';
-import { TabItem } from '../../core/models/item.model';
-import HttpBaseService from '../../core/services/http-base.service';
-import { GlobalVariables } from '../../core/utils/global-variables.ultility';
+import { ImageItem, TabItem } from '../../core/models/item.model';
+import { GlobalVariables } from '../../core/utils/global-variables.util';
+import useExampleAPI from '../../network-services/api/example-api.hook';
+import withBaseComponent, { BaseProps } from '../../shared/base-component/base.component';
 import ButtonComponent from '../../shared/button/button.component';
 import RangeDateSelectorComponent from '../../shared/calendar-range-selector/range-date-selector.component';
 import DynamicTabViewComponent from '../../shared/dynamic-tab-view/dynamic-tab-view.component';
 import HyperlinkComponent from '../../shared/hyperlink/hyperlink.component';
+import ImageCarouselComponent from '../../shared/image-carousel/image-carousel.component';
+import ImageViewComponent from '../../shared/image-view/image-view.component';
 import Component1Component from './components/component1.component';
 import Component2Component from './components/component2.component';
 import Component3Component from './components/component3.component';
-import ImageViewComponent from '../../shared/image-view/image-view.component';
-import { CommonConstant } from '../../core/constants/common.const';
-import { useNavigate } from 'react-router';
-import { useAppDispatch } from '../../core/store/stores/store';
-import { HttpStatusCode } from 'axios';
-import { useErrorPage } from '../../core/components/error-page/error-page.hook';
 
-const ExampleComponent = () => {
+const ExampleComponent = (props: BaseProps) => {
     const loadingHook = useLoading();
     const splashScreenHook = useSplashScreen();
     const errorPagehook = useErrorPage();
@@ -37,11 +41,15 @@ const ExampleComponent = () => {
     const msgToastHook = useMessageToast();
     const msgDialogHook = useMessageDialog();
     const indexedDBHook = useIndexedDB();
+    const httpBaseHook = useHttpBase();
+    const canvasHook = useCanvas();
+    const commonFuncHook = useCommonFunc();
 
-    const dispatch = useAppDispatch();
-    const navigate = useNavigate();
+    // API hooks
+    const exampleAPIHook = useExampleAPI();
 
     const [tabItems, setTabItems] = useState([] as TabItem[]);
+    const [thumbnailImages, setThumbnailImages] = useState([] as ImageItem[]);
 
     const { t } = useTranslation();
 
@@ -51,6 +59,7 @@ const ExampleComponent = () => {
             buildBreadcrumbData();
             getTabItem();
         } catch (error) {
+            commonFuncHook.handleError(error);
             throw error;
         }
     }, []);
@@ -65,21 +74,26 @@ const ExampleComponent = () => {
                 />
             );
         } catch (error) {
+            commonFuncHook.handleError(error);
             throw error;
         }
     };
 
     const generateImages = () => {
         try {
-            // for (let i = 0; i < 20; i++) {
-            //     this.thumbnailImages.push({
-            //         src: '../../../assets/images/dummy-angular.png',
-            //         width: CommonConstant.ImageRatio.Thumbnail.width,
-            //         height: CommonConstant.ImageRatio.Thumbnail.width
-            //     });
-            // }
-            // this.thumbnailImages = cloneDeep(this.thumbnailImages);
+            const imgs: ImageItem[] = [];
+
+            for (let i = 0; i < 20; i++) {
+                imgs.push({
+                    src: '../images/dummy-angular.png',
+                    width: CommonConstant.ImageRatio.Thumbnail.width,
+                    height: CommonConstant.ImageRatio.Thumbnail.width
+                });
+            }
+
+            setThumbnailImages(imgs);
         } catch (error) {
+            commonFuncHook.handleError(error);
             throw error;
         }
     };
@@ -118,17 +132,17 @@ const ExampleComponent = () => {
                 breadcrumbHook.setBreadcrumb(cloneDeep(bc));
             }
         } catch (error) {
+            commonFuncHook.handleError(error);
             throw error;
         }
     };
 
     const getTabItem = async () => {
         try {
-            const res = await HttpBaseService.getInstance().getLocalFile<{ menu: TabItem[] }>(
-                '../json/items/tab-example.json'
-            );
-            setTabItems(res.menu);
+            const res = (await httpBaseHook.getLocalFile<{ menu: TabItem[] }>('../json/items/tab-example.json')).menu;
+            setTabItems(res);
         } catch (error) {
+            commonFuncHook.handleError(error);
             throw error;
         }
     };
@@ -138,6 +152,7 @@ const ExampleComponent = () => {
             try {
                 alert(`Click ${type} button`);
             } catch (error) {
+                commonFuncHook.handleError(error);
                 throw error;
             }
         }, []);
@@ -147,6 +162,7 @@ const ExampleComponent = () => {
             try {
                 window.open('https://www.google.com/', '_blank');
             } catch (error) {
+                commonFuncHook.handleError(error);
                 throw error;
             }
         }, []);
@@ -161,6 +177,7 @@ const ExampleComponent = () => {
                 // this.dialogService.open(dialog);
                 // this.dialogAService.updateState({ activeDialog: 'A', activeScreen: 'A' } as GlobalState);
             } catch (error) {
+                commonFuncHook.handleError(error);
                 throw error;
             }
         }, []);
@@ -174,6 +191,7 @@ const ExampleComponent = () => {
                 // };
                 // this.dialogService.open(dialog);
             } catch (error) {
+                commonFuncHook.handleError(error);
                 throw error;
             }
         }, []);
@@ -183,6 +201,7 @@ const ExampleComponent = () => {
             try {
                 // this.dialogAService.updateState({ activeDialog: 'B', activeScreen: 'B' } as GlobalState);
             } catch (error) {
+                commonFuncHook.handleError(error);
                 throw error;
             }
         }, []);
@@ -192,6 +211,7 @@ const ExampleComponent = () => {
             try {
                 // this.dialogService.close('Dialog A');
             } catch (error) {
+                commonFuncHook.handleError(error);
                 throw error;
             }
         }, []);
@@ -200,6 +220,7 @@ const ExampleComponent = () => {
         try {
             errorPagehook.setErrorPage(code);
         } catch (error) {
+            commonFuncHook.handleError(error);
             throw error;
         }
     };
@@ -237,6 +258,7 @@ const ExampleComponent = () => {
                         break;
                 }
             } catch (error) {
+                commonFuncHook.handleError(error);
                 throw error;
             }
         }, []);
@@ -343,6 +365,7 @@ const ExampleComponent = () => {
                         break;
                 }
             } catch (error) {
+                commonFuncHook.handleError(error);
                 throw error;
             }
         }, []);
@@ -364,6 +387,7 @@ const ExampleComponent = () => {
                     }
                 }, GlobalVariables.splashScreenDurationMilSecond);
             } catch (error) {
+                commonFuncHook.handleError(error);
                 throw error;
             }
         }, []);
@@ -399,47 +423,63 @@ const ExampleComponent = () => {
                         break;
                 }
             } catch (error) {
+                commonFuncHook.handleError(error);
                 throw error;
             }
         }, []);
 
     const exportPDF = () =>
         useCallback(async () => {
-            // try {
-            //     this.LoadingService.show(false);
-            //     let doc = new wjPdf.PdfDocument({
-            //         footer: CommonConstant.PDFCommon.Footer,
-            //         pageSettings: CommonConstant.PDFCommon.PageSetting.Default,
-            //         ended: (sender: wjPdf.PdfDocument, args: wjPdf.PdfDocumentEndedEventArgs) => {
-            //             // revert after exporting successfully
-            //             wjPdf.saveBlob(new Blob([args.blob], { type: 'application/octet-stream' }), 'example.pdf');
-            //             this.LoadingService.hide(true);
-            //         }
-            //     });
-            //     // draw img from canvas for pdf
-            //     const drawImg = (canvas: HTMLCanvasElement, width?: number, height?: number) => {
-            //         const img = canvas.toDataURL();
-            //         doc.drawImage(img, undefined, undefined, {
-            //             width: width ? width : doc.width,
-            //             height: height ? height : doc.height,
-            //             stretchProportionally: true,
-            //             align: wjPdf.PdfImageHorizontalAlign.Center
-            //         });
-            //     };
-            //     const el = document.body.getElementsByClassName('ex-container')[0]! as HTMLCanvasElement;
-            //     el.style.maxWidth = el.clientWidth + 'px';
-            //     const canvas = await this.canvasService.toCanvas(
-            //         document.body.getElementsByClassName('ex-container')[0]! as HTMLCanvasElement,
-            //         {
-            //             pixelRatio: 4
-            //         }
-            //     );
-            //     drawImg(canvas);
-            //     canvas.remove();
-            //     doc.end();
-            // } catch (error) {
-            //     throw error;
-            // }
+            try {
+                loadingHook.show(false);
+                const doc = new wjPdf.PdfDocument({
+                    footer: CommonConstant.PDFCommon.Footer,
+                    pageSettings: CommonConstant.PDFCommon.PageSetting.Default,
+                    ended: (sender: wjPdf.PdfDocument, args: wjPdf.PdfDocumentEndedEventArgs) => {
+                        // revert after exporting successfully
+                        wjPdf.saveBlob(new Blob([args.blob], { type: 'application/octet-stream' }), 'example.pdf');
+                        loadingHook.hide(true);
+                    }
+                });
+                // draw img from canvas for pdf
+                const drawImg = (canvas: HTMLCanvasElement, width?: number, height?: number) => {
+                    const img = canvas.toDataURL();
+                    doc.drawImage(img, undefined, undefined, {
+                        width: width ? width : doc.width,
+                        height: height ? height : doc.height,
+                        stretchProportionally: true,
+                        align: wjPdf.PdfImageHorizontalAlign.Center
+                    });
+                };
+                const el = document.body.getElementsByClassName('ex-container')[0]! as HTMLCanvasElement;
+                el.style.maxWidth = el.clientWidth + 'px';
+                const canvas = await canvasHook.toCanvas(
+                    document.body.getElementsByClassName('ex-container')[0]! as HTMLCanvasElement,
+                    {
+                        pixelRatio: 4
+                    }
+                );
+                drawImg(canvas);
+                canvas.remove();
+                doc.end();
+            } catch (error) {
+                commonFuncHook.handleError(error);
+                throw error;
+            }
+        }, []);
+
+    const executeRequestServer = (type: 'restfulAPI' | 'graphQL' | 'websocket') =>
+        useCallback(() => {
+            switch (type) {
+                case 'graphQL':
+                    exampleAPIHook.createCommentSubscription('').subscribe({
+                        next: (res) => {
+                            console.log(res);
+                        },
+                        error: (err) => console.log(err)
+                    });
+                    break;
+            }
         }, []);
 
     return (
@@ -718,7 +758,14 @@ const ExampleComponent = () => {
                 <div className="module">
                     <h1 className="module-title">Image Thumbnail/ Preview Mode</h1>
                     <p className="module-info">You can view image at preview mode by clicking on image.</p>
-                    <div className="module-img"></div>
+                    <div className="module-img">
+                        <ImageCarouselComponent
+                            images={thumbnailImages}
+                            numVisible={2}
+                            numScroll={1}
+                            circular={false}
+                        />
+                    </div>
                 </div>
 
                 {lineModule()}
@@ -784,7 +831,6 @@ const ExampleComponent = () => {
                         <ButtonComponent
                             content="Export"
                             styleClass="btn-primary"
-                            disabled={true}
                             onClickAction={exportPDF()}
                         />
                     </div>
@@ -800,16 +846,19 @@ const ExampleComponent = () => {
                             content="API"
                             styleClass="btn-primary"
                             disabled={true}
+                            onClickAction={executeRequestServer('restfulAPI')}
                         />
                         <ButtonComponent
                             content="GraphQL"
                             styleClass="btn-primary"
                             disabled={true}
+                            onClickAction={executeRequestServer('graphQL')}
                         />
                         <ButtonComponent
                             content="WebSocket"
                             styleClass="btn-primary"
                             disabled={true}
+                            onClickAction={executeRequestServer('websocket')}
                         />
                     </div>
                 </div>
@@ -863,4 +912,4 @@ const ExampleComponent = () => {
     );
 };
 
-export default memo(ExampleComponent);
+export default withBaseComponent(memo(ExampleComponent))({ activeScreen: 'Example-screen' });

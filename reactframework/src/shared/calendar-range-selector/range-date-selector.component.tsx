@@ -6,10 +6,11 @@ import { memo, useCallback, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { CommonConstant } from '../../core/constants/common.const';
+import useCommonFunc from '../../core/hooks/common-func.hook';
 import { CommonProps } from '../../core/models/common-props.model';
 import { RangeDate } from '../../core/models/common.model';
-import { isNullOrUndefined } from '../../core/utils/common-func.ultility';
-import { generateDateToBefore, startOfNextDay } from '../../core/utils/date.ultility';
+import { isNullOrUndefined } from '../../core/utils/common-func.util';
+import { generateDateToBefore, startOfNextDay } from '../../core/utils/date.util';
 
 interface Props extends CommonProps {
     hasChangeDate?: boolean;
@@ -21,6 +22,7 @@ interface Props extends CommonProps {
 }
 
 const RangeDateSelectorComponent = (props: Props) => {
+    const commonFuncHook = useCommonFunc();
     const [rangeDay, setRangeDay] = useState(0);
     const { t } = useTranslation();
 
@@ -31,6 +33,7 @@ const RangeDateSelectorComponent = (props: Props) => {
                 props.from = generateDateToBefore(props.to, 1, 'month').from!;
             }
         } catch (error) {
+            commonFuncHook.handleError(error);
             throw error;
         }
     }, []);
@@ -41,6 +44,7 @@ const RangeDateSelectorComponent = (props: Props) => {
                 initRangeDay();
             }
         } catch (error) {
+            commonFuncHook.handleError(error);
             throw error;
         }
     }, [props.hasChangeDate]);
@@ -49,6 +53,7 @@ const RangeDateSelectorComponent = (props: Props) => {
         try {
             setRangeDay(differenceInCalendarDays(startOfNextDay(props.to!), props.from!));
         } catch (error) {
+            commonFuncHook.handleError(error);
             throw error;
         }
     };
@@ -75,6 +80,7 @@ const RangeDateSelectorComponent = (props: Props) => {
                 to: props.to
             });
         } catch (error) {
+            commonFuncHook.handleError(error);
             throw error;
         }
     };

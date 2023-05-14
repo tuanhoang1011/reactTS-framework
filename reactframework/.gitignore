@@ -24,3 +24,4 @@ yarn-error.log*
 
 # Another files
 package-lock.json
+.DS_Store

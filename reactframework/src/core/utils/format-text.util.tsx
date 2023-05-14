@@ -6,7 +6,7 @@ import { sprintf } from 'sprintf-js';
 import { CommonConstant } from '../constants/common.const';
 import { FormatTextType } from '../enums/format-text.enum';
 import { FormBase } from '../models/form-basic.model';
-import { isNullOrUndefined } from './common-func.ultility';
+import { isNullOrUndefined } from './common-func.util';
 
 export const formatText = (data: any, config: FormBase): string => {
     const { t } = useTranslation();

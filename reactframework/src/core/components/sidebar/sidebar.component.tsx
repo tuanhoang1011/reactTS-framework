@@ -2,11 +2,14 @@ import './sidebar.component.scss';
 
 import { memo, useEffect, useState } from 'react';
 
+import useCommonFunc from '../../hooks/common-func.hook';
 import { MenuItem } from '../../models/item.model';
 import useSidebar from './sidebar.hook';
 
 const SidebarComponent = () => {
     const sidebarHook = useSidebar();
+    const commonFuncHook = useCommonFunc();
+
     const [navMenu, setNavMenu] = useState([] as MenuItem[]);
 
     useEffect(() => {
@@ -18,6 +21,7 @@ const SidebarComponent = () => {
 
             getNavMenu();
         } catch (error) {
+            commonFuncHook.handleError(error);
             throw error;
         }
     }, []);

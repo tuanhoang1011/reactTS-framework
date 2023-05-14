@@ -5,6 +5,7 @@ import { useTranslation } from 'react-i18next';
 import { sprintf } from 'sprintf-js';
 
 import { LogIdentiferFormat, LogSubType, LogType } from '../../core/constants/log.const';
+import useCommonFunc from '../../core/hooks/common-func.hook';
 import useLog from '../../core/hooks/log.hook';
 import { CommonProps } from '../../core/models/common-props.model';
 
@@ -17,6 +18,7 @@ interface Props extends CommonProps {
 }
 
 const HyperlinkComponent = (props: Props) => {
+    const commonFuncHook = useCommonFunc();
     const logHook = useLog();
     const { t } = useTranslation();
 
@@ -34,6 +36,7 @@ const HyperlinkComponent = (props: Props) => {
 
             props.onClickAction();
         } catch (error) {
+            commonFuncHook.handleError(error);
             throw error;
         }
     };
@@ -43,7 +46,6 @@ const HyperlinkComponent = (props: Props) => {
             className={`${props.styleClass} hyper-link${props.disabled ? ' app-disabled' : ''}`}
             aria-current="page"
             tabIndex={0}
-            href="!#"
             onKeyUp={($event) => onClick($event)}
             onClick={($event) => onClick($event)}
         >

@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { sprintf } from 'sprintf-js';
 
 import { LogIdentiferFormat, LogSubType, LogType } from '../../core/constants/log.const';
+import useCommonFunc from '../../core/hooks/common-func.hook';
 import useLog from '../../core/hooks/log.hook';
 import { CommonProps } from '../../core/models/common-props.model';
 
@@ -16,6 +17,7 @@ interface Props extends CommonProps {
 
 const ButtonComponent = (props: Props) => {
     const logHook = useLog();
+    const commonFuncHook = useCommonFunc();
     const { t } = useTranslation();
 
     const clickAction = (e: any) => {
@@ -49,6 +51,7 @@ const ButtonComponent = (props: Props) => {
                     break;
             }
         } catch (error) {
+            commonFuncHook.handleError(error);
             throw error;
         }
     };

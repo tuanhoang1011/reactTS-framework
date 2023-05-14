@@ -1,19 +1,22 @@
+import './error-page.component.scss';
+
 import { HttpStatusCode } from 'axios';
 import { memo, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate, useParams } from 'react-router';
+
+import withBaseComponent from '../../../shared/base-component/base.component';
 import ButtonComponent from '../../../shared/button/button.component';
+import { LogActiveScreen } from '../../constants/log.const';
 import { AppRoutes } from '../../constants/router.const';
-
+import useCommonFunc from '../../hooks/common-func.hook';
 import { ErrorPage } from '../../models/common.model';
-
-import { isNullOrUndefined } from '../../utils/common-func.ultility';
-import './error-page.component.scss';
-
+import { isNullOrUndefined } from '../../utils/common-func.util';
 import { useErrorPage } from './error-page.hook';
 
 const ErrorPageComponent = () => {
     const errorPageHook = useErrorPage();
+    const commonFuncHook = useCommonFunc();
     const paramsHook = useParams();
 
     const [error, setError] = useState({
@@ -104,6 +107,7 @@ const ErrorPageComponent = () => {
 
             setError(error);
         } catch (error) {
+            commonFuncHook.handleError(error);
             throw error;
         }
     };
@@ -142,4 +146,4 @@ const ErrorPageComponent = () => {
     );
 };
 
-export default memo(ErrorPageComponent);
+export default withBaseComponent(memo(ErrorPageComponent))({ activeScreen: LogActiveScreen.ErrorPage });

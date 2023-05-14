@@ -2,9 +2,10 @@ import { format } from 'date-fns';
 import { isEmpty } from 'lodash';
 import { useEffect } from 'react';
 
-import { LogLevel } from '../constants/log.const';
-import { LogContent, LogRequest } from '../models/log.model';
-import { GlobalVariables } from '../utils/global-variables.ultility';
+import { LogLevel, LogSubType, LogType } from '../constants/log.const';
+import { LogContent, LogExceptionContent, LogRequest } from '../models/log.model';
+import { useAppSelector } from '../store/stores/store';
+import { GlobalVariables } from '../utils/global-variables.util';
 import useIndexedDB from './indexed-db.hook';
 
 const logDB = {
@@ -12,13 +13,15 @@ const logDB = {
     objectStore: process.env['REACT_APP_INDEXEDDB_OBJSTORE_LOG'] ?? '',
     maxBundleSize: GlobalVariables.logMaxBundleSize
 };
-const screenIdentifer = '';
-
+let screenIdentifer = '';
 let isCreatedStore = false;
 let isPushingLog = false;
 let pendingKey: IDBValidKey = '';
 
 const useLog = () => {
+    const activeScreen = useAppSelector((state) => state.global.activeScreen);
+    const activeDialog = useAppSelector((state) => state.global.activeDialog);
+
     const indexedDBHook = useIndexedDB();
 
     useEffect(() => {
@@ -28,9 +31,20 @@ const useLog = () => {
                 isCreatedStore = true;
             }
         } catch (error) {
+            writeExceptionLog(error);
             throw error;
         }
     }, []);
+
+    useEffect(() => {
+        try {
+            // set active screen/dialog for writing log
+            screenIdentifer = activeDialog || activeScreen || '';
+        } catch (error) {
+            writeExceptionLog(error);
+            throw error;
+        }
+    }, [activeDialog, activeScreen]);
 
     const pushingLogs = (): Promise<void> => {
         return new Promise(async (resolve) => {
@@ -95,7 +109,7 @@ const useLog = () => {
             } catch (error) {
                 // this.msgService.error('MSG.APP_ERR0001');
                 finishPushingLogs();
-
+                writeExceptionLog(error);
                 throw error;
             }
         });
@@ -175,8 +189,21 @@ const useLog = () => {
                 pushingLogs();
             }
         } catch (error) {
+            writeExceptionLog(error);
             throw error;
         }
+    };
+
+    const writeExceptionLog = (err: Error | unknown) => {
+        if (error instanceof Error) {
+            error(LogType.Error, {
+                subType: LogSubType.Exception,
+                errorContent: {
+                    message: error.message
+                } as LogExceptionContent
+            } as LogContent);
+        }
+        console.error(error);
     };
 
     return { pushingLogs, error, operation, info, debug, warn };

@@ -7,13 +7,13 @@ import { initReactI18next } from 'react-i18next';
 import { Provider } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
 
-import AppComponent from './app.component';
+import AppComponent from './App.component';
 import LanguageEN from './assets/i18n/en.json';
 import LanguageVN from './assets/i18n/vn.json';
 import ErrorBoundary from './core/services/global-error-handler.service';
 import HTTPInterceptor from './core/services/http-interceptor.service';
 import Store from './core/store/stores/store';
-import { GlobalVariables } from './core/utils/global-variables.ultility';
+import { GlobalVariables } from './core/utils/global-variables.util';
 import reportWebVitals from './reportWebVitals';
 
 i18n.use(Backend)

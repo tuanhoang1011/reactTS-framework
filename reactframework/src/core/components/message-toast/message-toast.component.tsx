@@ -4,6 +4,7 @@ import { isEmpty } from 'lodash';
 import { Toast } from 'primereact/toast';
 import { memo, useEffect, useRef } from 'react';
 
+import useCommonFunc from '../../hooks/common-func.hook';
 import { useAppDispatch } from '../../store/stores/store';
 import useMessageToast from './message-toast.hook';
 import { setProps } from './message-toast.reducer';
@@ -11,6 +12,8 @@ import { setProps } from './message-toast.reducer';
 const MessageToastComponent = () => {
     const dispatch = useAppDispatch();
     const msgToastHook = useMessageToast();
+    const commonFuncHook = useCommonFunc();
+
     const toast = useRef<Toast>(null);
 
     const position = 'bottom-right';
@@ -28,6 +31,7 @@ const MessageToastComponent = () => {
                 );
             }
         } catch (error) {
+            commonFuncHook.handleError(error);
             throw error;
         }
     }, [msgToastHook.messages]);
@@ -44,6 +48,7 @@ const MessageToastComponent = () => {
                 );
             }
         } catch (error) {
+            commonFuncHook.handleError(error);
             throw error;
         }
     }, [msgToastHook.isClearAll]);

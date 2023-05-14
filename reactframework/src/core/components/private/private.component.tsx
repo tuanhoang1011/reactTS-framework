@@ -3,6 +3,8 @@ import './private.component.scss';
 import { memo } from 'react';
 import { Outlet } from 'react-router';
 
+import withBaseComponent from '../../../shared/base-component/base.component';
+
 const PrivateComponent = () => {
     return (
         <div className="private-container">
@@ -20,4 +22,4 @@ const PrivateComponent = () => {
     );
 };
 
-export default memo(PrivateComponent);
+export default withBaseComponent(memo(PrivateComponent))({});

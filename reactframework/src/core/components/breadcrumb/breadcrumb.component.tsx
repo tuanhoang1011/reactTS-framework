@@ -7,14 +7,17 @@ import { Navigate } from 'react-router';
 import sprintf from 'sprintf-js';
 
 import { LogIdentiferFormat, LogSubType, LogType } from '../../constants/log.const';
+import useCommonFunc from '../../hooks/common-func.hook';
 import useLog from '../../hooks/log.hook';
 import { BreadcrumbItem } from '../../models/breadcrumb.model';
-import { isNullOrUndefined } from '../../utils/common-func.ultility';
+import { isNullOrUndefined } from '../../utils/common-func.util';
 import useBreadcrumb from './breadcrumb.hook';
 
 const BreadcrumbComponent = () => {
     const logHook = useLog();
     const breadcrumbHook = useBreadcrumb();
+    const commonFuncHook = useCommonFunc();
+
     const [items, setItems] = useState([] as BreadcrumbItem[]);
     const { t } = useTranslation();
 
@@ -24,6 +27,7 @@ const BreadcrumbComponent = () => {
                 setItems(cloneDeep(breadcrumbHook.breadcrumbs?.items) ?? []);
             }
         } catch (error) {
+            commonFuncHook.handleError(error);
             throw error;
         }
     }, [breadcrumbHook.breadcrumbs?.items]);
@@ -41,6 +45,7 @@ const BreadcrumbComponent = () => {
                 Navigate({ to: item.url });
             }
         } catch (error) {
+            commonFuncHook.handleError(error);
             throw error;
         }
     };

@@ -7,6 +7,7 @@ import { sprintf } from 'sprintf-js';
 
 import ButtonComponent from '../../../shared/button/button.component';
 import { LogIdentiferFormat, LogSubType, LogType } from '../../constants/log.const';
+import useCommonFunc from '../../hooks/common-func.hook';
 import useLog from '../../hooks/log.hook';
 import { Message, MessageAction } from '../../models/message.model';
 import useMessageDialog from './message-dialog.hook';
@@ -14,6 +15,7 @@ import useMessageDialog from './message-dialog.hook';
 const MessageDialogComponent = () => {
     const msgDialogHook = useMessageDialog();
     const logHook = useLog();
+    const commonFuncHook = useCommonFunc();
     const { t } = useTranslation();
 
     const clickAction = (msgItem: Message, action: MessageAction) => {
@@ -30,6 +32,7 @@ const MessageDialogComponent = () => {
                 action.click();
             }
         } catch (error) {
+            commonFuncHook.handleError(error);
             throw error;
         }
     };
@@ -46,6 +49,7 @@ const MessageDialogComponent = () => {
 
             if (msgItem.options?.clickX) msgItem.options.clickX();
         } catch (error) {
+            commonFuncHook.handleError(error);
             throw error;
         }
     };

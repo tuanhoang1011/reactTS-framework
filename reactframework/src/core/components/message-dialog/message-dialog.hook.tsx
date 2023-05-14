@@ -1,6 +1,6 @@
 import { cloneDeep } from 'lodash';
-import { useState } from 'react';
 
+import useCommonFunc from '../../hooks/common-func.hook';
 import { MessageAction, MessageItem, MessageOptions } from '../../models/message.model';
 import { useAppDispatch, useAppSelector } from '../../store/stores/store';
 import { setProps } from './message-dialog.reducer';
@@ -29,6 +29,8 @@ const CANCEL_BUTTON: MessageAction = {
 const useMessageDialog = () => {
     const [messages] = useAppSelector((state) => [state.msgDialog.messages ?? []]);
     const dispatch = useAppDispatch();
+
+    const commonFuncHook = useCommonFunc();
 
     const clearAll = () => {
         dispatch(
@@ -130,6 +132,7 @@ const useMessageDialog = () => {
                 })
             );
         } catch (error) {
+            commonFuncHook.handleError(error);
             throw error;
         }
     };

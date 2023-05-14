@@ -3,9 +3,11 @@ import './image-view.component.scss';
 import { memo, useEffect, useRef, useState } from 'react';
 
 import { CommonConstant } from '../../core/constants/common.const';
+import { LogSubType, LogType } from '../../core/constants/log.const';
+import useCommonFunc from '../../core/hooks/common-func.hook';
+import useImageSize from '../../core/hooks/image-size.hook';
 import useLog from '../../core/hooks/log.hook';
 import { CommonProps } from '../../core/models/common-props.model';
-import { LogSubType, LogType } from '../../core/constants/log.const';
 import ButtonComponent from '../button/button.component';
 
 interface Props extends CommonProps {
@@ -20,10 +22,16 @@ interface Props extends CommonProps {
 }
 
 const ImageViewComponent = (props: Props) => {
+    const commonFuncHook = useCommonFunc();
     const logHook = useLog();
 
+    const [thumbRef] = useImageSize<HTMLImageElement>();
+    const [previewImgRef] = useImageSize<HTMLImageElement>({
+        imgRatio: CommonConstant.ImageRatio.Preview.ratio
+    });
+    const previewDivRef = useRef<HTMLDivElement>(null);
+
     const [isShowingPreview, setShowingPreview] = useState(false);
-    const previewImgRef = useRef<HTMLDivElement>(null);
 
     let degree = 0;
     let zoomRatio = 1;
@@ -52,6 +60,7 @@ const ImageViewComponent = (props: Props) => {
 
             props.onClickImageView(true);
         } catch (error) {
+            commonFuncHook.handleError(error);
             throw error;
         }
     };
@@ -62,6 +71,7 @@ const ImageViewComponent = (props: Props) => {
                 offPreviewMode();
             }
         } catch (error) {
+            commonFuncHook.handleError(error);
             throw error;
         }
     };
@@ -82,6 +92,7 @@ const ImageViewComponent = (props: Props) => {
 
             props.onClickImageView(false);
         } catch (error) {
+            commonFuncHook.handleError(error);
             throw error;
         }
     };
@@ -97,6 +108,7 @@ const ImageViewComponent = (props: Props) => {
                 identifier: `Rotate-${isRight ? 'right' : 'left'}-image-preview-mode-button`
             });
         } catch (error) {
+            commonFuncHook.handleError(error);
             throw error;
         }
     };
@@ -114,14 +126,16 @@ const ImageViewComponent = (props: Props) => {
                 identifier: `Zoom-${isZoomOut ? 'out' : 'in'}-image-preview-mode-button`
             });
         } catch (error) {
+            commonFuncHook.handleError(error);
             throw error;
         }
     };
 
     const setTransform = () => {
         try {
-            previewImgRef.current!.style.transform = `scale(${zoomRatio}) rotate(${degree}deg)`;
+            previewDivRef.current!.style.transform = `scale(${zoomRatio}) rotate(${degree}deg)`;
         } catch (error) {
+            commonFuncHook.handleError(error);
             throw error;
         }
     };
@@ -133,6 +147,7 @@ const ImageViewComponent = (props: Props) => {
                 onClick={() => clickImage()}
             >
                 <img
+                    ref={thumbRef}
                     src={props.src}
                     className="rounded-default"
                     width={props.width}
@@ -148,11 +163,12 @@ const ImageViewComponent = (props: Props) => {
                     onClick={($event) => clickOutside($event)}
                 >
                     <div
-                        ref={previewImgRef}
+                        ref={previewDivRef}
                         className="preview-img"
                     >
                         <img
-                            className="rounded-default"
+                            ref={previewImgRef}
+                            className="rounded-default as"
                             src={props.src}
                             width={CommonConstant.ImageRatio.Preview.width}
                             height={CommonConstant.ImageRatio.Preview.height}
