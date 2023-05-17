@@ -1,0 +1,66 @@
+@keyframes pulse {
+    0% {
+        transform: scale(0);
+    }
+
+    50% {
+        transform: scale(1.2);
+    }
+
+    100% {
+        transform: scale(0);
+    }
+}
+
+.ex-container {
+    @apply flex flex-col mx-auto max-w-[90%] p-8 shadow-errpage shadow-primary rounded-[28px] bg-bg-primary w-full;
+
+    .logo {
+        &-sticker {
+            animation: 1s ease 0s infinite normal none running pulse;
+            @apply self-center absolute;
+        }
+    }
+
+    .header {
+        @apply self-center text-center;
+
+        &-title {
+            @apply text-[40px] leading-[50px];
+        }
+
+        &-info {
+            @apply text-[16px] leading-[35px];
+        }
+    }
+
+    .module-line {
+        @apply max-w-fit self-center my-5;
+    }
+
+    .module {
+        @apply flex flex-col gap-y-2 rounded-default bg-[#1f232e66] px-7 py-5;
+
+        &-title {
+            @apply text-[20px] mb-2 text-txt-title;
+        }
+
+        &-info {
+            @apply ml-3;
+        }
+
+        &-btn {
+            @apply flex items-center gap-5 flex-wrap;
+        }
+
+        &-img {
+            @apply flex flex-row flex-wrap gap-3;
+        }
+
+        &.err-page-module {
+            .img-thumbnail-container {
+                @apply cursor-pointer;
+            }
+        }
+    }
+}

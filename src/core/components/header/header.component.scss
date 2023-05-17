@@ -1,0 +1,76 @@
+.header-container {
+    @apply flex flex-wrap items-center bg-bg-secondary h-header px-4 gap-x-3;
+
+    .header-sidebar-hamburger {
+        @apply flex justify-center items-center h-header;
+
+        input {
+            @apply hidden;
+        }
+
+        .hamburger {
+            @apply text-[24px];
+        }
+    }
+
+    .header-logo {
+        @apply w-fit;
+    }
+
+    .header-left {
+        @apply flex flex-wrap flex-1 h-full items-center;
+
+        .h-navbar {
+            @apply flex flex-row flex-wrap items-center justify-between h-full px-5;
+
+            app-menu {
+                @apply h-full;
+            }
+
+            .h-nav-menu {
+                @apply flex flex-row gap-3;
+
+                .submenu-dropdown {
+                    @apply w-[180px];
+                }
+            }
+        }
+    }
+
+    .header-right {
+        @apply flex flex-wrap items-center gap-x-2;
+
+        .h-user,
+        .h-lang {
+            @apply flex flex-row flex-wrap items-center;
+
+            .h-menu {
+                @apply flex flex-col flex-wrap gap-y-2;
+            }
+        }
+
+        .h-user {
+            @apply px-2;
+
+            .h-username {
+                @apply pl-3;
+            }
+        }
+
+        .h-lang {
+            @apply px-1;
+
+            .h-lang-main {
+                @apply pl-1;
+            }
+        }
+
+        p-overlayPanel {
+            @apply hidden;
+        }
+    }
+
+    .h-line-item {
+        @apply h-4 border-l-[1px] border-border;
+    }
+}
