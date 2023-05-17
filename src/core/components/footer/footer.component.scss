@@ -1,0 +1,11 @@
+.footer-container {
+    @apply flex flex-wrap flex-col bg-bg-secondary min-h-min divide-y-[2px] divide-border;
+
+    .footer-nav {
+        @apply p-10;
+    }
+
+    .footer-info {
+        @apply flex whitespace-pre-line justify-center p-5;
+    }
+}

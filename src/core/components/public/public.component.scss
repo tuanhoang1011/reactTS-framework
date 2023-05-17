@@ -1,0 +1,27 @@
+.public-container {
+    @apply flex flex-col flex-wrap justify-center items-center;
+
+    .public-header {
+        @apply sticky top-0 z-[99999] w-full;
+    }
+
+    .public-body {
+        @apply flex flex-row flex-wrap w-full;
+
+        .public-sidebar {
+            @apply sticky top-[48px] z-[99999] max-w-max h-sidebar;
+        }
+
+        .public-content {
+            @apply flex flex-col flex-wrap flex-1;
+
+            .public-main {
+                @apply flex flex-1 flex-wrap pt-[50px] pb-[100px] max-w-support mx-auto w-full;
+            }
+
+            .public-footer {
+                @apply w-full;
+            }
+        }
+    }
+}

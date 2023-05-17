@@ -1,0 +1,23 @@
+.menu {
+    @apply h-full;
+
+    li {
+        @apply flex h-full items-center p-2 gap-x-1;
+
+        img {
+            @apply w-5;
+        }
+    }
+
+    .submenu {
+        @apply relative;
+
+        .submenu-dropdown {
+            @apply absolute hidden top-[44px] p-3 rounded-default bg-bg-secondary text-txt-default min-w-max;
+        }
+
+        &:hover .submenu-dropdown {
+            @apply block;
+        }
+    }
+}
