@@ -2,31 +2,35 @@ import i18next from 'i18next';
 import { addLocale, locale } from 'primereact/api';
 
 import { StorageKey } from '../../constants/storage-key.const';
+import useCommonFunc from '../../hooks/common-func.hook';
+import useHttpBase from '../../hooks/http-base.hook';
 import useLocalStorage from '../../hooks/local-storage.hook';
 import { MenuItem } from '../../models/item.model';
-import HttpBaseService from '../../services/http-base.service';
-import { GlobalVariables } from '../../utils/global-variables.ultility';
+import { GlobalVariables } from '../../utils/global-variables.util';
 
 const root = '../json/';
 const headerJSON = `${root}items/header.json`;
 const languagesJSON = `${root}items/languages.json`;
-const httpBaseService = HttpBaseService.getInstance();
 
 const useHeader = () => {
     const localStorageHook = useLocalStorage();
+    const httpBaseHook = useHttpBase();
+    const commonFuncHook = useCommonFunc();
 
     const getNavMenu = async () => {
         try {
-            return await httpBaseService.getLocalFile<{ menu: MenuItem[] }>(headerJSON);
+            return await httpBaseHook.getLocalFile<{ menu: MenuItem[] }>(headerJSON);
         } catch (error) {
+            commonFuncHook.handleError(error);
             throw error;
         }
     };
 
     const getLanguages = async () => {
         try {
-            return await httpBaseService.getLocalFile<{ menu: MenuItem[] }>(languagesJSON);
+            return await httpBaseHook.getLocalFile<{ menu: MenuItem[] }>(languagesJSON);
         } catch (error) {
+            commonFuncHook.handleError(error);
             throw error;
         }
     };
@@ -41,6 +45,7 @@ const useHeader = () => {
             document.body.classList.add(`theme-${newTheme}`);
             GlobalVariables.theme = newTheme;
         } catch (error) {
+            commonFuncHook.handleError(error);
             throw error;
         }
     };
@@ -59,6 +64,7 @@ const useHeader = () => {
             i18next.changeLanguage(lang);
             GlobalVariables.language = lang;
         } catch (error) {
+            commonFuncHook.handleError(error);
             throw error;
         }
     };

@@ -1,5 +1,4 @@
-import { useState } from 'react';
-
+import useCommonFunc from '../../hooks/common-func.hook';
 import { useAppDispatch, useAppSelector } from '../../store/stores/store';
 import { setProps } from './loading.reducer';
 
@@ -9,6 +8,7 @@ let isPendingAPI = false;
 const useLoading = () => {
     const isOn = useAppSelector((state) => state.loading.isOn);
     const dispatch = useAppDispatch();
+    const commonFuncHook = useCommonFunc();
 
     const show = (pendingAPI = true) => {
         try {
@@ -19,6 +19,7 @@ const useLoading = () => {
                 isPendingAPI = false;
             }
         } catch (error) {
+            commonFuncHook.handleError(error);
             throw error;
         }
     };
@@ -33,6 +34,7 @@ const useLoading = () => {
                 isPendingAPI = true;
             }
         } catch (error) {
+            commonFuncHook.handleError(error);
             throw error;
         }
     };
@@ -54,6 +56,7 @@ const useLoading = () => {
                 }
             }
         } catch (error) {
+            commonFuncHook.handleError(error);
             throw error;
         }
     };
@@ -64,6 +67,7 @@ const useLoading = () => {
 
     return {
         isOn,
+        apiReqCount,
         isPendingAPI,
         show,
         hide,

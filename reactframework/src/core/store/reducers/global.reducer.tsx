@@ -3,7 +3,9 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { GlobalState } from '../../models/state.model';
 
 const initialState: GlobalState = {
-    errorPage: undefined
+    errorPage: undefined,
+    activeScreen: '',
+    activeDialog: ''
 };
 
 export const GlobalSlice = createSlice({

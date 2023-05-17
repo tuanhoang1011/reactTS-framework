@@ -7,17 +7,21 @@ import { Navigate } from 'react-router';
 import MenuComponent from '../../../shared/menu/menu.component';
 import { CommonConstant } from '../../constants/common.const';
 import { FormatTextType } from '../../enums/format-text.enum';
+import useCommonFunc from '../../hooks/common-func.hook';
 import { MenuItem } from '../../models/item.model';
-import { formatText } from '../../utils/format-text.ultility';
-import { GlobalVariables } from '../../utils/global-variables.ultility';
+import { formatText } from '../../utils/format-text.util';
+import { GlobalVariables } from '../../utils/global-variables.util';
 import useSidebar from '../sidebar/sidebar.hook';
 import useHeader from './header.hook';
 
 const HeaderComponent = () => {
     const usr = useRef<OverlayPanel>(null);
     const lang = useRef<OverlayPanel>(null);
+
     const headerHook = useHeader();
     const sidebarHook = useSidebar();
+    const commonFuncHook = useCommonFunc();
+
     const [theme, setTheme] = useState(GlobalVariables.theme);
     const [navMenu, setNavMenu] = useState([] as MenuItem[]);
     const [userMenu, setUserMenu] = useState([] as MenuItem[]);
@@ -30,6 +34,7 @@ const HeaderComponent = () => {
             getUserMenu();
             getLanguages();
         } catch (error) {
+            commonFuncHook.handleError(error);
             throw error;
         }
     }, []);
@@ -39,6 +44,7 @@ const HeaderComponent = () => {
             const items = (await headerHook.getNavMenu()).menu;
             setNavMenu(items);
         } catch (error) {
+            commonFuncHook.handleError(error);
             throw error;
         }
     };
@@ -67,6 +73,7 @@ const HeaderComponent = () => {
             ];
             setUserMenu(items);
         } catch (error) {
+            commonFuncHook.handleError(error);
             throw error;
         }
     };
@@ -76,6 +83,7 @@ const HeaderComponent = () => {
             const items = (await headerHook.getLanguages()).menu;
             setLanguages(items);
         } catch (error) {
+            commonFuncHook.handleError(error);
             throw error;
         }
     };
@@ -92,6 +100,7 @@ const HeaderComponent = () => {
             headerHook.setTheme(GlobalVariables.theme, newTheme);
             setTheme(newTheme);
         } catch (error) {
+            commonFuncHook.handleError(error);
             throw error;
         }
     };
@@ -108,6 +117,7 @@ const HeaderComponent = () => {
                 Navigate({ to: (selectedItem as any).subMenu.url! });
             }
         } catch (error) {
+            commonFuncHook.handleError(error);
             throw error;
         }
     };
@@ -121,6 +131,7 @@ const HeaderComponent = () => {
 
             lang.current?.hide();
         } catch (error) {
+            commonFuncHook.handleError(error);
             throw error;
         }
     };
@@ -129,6 +140,7 @@ const HeaderComponent = () => {
         try {
             sidebarHook.setSidebarStatus(!sidebarHook.expandSidebar);
         } catch (error) {
+            commonFuncHook.handleError(error);
             throw error;
         }
     };

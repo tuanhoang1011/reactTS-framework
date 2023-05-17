@@ -6,6 +6,8 @@ import { MessageItem } from './message.model';
 
 export interface GlobalState {
     errorPage?: HttpStatusCode;
+    activeScreen?: string;
+    activeDialog?: string;
 }
 
 export interface LoadingState {

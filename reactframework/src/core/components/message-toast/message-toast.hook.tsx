@@ -3,7 +3,7 @@ import { sprintf } from 'sprintf-js';
 
 import { MessageOptions } from '../../models/message.model';
 import { useAppDispatch, useAppSelector } from '../../store/stores/store';
-import { GlobalVariables } from '../../utils/global-variables.ultility';
+import { GlobalVariables } from '../../utils/global-variables.util';
 import { setProps } from './message-toast.reducer';
 
 const useMessageToast = () => {

@@ -1,3 +1,4 @@
+import * as wjPdf from '@grapecity/wijmo.pdf';
 import { endOfDay, startOfDay } from 'date-fns';
 
 export const CommonConstant = Object.freeze({
@@ -33,31 +34,30 @@ export const CommonConstant = Object.freeze({
         Preview: { ratio: 800 / 600, width: 800, height: 600 }
     },
 
-    // PDFCommon: {
-    //     PageSetting: {
-    //         Default: {
-    //             layout: wjPdf.PdfPageOrientation.Portrait,
-    //             size: wjPdf.PdfPageSize.A4,
-    //             margins: {
-    //                 top: 20,
-    //                 bottom: 20,
-    //                 left: 50,
-    //                 right: 50
-    //             }
-    //         }
-    //     },
-
-    //     Footer: {
-    //         declarative: {
-    //             text: '\t&[Page]/&[Pages]',
-    //             brush: '#8A9999',
-    //             font: new wjPdf.PdfFont('times', 10, 'normal', '500')
-    //         }
-    //     },
-    //     ClassCSS: {
-    //         NoPDF: 'no-pdf'
-    //     }
-    // },
+    PDFCommon: {
+        PageSetting: {
+            Default: {
+                layout: wjPdf.PdfPageOrientation.Portrait,
+                size: wjPdf.PdfPageSize.A4,
+                margins: {
+                    top: 20,
+                    bottom: 20,
+                    left: 50,
+                    right: 50
+                }
+            }
+        },
+        Footer: {
+            declarative: {
+                text: '\t&[Page]/&[Pages]',
+                brush: '#8A9999',
+                font: new wjPdf.PdfFont('times', 10, 'normal', '500')
+            }
+        },
+        ClassCSS: {
+            NoPDF: 'no-pdf'
+        }
+    },
 
     CalendarConstant: {
         MinDate: startOfDay(new Date(1900, 0, 1)),

@@ -1,18 +1,22 @@
 import { isEmpty } from 'lodash';
 
 import { StorageItem } from '../models/item.model';
+import useCommonFunc from './common-func.hook';
 
 const mainKey = process.env['REACT_APP_LOCAL_STORAGE_KEY'] ?? '';
 
-const getAppCache = () => {
-    try {
-        return localStorage.getItem(mainKey) || '';
-    } catch (error) {
-        throw error;
-    }
-};
-
 const useLocalStorage = () => {
+    const commonFuncHook = useCommonFunc();
+
+    const getAppCache = () => {
+        try {
+            return localStorage.getItem(mainKey) || '';
+        } catch (error) {
+            commonFuncHook.handleError(error);
+            throw error;
+        }
+    };
+
     const get = (key: string): string => {
         try {
             const storageItems: string = getAppCache();
@@ -31,6 +35,7 @@ const useLocalStorage = () => {
                 return val;
             }
         } catch (error) {
+            commonFuncHook.handleError(error);
             throw error;
         }
     };
@@ -59,6 +64,7 @@ const useLocalStorage = () => {
 
             localStorage.setItem(mainKey, JSON.stringify(objItems));
         } catch (error) {
+            commonFuncHook.handleError(error);
             throw error;
         }
     };
@@ -74,6 +80,7 @@ const useLocalStorage = () => {
                 localStorage.setItem(mainKey, JSON.stringify(remainItems));
             }
         } catch (error) {
+            commonFuncHook.handleError(error);
             throw error;
         }
     };
@@ -89,6 +96,7 @@ const useLocalStorage = () => {
                 localStorage.setItem(mainKey, JSON.stringify(remainItems));
             }
         } catch (error) {
+            commonFuncHook.handleError(error);
             throw error;
         }
     };
@@ -97,6 +105,7 @@ const useLocalStorage = () => {
         try {
             localStorage.clear();
         } catch (error) {
+            commonFuncHook.handleError(error);
             throw error;
         }
     };
