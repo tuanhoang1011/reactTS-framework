@@ -1,13 +1,3 @@
-export interface BaseItem {
-    id: string;
-    label?: string;
-    icon?: string;
-    imgIcon?: string;
-    imgIconAlt?: string;
-    imgIconStyleClass?: string;
-    disabled?: boolean;
-}
-
 export interface SortInfo {
     sortOrder: 'asc' | 'desc';
     sortField: string;
@@ -15,7 +5,7 @@ export interface SortInfo {
 
 export interface DialogInfo {
     dialogId: string;
-    component: any;
+    component: JSX.Element;
 }
 
 export interface CanvasOptions {

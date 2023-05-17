@@ -3,7 +3,7 @@
     "TITLE_001": "Success",
     "TITLE_002": "Error",
     "TITLE_003": "Warning",
-    "TITLE_004": "Xác nhận",
+    "TITLE_004": "Confirmation",
     "TITLE_005": "Information",
     "EXAMPLE_ERR0001": "This is example message. Include 2 parameters: %s and %s.",
     "APP_ERR0001": "There is a problem with the website. Please contact the site owner.",

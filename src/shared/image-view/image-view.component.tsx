@@ -18,7 +18,7 @@ interface Props extends CommonProps {
     width: number;
     previewMode: boolean;
     transformMode: boolean;
-    onClickImageView: (isClickThumb: boolean) => void;
+    onClickImageView?: (isClickThumb: boolean) => void;
 }
 
 const ImageViewComponent = (props: Props) => {
@@ -58,7 +58,7 @@ const ImageViewComponent = (props: Props) => {
                 setShowingPreview(true);
             }
 
-            props.onClickImageView(true);
+            props.onClickImageView!(true);
         } catch (error) {
             commonFuncHook.handleError(error);
             throw error;
@@ -90,7 +90,7 @@ const ImageViewComponent = (props: Props) => {
             degree = 0;
             zoomRatio = 1;
 
-            props.onClickImageView(false);
+            props.onClickImageView!(false);
         } catch (error) {
             commonFuncHook.handleError(error);
             throw error;
@@ -229,7 +229,8 @@ ImageViewComponent.defaultProps = {
     height: CommonConstant.ImageRatio.Thumbnail.height,
     width: CommonConstant.ImageRatio.Thumbnail.width,
     previewMode: true,
-    transformMode: true
+    transformMode: true,
+    onClickImageView: (isClickThumb: boolean) => {}
 };
 
 export default memo(ImageViewComponent);

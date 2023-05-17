@@ -26,43 +26,52 @@ module.exports = {
     // darkMode: false, // or 'media' or 'class'
     theme: {
         extend: {
+            screens: {
+                sm: { max: '640px' },
+                md: { max: '768px' },
+                lg: { max: '1024px' },
+                xl: { max: '1280px' },
+                '2xl': { max: '1536px' }
+            },
+
             fontSize: {
                 'fs-default': '16px',
-                'fs-msg': '14px'
+                'fs-msg': '14px',
+                'fs-icon': '18px'
             },
 
             minWidth: {
                 support: '1200px',
                 'sidebar-expand': '220px',
                 'sidebar-collapse': '60px',
-                'icon-btn': '40px'
+                'icon-btn': '35px'
             },
 
             maxWidth: {
                 support: '1200px',
                 'sidebar-expand': '220px',
                 'sidebar-collapse': '60px',
-                'icon-btn': '40px'
+                'icon-btn': '35px'
             },
 
             width: (theme) => ({
                 min: theme('minWidth.support'),
                 max: theme('maxWidth.support'),
-                'icon-btn': '40px'
+                'icon-btn': '35px'
             }),
 
             minHeight: {
-                'icon-btn': '40px'
+                'icon-btn': '35px'
             },
 
             maxHeight: {
-                'icon-btn': '40px'
+                'icon-btn': '35px'
             },
 
             height: {
                 header: '48px',
                 sidebar: 'calc(100vh - 48px)', // minus header height
-                'icon-btn': '40px'
+                'icon-btn': '35px'
             },
 
             opacity: {
@@ -76,6 +85,7 @@ module.exports = {
             },
 
             boxShadow: {
+                'line-bottom': '0 5px 10px -5px',
                 errpage: '5px 5px 30px 20px'
             }
         }
@@ -95,16 +105,18 @@ module.exports = {
         createThemes({
             light: {
                 // common
-                'bg-primary': '#000',
-                'bg-secondary': '#1e222d',
+                'bg-primary': '#112324',
+                'bg-secondary': '#1a2f30',
+                'bg-secondary-blur': '#1a2f30f2',
                 primary: '#1ea97c',
                 secondary: '#a0a3ad',
                 danger: '#F23645',
                 border: '#50535e',
                 hyperlink: '#1ea97c',
+                'shadow-outline': '#1ea97d80',
 
                 // loading
-                mask: '#1e222dcc',
+                mask: '#1a2f30f2',
                 'loading-gradient-fr': '#00f0fc',
                 'loading-gradient-to': '#bcfd02',
 
@@ -133,7 +145,7 @@ module.exports = {
                 'btn-primary': '#1ea97c',
                 'btn-secondary': '#1ea97c',
                 'btn-danger': '#F23645',
-                'btn-icon': '#1e222d',
+                'btn-icon': '#112324',
 
                 // message
                 success: '#1ea97c',
@@ -148,16 +160,18 @@ module.exports = {
             },
             dark: {
                 // common
-                'bg-primary': '#000',
-                'bg-secondary': '#1e222d',
+                'bg-primary': '#27335a',
+                'bg-secondary': '#3c4b76',
+                'bg-secondary-blur': '#3c4b76f2',
                 primary: '#149eca',
                 secondary: '#a0a3ad',
                 danger: '#F23645',
                 border: '#50535e',
                 hyperlink: '#149eca',
+                'shadow-outline': '#149ecc80',
 
                 // loading
-                mask: '#1e222dcc',
+                mask: '#3c4b76f2',
                 'loading-gradient-fr': '#149eca',
                 'loading-gradient-to': '#c56dba',
 
@@ -167,7 +181,7 @@ module.exports = {
                 'txt-btn': '#fff',
 
                 // header
-                'header-menu': '#707070',
+                'header-menu': '#ffffff',
                 'header-submenu': '#707070',
 
                 // sidebar
@@ -186,7 +200,7 @@ module.exports = {
                 'btn-primary': '#149eca',
                 'btn-secondary': '#149eca',
                 'btn-danger': '#F23645',
-                'btn-icon': '#1e222d',
+                'btn-icon': '#27335a',
 
                 // message
                 success: '#149eca',

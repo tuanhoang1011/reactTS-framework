@@ -1,4 +1,4 @@
-import { BaseItem } from './common.model';
+import { BaseItem } from './item.model';
 
 export interface BreadcrumbItemList {
     id: string;

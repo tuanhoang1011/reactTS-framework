@@ -4,6 +4,7 @@ import { useEventListener } from 'primereact/hooks';
 import { memo, Suspense, useEffect, useRef } from 'react';
 import { Routes } from 'react-router';
 
+import DialogManagerComponent from './core/components/dialog-manager/dialog-manager.component';
 import useHeader from './core/components/header/header.hook';
 import LoadingComponent from './core/components/loading/loading.component';
 import useLoading from './core/components/loading/loading.hook';
@@ -154,6 +155,7 @@ const AppComponent = () => {
             <MessageToastComponent />
 
             {/* dialog management  */}
+            <DialogManagerComponent />
 
             <Suspense fallback={<></>}>
                 <Routes>{AppRouting}</Routes>

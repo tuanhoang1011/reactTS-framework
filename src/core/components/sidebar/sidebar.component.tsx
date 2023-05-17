@@ -27,7 +27,7 @@ const SidebarComponent = () => {
     }, []);
 
     return (
-        <div className={`sidebar-container${sidebarHook.expandSidebar ? ' expanded' : ''}`}>
+        <div className={`sidebar-container ${sidebarHook.expandSidebar ? 'expanded' : ''}`}>
             <div className="sidebar-nav">
                 {/* check later */}
                 {/* <app-menu [menus]="navMenu"

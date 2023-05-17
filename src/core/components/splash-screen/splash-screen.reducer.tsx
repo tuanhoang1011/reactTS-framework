@@ -10,7 +10,7 @@ export const SplashScreenSlice = createSlice({
     name: 'splashScreen',
     initialState: initialState,
     reducers: {
-        setProps: (state, actions: PayloadAction<SplashScreenState>) => {
+        setPropsSplashScreen: (state, actions: PayloadAction<SplashScreenState>) => {
             state = {
                 ...state,
                 ...actions.payload
@@ -20,5 +20,5 @@ export const SplashScreenSlice = createSlice({
     }
 });
 
-export const { setProps } = SplashScreenSlice.actions;
+export const { setPropsSplashScreen } = SplashScreenSlice.actions;
 export default SplashScreenSlice.reducer;

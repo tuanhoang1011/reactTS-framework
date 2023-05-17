@@ -7,7 +7,7 @@ import { memo, useEffect, useRef } from 'react';
 import useCommonFunc from '../../hooks/common-func.hook';
 import { useAppDispatch } from '../../store/stores/store';
 import useMessageToast from './message-toast.hook';
-import { setProps } from './message-toast.reducer';
+import { setPropsMsgToast } from './message-toast.reducer';
 
 const MessageToastComponent = () => {
     const dispatch = useAppDispatch();
@@ -25,7 +25,7 @@ const MessageToastComponent = () => {
                 toast.current?.show(msgToastHook.messages);
                 // clear message state
                 dispatch(
-                    setProps({
+                    setPropsMsgToast({
                         messages: []
                     })
                 );
@@ -42,7 +42,7 @@ const MessageToastComponent = () => {
                 toast.current?.clear();
                 // clear message state
                 dispatch(
-                    setProps({
+                    setPropsMsgToast({
                         clearAll: false
                     })
                 );

@@ -2,6 +2,7 @@ import { configureStore } from '@reduxjs/toolkit';
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
 
 import breadcrumbReducer from '../../components/breadcrumb/breadcrumb.reducer';
+import dialogManagerReducer from '../../components/dialog-manager/dialog-manager.reducer';
 import loadingReducer from '../../components/loading/loading.reducer';
 import messageDialogReducer from '../../components/message-dialog/message-dialog.reducer';
 import messageToastReducer from '../../components/message-toast/message-toast.reducer';
@@ -23,7 +24,8 @@ const Store = configureStore({
         breadrumb: breadcrumbReducer,
         msgToast: messageToastReducer,
         msgDialog: messageDialogReducer,
-        global: globalReducer
+        global: globalReducer,
+        dialogManager: dialogManagerReducer
     },
     middleware: (getDefaultMiddleware) =>
         getDefaultMiddleware({

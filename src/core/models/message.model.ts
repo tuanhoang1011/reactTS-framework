@@ -1,5 +1,7 @@
 import { uniqueId } from 'lodash';
 
+import { ActionItem } from './item.model';
+
 export interface Message {
     id: string;
     key: string;
@@ -19,15 +21,8 @@ export interface MessageOptions {
     footerStyleClass?: string;
     screenName?: string;
     variables?: any[];
-    actions?: MessageAction[];
+    actions?: ActionItem[];
     clickX?: () => void;
-}
-
-export interface MessageAction {
-    label: string;
-    styleClass?: string;
-    isDefault?: boolean;
-    click?: () => void;
 }
 
 export class MessageItem implements Message {

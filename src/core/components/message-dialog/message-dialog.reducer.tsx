@@ -10,7 +10,7 @@ export const MessageDialogSlice = createSlice({
     name: 'msgDialog',
     initialState: initialState,
     reducers: {
-        setProps: (state, actions: PayloadAction<MessageDialogState>) => {
+        setPropsMsgDialog: (state, actions: PayloadAction<MessageDialogState>) => {
             state = {
                 ...state,
                 ...actions.payload
@@ -21,5 +21,5 @@ export const MessageDialogSlice = createSlice({
     }
 });
 
-export const { setProps } = MessageDialogSlice.actions;
+export const { setPropsMsgDialog } = MessageDialogSlice.actions;
 export default MessageDialogSlice.reducer;

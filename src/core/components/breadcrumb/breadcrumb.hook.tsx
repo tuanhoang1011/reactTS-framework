@@ -1,7 +1,7 @@
 import { BreadcrumbItemList } from '../../models/breadcrumb.model';
 import { LayoutState } from '../../models/state.model';
 import { useAppDispatch, useAppSelector } from '../../store/stores/store';
-import { setProps } from './breadcrumb.reducer';
+import { setPropsBreadcrumb } from './breadcrumb.reducer';
 
 const useBreadcrumb = () => {
     const dispatch = useAppDispatch();
@@ -13,7 +13,7 @@ const useBreadcrumb = () => {
         };
 
         dispatch(
-            setProps({
+            setPropsBreadcrumb({
                 ...state
             })
         );

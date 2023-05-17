@@ -10,7 +10,7 @@ export const BreadcrumbSlice = createSlice({
     name: 'breadcrumb',
     initialState: initialState,
     reducers: {
-        setProps: (state, actions: PayloadAction<LayoutState>) => {
+        setPropsBreadcrumb: (state, actions: PayloadAction<LayoutState>) => {
             state = {
                 ...state,
                 ...actions.payload
@@ -20,5 +20,5 @@ export const BreadcrumbSlice = createSlice({
     }
 });
 
-export const { setProps } = BreadcrumbSlice.actions;
+export const { setPropsBreadcrumb } = BreadcrumbSlice.actions;
 export default BreadcrumbSlice.reducer;

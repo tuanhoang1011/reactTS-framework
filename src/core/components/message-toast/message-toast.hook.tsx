@@ -4,7 +4,7 @@ import { sprintf } from 'sprintf-js';
 import { MessageOptions } from '../../models/message.model';
 import { useAppDispatch, useAppSelector } from '../../store/stores/store';
 import { GlobalVariables } from '../../utils/global-variables.util';
-import { setProps } from './message-toast.reducer';
+import { setPropsMsgToast } from './message-toast.reducer';
 
 const useMessageToast = () => {
     const [messages, isClearAll] = useAppSelector((state) => [state.msgToast.messages ?? [], state.msgToast.clearAll]);
@@ -12,7 +12,7 @@ const useMessageToast = () => {
 
     const show = (id: string, type: 'success' | 'info' | 'warn' | 'error', options?: MessageOptions) => {
         dispatch(
-            setProps({
+            setPropsMsgToast({
                 messages: [
                     {
                         summary: options?.header,
@@ -85,7 +85,7 @@ const useMessageToast = () => {
     };
 
     const clearAll = () => {
-        dispatch(setProps({ clearAll: true }));
+        dispatch(setPropsMsgToast({ clearAll: true }));
     };
 
     return {

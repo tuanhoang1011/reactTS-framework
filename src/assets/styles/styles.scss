@@ -106,3 +106,7 @@ body {
 .text-hover {
     @apply hover:text-primary hover:cursor-pointer;
 }
+
+.border-bottom {
+    @apply border-b-2 border-border #{!important};
+}
