@@ -1,7 +1,7 @@
 import './image-carousel.component.scss';
 
 import { Carousel } from 'primereact/carousel';
-import { memo, useRef } from 'react';
+import { memo } from 'react';
 
 import { CommonProps } from '../../core/models/common-props.model';
 import { ImageItem } from '../../core/models/item.model';
@@ -23,33 +23,21 @@ interface Props extends CommonProps {
 }
 
 const ImageCarouselComponent = (props: Props) => {
-    const ref = useRef<Carousel>(null);
-
-    const previewImage = (isTurnOn: boolean) => {
-        const itemContainer = ref.current?.getElement().getElementsByClassName('p-carousel-items-container');
-        // remove transform style to view image at preview mode
-        setTimeout(() => {
-            if (itemContainer) (itemContainer[0] as HTMLElement).style.transform = '';
-        }, 0);
-    };
-
     const generateItemsTemplate = (img: ImageItem) => {
         return (
             <ImageViewComponent
                 src={img.src}
                 alt={img.alt}
                 styleClass={img.styleClass}
-                transformMode={img.transformMode}
                 width={img.width}
                 height={img.height}
-                onClickImageView={($event) => previewImage($event)}
+                previewMode={false}
             />
         );
     };
 
     return (
         <Carousel
-            ref={ref}
             value={props.images}
             numVisible={props.numVisible}
             numScroll={props.numScroll}

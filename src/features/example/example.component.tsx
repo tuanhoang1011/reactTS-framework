@@ -8,6 +8,7 @@ import { useTranslation } from 'react-i18next';
 
 import BreadcrumbComponent from '../../core/components/breadcrumb/breadcrumb.component';
 import useBreadcrumb from '../../core/components/breadcrumb/breadcrumb.hook';
+import useDialogManager from '../../core/components/dialog-manager/dialog-manager.hook';
 import { useErrorPage } from '../../core/components/error-page/error-page.hook';
 import useLoading from '../../core/components/loading/loading.hook';
 import useMessageDialog from '../../core/components/message-dialog/message-dialog.hook';
@@ -19,6 +20,7 @@ import useCanvas from '../../core/hooks/canvas.hook';
 import useCommonFunc from '../../core/hooks/common-func.hook';
 import useHttpBase from '../../core/hooks/http-base.hook';
 import useIndexedDB from '../../core/hooks/indexed-db.hook';
+import { DialogInfo } from '../../core/models/common.model';
 import { ImageItem, TabItem } from '../../core/models/item.model';
 import { GlobalVariables } from '../../core/utils/global-variables.util';
 import useExampleAPI from '../../network-services/api/example-api.hook';
@@ -32,6 +34,8 @@ import ImageViewComponent from '../../shared/image-view/image-view.component';
 import Component1Component from './components/component1.component';
 import Component2Component from './components/component2.component';
 import Component3Component from './components/component3.component';
+import DialogAComponent from './components/dialog-a.component';
+import DialogBComponent from './components/dialog-b.component';
 
 const ExampleComponent = (props: BaseProps) => {
     const loadingHook = useLoading();
@@ -43,6 +47,7 @@ const ExampleComponent = (props: BaseProps) => {
     const indexedDBHook = useIndexedDB();
     const httpBaseHook = useHttpBase();
     const canvasHook = useCanvas();
+    const dialogManagerHook = useDialogManager();
     const commonFuncHook = useCommonFunc();
 
     // API hooks
@@ -83,7 +88,7 @@ const ExampleComponent = (props: BaseProps) => {
         try {
             const imgs: ImageItem[] = [];
 
-            for (let i = 0; i < 20; i++) {
+            for (let i = 0; i < 10; i++) {
                 imgs.push({
                     src: '../images/dummy-angular.png',
                     width: CommonConstant.ImageRatio.Thumbnail.width,
@@ -170,51 +175,56 @@ const ExampleComponent = (props: BaseProps) => {
     const openDialogA = () =>
         useCallback(() => {
             try {
-                // const dialog: DialogInfo = {
-                //     dialogId: 'Dialog A',
-                //     component: DialogAComponent
-                // };
-                // this.dialogService.open(dialog);
-                // this.dialogAService.updateState({ activeDialog: 'A', activeScreen: 'A' } as GlobalState);
+                const dialog: DialogInfo = {
+                    dialogId: 'Dialog A',
+                    component: (
+                        <DialogAComponent
+                            dialogId="Dialog A"
+                            propA={'Prop A'}
+                            propB={100}
+                            propC={{ a: 'a in PropC', b: 'b in PropC' }}
+                            clickFunc1={() => console.log('clickFunc1')}
+                            clickFunc2={() => console.log('clickFunc2')}
+                        />
+                    )
+                };
+                dialogManagerHook.open(dialog);
             } catch (error) {
                 commonFuncHook.handleError(error);
                 throw error;
             }
-        }, []);
+        }, [dialogManagerHook.open]);
 
     const openDialogB = () =>
         useCallback(() => {
             try {
-                // const dialog: DialogInfo = {
-                //     dialogId: 'Dialog B',
-                //     component: DialogBComponent
-                // };
-                // this.dialogService.open(dialog);
+                const dialog: DialogInfo = {
+                    dialogId: 'Dialog B',
+                    component: (
+                        <DialogBComponent
+                            dialogId="Dialog B"
+                            propA={'Prop A'}
+                            propB={50}
+                            propC={{ a: 'a in PropC', b: 'b in PropC' }}
+                        />
+                    )
+                };
+                dialogManagerHook.open(dialog);
             } catch (error) {
                 commonFuncHook.handleError(error);
                 throw error;
             }
-        }, []);
-
-    const updateDialogA = () =>
-        useCallback(() => {
-            try {
-                // this.dialogAService.updateState({ activeDialog: 'B', activeScreen: 'B' } as GlobalState);
-            } catch (error) {
-                commonFuncHook.handleError(error);
-                throw error;
-            }
-        }, []);
+        }, [dialogManagerHook.open]);
 
     const removeDialogA = () =>
         useCallback(() => {
             try {
-                // this.dialogService.close('Dialog A');
+                dialogManagerHook.close('Dialog A');
             } catch (error) {
                 commonFuncHook.handleError(error);
                 throw error;
             }
-        }, []);
+        }, [dialogManagerHook.close]);
 
     const redirectErrorPage = (code: HttpStatusCode) => {
         try {
@@ -261,7 +271,7 @@ const ExampleComponent = (props: BaseProps) => {
                 commonFuncHook.handleError(error);
                 throw error;
             }
-        }, []);
+        }, [msgToastHook]);
 
     const showMessageDialog = (type: string) =>
         useCallback(() => {
@@ -368,7 +378,7 @@ const ExampleComponent = (props: BaseProps) => {
                 commonFuncHook.handleError(error);
                 throw error;
             }
-        }, []);
+        }, [msgDialogHook]);
 
     const showLoadingSplashScreen = (isLoading: boolean) =>
         useCallback(() => {
@@ -390,7 +400,7 @@ const ExampleComponent = (props: BaseProps) => {
                 commonFuncHook.handleError(error);
                 throw error;
             }
-        }, []);
+        }, [loadingHook, splashScreenHook]);
 
     const processLog = (type: 'write' | 'push' | 'clear') =>
         useCallback(() => {
@@ -426,7 +436,7 @@ const ExampleComponent = (props: BaseProps) => {
                 commonFuncHook.handleError(error);
                 throw error;
             }
-        }, []);
+        }, [msgDialogHook, indexedDBHook]);
 
     const exportPDF = () =>
         useCallback(async () => {
@@ -466,7 +476,7 @@ const ExampleComponent = (props: BaseProps) => {
                 commonFuncHook.handleError(error);
                 throw error;
             }
-        }, []);
+        }, [loadingHook, canvasHook]);
 
     const executeRequestServer = (type: 'restfulAPI' | 'graphQL' | 'websocket') =>
         useCallback(() => {
@@ -598,25 +608,16 @@ const ExampleComponent = (props: BaseProps) => {
                         <ButtonComponent
                             content="Open Dialog A"
                             styleClass="btn-primary"
-                            disabled={true}
                             onClickAction={openDialogA()}
                         />
                         <ButtonComponent
                             content="Open Dialog B"
                             styleClass="btn-primary"
-                            disabled={true}
                             onClickAction={openDialogB()}
-                        />
-                        <ButtonComponent
-                            content="Update Dialog A"
-                            styleClass="btn-primary"
-                            disabled={true}
-                            onClickAction={updateDialogA()}
                         />
                         <ButtonComponent
                             content="Remove Dialog A"
                             styleClass="btn-danger"
-                            disabled={true}
                             onClickAction={removeDialogA()}
                         />
                     </div>
@@ -727,7 +728,7 @@ const ExampleComponent = (props: BaseProps) => {
                         />
                         <ButtonComponent
                             content="Custom"
-                            styleClass="btn-primary !bg-bg-secondary !border-bg-secondary"
+                            styleClass="btn-primary !bg-bg-primary !border-bg-primary"
                             onClickAction={showMessageDialog('custom')}
                         />
                     </div>
@@ -758,6 +759,23 @@ const ExampleComponent = (props: BaseProps) => {
                 <div className="module">
                     <h1 className="module-title">Image Thumbnail/ Preview Mode</h1>
                     <p className="module-info">You can view image at preview mode by clicking on image.</p>
+                    <div className="module-img">
+                        <ImageViewComponent
+                            src="../images/dummy-angular.png"
+                            width={CommonConstant.ImageRatio.Thumbnail.width}
+                            height={CommonConstant.ImageRatio.Thumbnail.height}
+                        />
+                        <ImageViewComponent
+                            src="../images/dummy-angular.png"
+                            width={CommonConstant.ImageRatio.Thumbnail.width}
+                            height={CommonConstant.ImageRatio.Thumbnail.height}
+                        />
+                    </div>
+                </div>
+
+                {/* IMAGE CAROUSEL */}
+                <div className="module">
+                    <h1 className="module-title">Image Carousel</h1>
                     <div className="module-img">
                         <ImageCarouselComponent
                             images={thumbnailImages}

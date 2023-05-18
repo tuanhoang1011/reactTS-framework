@@ -6,13 +6,14 @@ import { LogIdentiferFormat, LogSubType, LogType } from '../../core/constants/lo
 import useCommonFunc from '../../core/hooks/common-func.hook';
 import useLog from '../../core/hooks/log.hook';
 import { CommonProps } from '../../core/models/common-props.model';
+import withBaseComponent from '../base-component/base.component';
 
 interface Props extends CommonProps {
     content?: string;
     styleClass?: string;
     disabled?: boolean;
     isWriteLog?: boolean;
-    onClickAction: () => void;
+    onClickAction?: () => void;
 }
 
 const ButtonComponent = (props: Props) => {
@@ -39,14 +40,14 @@ const ButtonComponent = (props: Props) => {
                     // 0 | 1: left click/touch
                     if (e.which === 1 || e.button === 0) {
                         writeLog();
-                        props.onClickAction();
+                        props.onClickAction!();
                     }
                     break;
                 case 'keyup':
                     // 13: enter/return key
                     if (e.keyCode === 13) {
                         writeLog();
-                        props.onClickAction();
+                        props.onClickAction!();
                     }
                     break;
             }
@@ -74,4 +75,5 @@ ButtonComponent.defaultProps = {
     onClickAction: () => {}
 };
 
-export default memo(ButtonComponent);
+// export default memo(ButtonComponent);
+export default withBaseComponent<Props>(memo(ButtonComponent))({ activeScreen: 'Example-screen' });

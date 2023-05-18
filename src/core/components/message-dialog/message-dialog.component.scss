@@ -1,34 +1,42 @@
-.dlg-success {
-    @apply bg-success #{!important};
-}
+.msg-dialog-container {
+    @apply min-w-[600px] max-w-[800px] min-h-[200px] max-h-[350px] bg-bg-secondary w-fit h-fit #{!important};
 
-.dlg-error {
-    @apply bg-error #{!important};
-}
+    &.dlg-success {
+        @apply bg-success #{!important};
+    }
 
-.dlg-warn {
-    @apply bg-warn #{!important};
-}
+    &.dlg-error {
+        @apply bg-error #{!important};
+    }
 
-.dlg-info {
-    @apply bg-info #{!important};
-}
+    &.dlg-warn {
+        @apply bg-warn #{!important};
+    }
 
-.dlg-confirm {
-    @apply bg-confirm #{!important};
-}
+    &.dlg-info {
+        @apply bg-info #{!important};
+    }
 
-.p-dialog-mask {
-    @apply z-[100000] #{!important};
-}
+    &.dlg-confirm {
+        @apply bg-confirm #{!important};
+    }
 
-.p-dialog {
-    @apply bg-bg-secondary;
+    &.p-dialog-mask {
+        @apply z-[100000] #{!important};
+    }
+
+    .p-dialog-header {
+        @apply mt-4 py-0 border-none shadow-none #{!important};
+
+        .p-dialog-header-icon {
+            @apply focus-visible:ring-2;
+        }
+    }
 
     .p-dialog-content {
         @apply flex justify-center;
 
-        .dlg-content {
+        .dl-content {
             @apply whitespace-pre-line px-[20px] flex items-center;
 
             .msg-icon {
@@ -42,7 +50,7 @@
     }
 
     .p-dialog-footer {
-        .dlg-footer {
+        .dl-footer {
             @apply flex justify-end gap-x-3;
         }
     }

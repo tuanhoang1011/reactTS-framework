@@ -1,6 +1,6 @@
 import useCommonFunc from '../../hooks/common-func.hook';
 import { useAppDispatch, useAppSelector } from '../../store/stores/store';
-import { setProps } from './splash-screen.reducer';
+import { setPropsSplashScreen } from './splash-screen.reducer';
 
 const useSplashScreen = () => {
     const isOn = useAppSelector((state) => state.splashScreen.isOn);
@@ -10,7 +10,7 @@ const useSplashScreen = () => {
 
     const show = () => {
         try {
-            dispatch(setProps({ isOn: true }));
+            dispatch(setPropsSplashScreen({ isOn: true }));
         } catch (error) {
             commonFuncHook.handleError(error);
             throw error;
@@ -19,7 +19,7 @@ const useSplashScreen = () => {
 
     const hide = () => {
         try {
-            dispatch(setProps({ isOn: false }));
+            dispatch(setPropsSplashScreen({ isOn: false }));
         } catch (error) {
             commonFuncHook.handleError(error);
             throw error;

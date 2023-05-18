@@ -1,4 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+
 import { MessageToastState } from '../../models/state.model';
 
 const initialState: MessageToastState = {
@@ -10,7 +11,7 @@ export const MessageToastSlice = createSlice({
     name: 'msgToast',
     initialState: initialState,
     reducers: {
-        setProps: (state, actions: PayloadAction<MessageToastState>) => {
+        setPropsMsgToast: (state, actions: PayloadAction<MessageToastState>) => {
             state = {
                 ...state,
                 ...actions.payload
@@ -21,5 +22,5 @@ export const MessageToastSlice = createSlice({
     }
 });
 
-export const { setProps } = MessageToastSlice.actions;
+export const { setPropsMsgToast } = MessageToastSlice.actions;
 export default MessageToastSlice.reducer;

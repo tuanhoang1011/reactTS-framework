@@ -10,7 +10,7 @@ export const SidebarSlice = createSlice({
     name: 'sidebar',
     initialState: initialState,
     reducers: {
-        setProps: (state, actions: PayloadAction<LayoutState>) => {
+        setPropsSidebar: (state, actions: PayloadAction<LayoutState>) => {
             state = {
                 ...state,
                 ...actions.payload
@@ -20,5 +20,5 @@ export const SidebarSlice = createSlice({
     }
 });
 
-export const { setProps } = SidebarSlice.actions;
+export const { setPropsSidebar } = SidebarSlice.actions;
 export default SidebarSlice.reducer;

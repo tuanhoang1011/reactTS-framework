@@ -2,7 +2,7 @@ import './range-date-selector.component.scss';
 
 import { differenceInCalendarDays, endOfDay, endOfToday, startOfDay } from 'date-fns';
 import { Calendar, CalendarSelectEvent } from 'primereact/calendar';
-import { memo, useCallback, useEffect, useState } from 'react';
+import { memo, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { CommonConstant } from '../../core/constants/common.const';
@@ -24,13 +24,15 @@ interface Props extends CommonProps {
 const RangeDateSelectorComponent = (props: Props) => {
     const commonFuncHook = useCommonFunc();
     const [rangeDay, setRangeDay] = useState(0);
+    const [from, setFrom] = useState(props.from);
+    const [to, setTo] = useState(props.to);
     const { t } = useTranslation();
 
     useEffect(() => {
         try {
-            if (!props.from || !props.to) {
-                props.to = endOfToday();
-                props.from = generateDateToBefore(props.to, 1, 'month').from!;
+            if (!from || !to) {
+                setTo(endOfToday());
+                setFrom(generateDateToBefore(to!, 1, 'month').from!);
             }
         } catch (error) {
             commonFuncHook.handleError(error);
@@ -49,9 +51,29 @@ const RangeDateSelectorComponent = (props: Props) => {
         }
     }, [props.hasChangeDate]);
 
+    useEffect(() => {
+        try {
+            initRangeDay();
+
+            props.onSelectDate({
+                from: from,
+                to: to
+            });
+        } catch (error) {
+            commonFuncHook.handleError(error);
+            throw error;
+        }
+    }, [from, to]);
+
     const initRangeDay = () => {
         try {
-            setRangeDay(differenceInCalendarDays(startOfNextDay(props.to!), props.from!));
+            const _rangeDate = differenceInCalendarDays(startOfNextDay(to!), from!);
+
+            if (isNaN(_rangeDate)) {
+                setRangeDay(undefined!);
+            } else {
+                setRangeDay(differenceInCalendarDays(startOfNextDay(to!), from!));
+            }
         } catch (error) {
             commonFuncHook.handleError(error);
             throw error;
@@ -61,24 +83,20 @@ const RangeDateSelectorComponent = (props: Props) => {
     const selectDate = (selectedDate: CalendarSelectEvent, type: 'from' | 'to') => {
         try {
             if (type === 'from') {
-                props.from = startOfDay(selectedDate.value as Date);
+                const _from = startOfDay(selectedDate.value as Date);
+                setFrom(_from);
 
-                if (props.from > props.to!) {
-                    props.to = undefined!;
+                if (_from! > to!) {
+                    setTo(undefined);
                 }
             } else {
-                props.to = endOfDay(selectedDate.value as Date);
+                const _to = endOfDay(selectedDate.value as Date);
+                setTo(_to);
 
-                if (props.to < props.from!) {
-                    props.from = undefined!;
+                if (_to! < from!) {
+                    setFrom(undefined);
                 }
             }
-            initRangeDay();
-
-            props.onSelectDate({
-                from: props.from,
-                to: props.to
-            });
         } catch (error) {
             commonFuncHook.handleError(error);
             throw error;
@@ -91,24 +109,24 @@ const RangeDateSelectorComponent = (props: Props) => {
                 <span>{t('LBL_0008')}</span>
                 {
                     <Calendar
-                        value={props.from}
+                        value={from}
                         minDate={props.min}
                         maxDate={props.max}
                         showIcon={true}
                         showButtonBar
-                        onSelect={useCallback(() => ($event: CalendarSelectEvent) => selectDate($event, 'from'), [])}
+                        onSelect={($event: CalendarSelectEvent) => selectDate($event, 'from')}
                     ></Calendar>
                 }
             </div>
             <div className="rd-calendar rd-to">
                 <span>{t('LBL_0009')}</span>
                 <Calendar
-                    value={props.to}
+                    value={to}
                     minDate={props.min}
                     maxDate={props.max}
                     showIcon={true}
                     showButtonBar
-                    onSelect={useCallback(() => ($event: CalendarSelectEvent) => selectDate($event, 'to'), [])}
+                    onSelect={($event: CalendarSelectEvent) => selectDate($event, 'to')}
                 ></Calendar>
             </div>
             {rangeDay && (
@@ -123,6 +141,8 @@ const RangeDateSelectorComponent = (props: Props) => {
 RangeDateSelectorComponent.defaultProps = {
     min: CommonConstant.CalendarConstant.MinDate,
     max: CommonConstant.CalendarConstant.MaxDate,
+    from: generateDateToBefore(new Date(), 1, 'month').from!,
+    to: new Date(),
     hasChangeDate: false,
     onSelectDate: (rangeDate: RangeDate) => {}
 };

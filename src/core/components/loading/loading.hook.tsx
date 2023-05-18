@@ -1,6 +1,6 @@
 import useCommonFunc from '../../hooks/common-func.hook';
 import { useAppDispatch, useAppSelector } from '../../store/stores/store';
-import { setProps } from './loading.reducer';
+import { setPropsLoading } from './loading.reducer';
 
 let apiReqCount = 0;
 let isPendingAPI = false;
@@ -12,7 +12,7 @@ const useLoading = () => {
 
     const show = (pendingAPI = true) => {
         try {
-            dispatch(setProps({ isOn: true }));
+            dispatch(setPropsLoading({ isOn: true }));
 
             if (!pendingAPI) {
                 apiReqCount = 0;
@@ -27,7 +27,7 @@ const useLoading = () => {
     const hide = (pendingAPI = true) => {
         try {
             if (apiReqCount === 0) {
-                dispatch(setProps({ isOn: false }));
+                dispatch(setPropsLoading({ isOn: false }));
             }
 
             if (pendingAPI) {

@@ -26,14 +26,12 @@ const useImageSize = <T,>(props: Props = { imgRatio: CommonConstant.ImageRatio.T
     });
 
     const setImageSize = () => {
-        setTimeout(() => {
-            const el = ref.current as any;
+        const el = ref.current as any;
 
-            if (el) {
-                const height = el.offsetWidth / props.imgRatio!;
-                el.style.height = `${height}px`;
-            }
-        }, 200);
+        if (el) {
+            const height = el.offsetWidth / props.imgRatio!;
+            el.style.height = `${height}px`;
+        }
     };
 
     return [ref];

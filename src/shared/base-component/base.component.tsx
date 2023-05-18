@@ -18,84 +18,88 @@ export interface BaseProps {
     scrollTableToTop?: () => void;
 }
 
-const withBaseComponent = (WrappedComponent) => (baseProps: BaseProps) => {
-    const BaseComponent = (childProps) => {
-        const dispatch = useAppDispatch();
+const withBaseComponent =
+    <T,>(WrappedComponent) =>
+    (baseProps: BaseProps) => {
+        const BaseComponent = (childProps: T) => {
+            const dispatch = useAppDispatch();
 
-        useEffect(() => {
-            baseProps.destroy$ = new Subject<void>();
+            useEffect(() => {
+                baseProps.destroy$ = new Subject<void>();
 
-            if (baseProps.activeScreen) {
-                dispatch(
-                    setPropsGlobal({
-                        activeScreen: baseProps.activeScreen
-                    })
-                );
-            }
-
-            if (baseProps.activeDialog) {
-                dispatch(
-                    setPropsGlobal({
-                        activeDialog: baseProps.activeDialog
-                    })
-                );
-            }
-
-            return () => {
-                baseProps.destroy$!.next();
-                baseProps.destroy$!.unsubscribe();
-            };
-        }, []);
-
-        const onSort = (event: any) => {
-            try {
-                baseProps.sortInfo = {
-                    sortOrder: event.orderStr,
-                    sortField: event.field
-                };
-
-                executeSort();
-            } catch (error) {
-                throw error;
-            }
-        };
-
-        const executeSort = () => {
-            try {
-                baseProps.tableValue = orderBy(
-                    baseProps.tableValue,
-                    [baseProps.sortInfo?.sortField],
-                    [baseProps.sortInfo?.sortOrder ?? 'asc']
-                );
-            } catch (error) {
-                throw error;
-            }
-        };
-
-        const scrollTableToTop = () => {
-            try {
-                const tableWrapper = document.querySelectorAll(`#${baseProps.tableID} .p-datatable-wrapper`);
-
-                if (tableWrapper && tableWrapper.length > 0) {
-                    // scroll table to top
-                    tableWrapper[0].scrollTop = 0;
+                if (baseProps.activeScreen) {
+                    dispatch(
+                        setPropsGlobal({
+                            activeScreen: baseProps.activeScreen
+                        })
+                    );
                 }
-            } catch (error) {
-                throw error;
-            }
+
+                if (baseProps.activeDialog) {
+                    setTimeout(() => {
+                        dispatch(
+                            setPropsGlobal({
+                                activeDialog: baseProps.activeDialog
+                            })
+                        );
+                    }, 200);
+                }
+
+                return () => {
+                    baseProps.destroy$!.next();
+                };
+            }, []);
+
+            const onSort = (event: any) => {
+                try {
+                    baseProps.sortInfo = {
+                        sortOrder: event.orderStr,
+                        sortField: event.field
+                    };
+
+                    executeSort();
+                } catch (error) {
+                    throw error;
+                }
+            };
+
+            const executeSort = () => {
+                try {
+                    baseProps.tableValue = orderBy(
+                        baseProps.tableValue,
+                        [baseProps.sortInfo?.sortField],
+                        [baseProps.sortInfo?.sortOrder ?? 'asc']
+                    );
+                } catch (error) {
+                    throw error;
+                }
+            };
+
+            const scrollTableToTop = () => {
+                try {
+                    const tableWrapper = document.querySelectorAll(`#${baseProps.tableID} .p-datatable-wrapper`);
+
+                    if (tableWrapper && tableWrapper.length > 0) {
+                        // scroll table to top
+                        tableWrapper[0].scrollTop = 0;
+                    }
+                } catch (error) {
+                    throw error;
+                }
+            };
+
+            return (
+                <WrappedComponent
+                    {...childProps}
+                    {...baseProps}
+                    executeSort={executeSort}
+                    onSort={onSort}
+                    scrollTableToTop={scrollTableToTop}
+                />
+            );
         };
 
-        return (
-            <WrappedComponent
-                {...baseProps}
-                executeSort={executeSort}
-                onSort={onSort}
-                scrollTableToTop={scrollTableToTop}
-            />
-        );
+        return BaseComponent;
     };
-
-    return BaseComponent;
-};
 
 export default withBaseComponent;

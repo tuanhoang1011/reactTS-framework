@@ -1,0 +1,31 @@
+.dialog-container {
+    &.p-dialog {
+        @apply min-w-[450px] min-h-[300px] w-[800px] h-[600px];
+
+        .p-dialog-header {
+            @apply shadow-line-bottom shadow-border z-[1];
+
+            .dl-h-icons {
+                @apply flex gap-x-2;
+
+                .dl-h-icon {
+                    @apply flex justify-center items-center w-icon-btn h-icon-btn rounded-[50%] text-fs-icon bg-btn-icon;
+                    @apply focus-visible:ring-2 outline-none;
+                    @apply hover:opacity-hover hover:cursor-pointer active:opacity-active active:cursor-pointer;
+                }
+            }
+
+            .p-dialog-header-icon {
+                @apply hidden;
+            }
+        }
+
+        .dl-content {
+            @apply w-full pt-6 px-6;
+        }
+
+        .dl-footer {
+            @apply flex justify-end gap-x-2;
+        }
+    }
+}

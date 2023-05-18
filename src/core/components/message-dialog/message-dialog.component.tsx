@@ -1,15 +1,16 @@
 import './message-dialog.component.scss';
 
-import { Dialog } from 'primereact/dialog';
-import { memo, useMemo } from 'react';
+import { Fragment, memo, useMemo } from 'react';
 import { Translation, useTranslation } from 'react-i18next';
 import { sprintf } from 'sprintf-js';
 
 import ButtonComponent from '../../../shared/button/button.component';
+import DialogComponent from '../../../shared/dialog/dialog.component';
 import { LogIdentiferFormat, LogSubType, LogType } from '../../constants/log.const';
 import useCommonFunc from '../../hooks/common-func.hook';
 import useLog from '../../hooks/log.hook';
-import { Message, MessageAction } from '../../models/message.model';
+import { ActionItem } from '../../models/item.model';
+import { Message } from '../../models/message.model';
 import useMessageDialog from './message-dialog.hook';
 
 const MessageDialogComponent = () => {
@@ -18,7 +19,7 @@ const MessageDialogComponent = () => {
     const commonFuncHook = useCommonFunc();
     const { t } = useTranslation();
 
-    const clickAction = (msgItem: Message, action: MessageAction) => {
+    const clickAction = (msgItem: Message, action: ActionItem) => {
         try {
             msgDialogHook.clear(msgItem.id);
 
@@ -54,84 +55,29 @@ const MessageDialogComponent = () => {
         }
     };
 
-    const generateHeader = (msgItem: Message) => {
-        return (
-            <>
-                {msgItem.options?.header && (
-                    <div className="dlg-header">
-                        <h1 className="dlg-header-content">
-                            <Translation>{(t) => t(msgItem.options?.header || '')}</Translation>
-                        </h1>
-                    </div>
-                )}
-            </>
-        );
-    };
-
-    const generateFooter = (msgItem: Message) => {
-        return (
-            <>
-                <div className={`dlg-footer ${msgItem.options?.footerStyleClass}`}>
-                    {msgItem.options?.actions?.map((action) => {
-                        if (action.isDefault) {
-                            return (
-                                <ButtonComponent
-                                    key={action.label}
-                                    content={action.label}
-                                    styleClass={`dlg-btn ${action.styleClass}`}
-                                    isWriteLog={false}
-                                    onClickAction={() => clickAction(msgItem, action)}
-                                ></ButtonComponent>
-                            );
-                        } else {
-                            return (
-                                <ButtonComponent
-                                    key={action.label}
-                                    content={action.label}
-                                    styleClass={`dlg-btn ${action.styleClass}`}
-                                    isWriteLog={false}
-                                    onClickAction={() => clickAction(msgItem, action)}
-                                ></ButtonComponent>
-                            );
-                        }
-                    })}
-                </div>
-            </>
-        );
-    };
-
     return (
         <>
             {useMemo(
                 () =>
                     msgDialogHook.messages.map((msgItem) => {
                         return (
-                            <Dialog
-                                key={msgItem.key}
-                                visible={true}
-                                focusOnShow={false}
-                                modal={true}
-                                closeOnEscape={false}
-                                showHeader={!!msgItem.options?.header}
-                                className={msgItem.options?.styleClass ?? ''}
-                                contentClassName={`rounded-b-none ${
+                            <DialogComponent
+                                key={msgItem.id}
+                                dialogId={msgItem.id}
+                                styleClass={`msg-dialog-container ${msgItem.options?.styleClass}`}
+                                contentClassName={`rounded-b-none ${msgItem.options?.contentStyleClass} ${
                                     msgItem.options?.header ? '' : 'rounded-t-default'
                                 }`}
+                                footerClassName={msgItem.options?.footerStyleClass}
+                                showHeader={!!msgItem.options?.header}
                                 draggable={false}
-                                resizable={false}
-                                blockScroll={false}
                                 closable={msgItem.options?.closable ?? true}
-                                style={{
-                                    minWidth: '600px',
-                                    maxWidth: '800px',
-                                    minHeight: '200px',
-                                    maxHeight: '350px'
-                                }}
-                                header={generateHeader(msgItem)}
-                                footer={generateFooter(msgItem)}
+                                closeOnEscape={false}
+                                maximizable={false}
+                                headerTitle={msgItem.options?.header}
                                 onHide={() => closeMessage(msgItem)}
                             >
-                                <div className={`dlg-content ${msgItem.options?.contentStyleClass}`}>
+                                <Fragment key="content">
                                     <div className={`msg-icon ${msgItem.options?.iconStyleClass}`}></div>
                                     <div className={`msg-content ${msgItem.options?.detailStyleClass}`}>
                                         <p>
@@ -140,8 +86,34 @@ const MessageDialogComponent = () => {
                                             </Translation>
                                         </p>
                                     </div>
-                                </div>
-                            </Dialog>
+                                </Fragment>
+
+                                <Fragment key="footer">
+                                    {msgItem.options?.actions?.map((action) => {
+                                        if (action.isDefault) {
+                                            return (
+                                                <ButtonComponent
+                                                    key={action.label}
+                                                    content={action.label}
+                                                    styleClass={`dl-f-btn ${action.styleClass}`}
+                                                    isWriteLog={false}
+                                                    onClickAction={() => clickAction(msgItem, action)}
+                                                ></ButtonComponent>
+                                            );
+                                        } else {
+                                            return (
+                                                <ButtonComponent
+                                                    key={action.label}
+                                                    content={action.label}
+                                                    styleClass={`dl-f-btn ${action.styleClass}`}
+                                                    isWriteLog={false}
+                                                    onClickAction={() => clickAction(msgItem, action)}
+                                                ></ButtonComponent>
+                                            );
+                                        }
+                                    })}
+                                </Fragment>
+                            </DialogComponent>
                         );
                     }),
                 [msgDialogHook.messages]

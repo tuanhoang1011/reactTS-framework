@@ -10,6 +10,7 @@
 
         .public-sidebar {
             @apply sticky top-[48px] z-[99999] max-w-max h-sidebar;
+            @apply lg:fixed;
         }
 
         .public-content {

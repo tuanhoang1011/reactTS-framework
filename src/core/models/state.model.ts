@@ -2,6 +2,7 @@ import { HttpStatusCode } from 'axios';
 import { ToastMessage } from 'primereact/toast';
 
 import { BreadcrumbItemList } from './breadcrumb.model';
+import { DialogInfo } from './common.model';
 import { MessageItem } from './message.model';
 
 export interface GlobalState {
@@ -30,4 +31,8 @@ export interface MessageToastState {
 
 export interface MessageDialogState {
     messages?: MessageItem[];
+}
+
+export interface DialogManagerState {
+    dialogs?: DialogInfo[];
 }

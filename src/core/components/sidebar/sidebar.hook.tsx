@@ -2,7 +2,7 @@ import useCommonFunc from '../../hooks/common-func.hook';
 import useHttpBase from '../../hooks/http-base.hook';
 import { MenuItem } from '../../models/item.model';
 import { useAppDispatch, useAppSelector } from '../../store/stores/store';
-import { setProps } from './sidebar.reducer';
+import { setPropsSidebar } from './sidebar.reducer';
 
 const root = '../json/';
 const sidebarJSON = `${root}items/sidebar.json`;
@@ -25,7 +25,7 @@ const useSidebar = () => {
 
     const setSidebarStatus = (val: boolean) => {
         try {
-            dispatch(setProps({ expandSidebar: val ?? true }));
+            dispatch(setPropsSidebar({ expandSidebar: val ?? true }));
         } catch (error) {
             commonFuncHook.handleError(error);
             throw error;

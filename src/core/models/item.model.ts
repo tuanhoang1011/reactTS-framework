@@ -1,4 +1,12 @@
-import { BaseItem } from './common.model';
+export interface BaseItem {
+    id: string;
+    label?: string;
+    icon?: string;
+    imgIcon?: string;
+    imgIconAlt?: string;
+    imgIconStyleClass?: string;
+    disabled?: boolean;
+}
 
 export interface StorageItem {
     key?: string;
@@ -31,4 +39,11 @@ export interface ImageItem {
     width?: number;
     previewMode?: boolean;
     transformMode?: boolean;
+}
+
+export interface ActionItem {
+    label: string;
+    styleClass?: string;
+    isDefault?: boolean;
+    click?: () => void;
 }

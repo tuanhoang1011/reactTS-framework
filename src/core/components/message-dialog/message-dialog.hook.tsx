@@ -1,27 +1,28 @@
 import { cloneDeep } from 'lodash';
 
 import useCommonFunc from '../../hooks/common-func.hook';
-import { MessageAction, MessageItem, MessageOptions } from '../../models/message.model';
+import { ActionItem } from '../../models/item.model';
+import { MessageItem, MessageOptions } from '../../models/message.model';
 import { useAppDispatch, useAppSelector } from '../../store/stores/store';
-import { setProps } from './message-dialog.reducer';
+import { setPropsMsgDialog } from './message-dialog.reducer';
 
-const YES_BUTTON: MessageAction = {
+const YES_BUTTON: ActionItem = {
     label: 'BTN_0001',
     styleClass: 'btn-primary',
     isDefault: true
 };
-const NO_BUTTON: MessageAction = {
+const NO_BUTTON: ActionItem = {
     label: 'BTN_0002',
     styleClass: 'btn-danger'
 };
 
-const CLOSE_BUTTON: MessageAction = {
+const CLOSE_BUTTON: ActionItem = {
     label: 'BTN_0003',
     styleClass: 'btn-secondary',
     isDefault: true
 };
 
-const CANCEL_BUTTON: MessageAction = {
+const CANCEL_BUTTON: ActionItem = {
     label: 'BTN_0004',
     styleClass: 'btn-secondary'
 };
@@ -34,7 +35,7 @@ const useMessageDialog = () => {
 
     const clearAll = () => {
         dispatch(
-            setProps({
+            setPropsMsgDialog({
                 messages: []
             })
         );
@@ -42,7 +43,7 @@ const useMessageDialog = () => {
 
     const clear = (id: string) => {
         dispatch(
-            setProps({
+            setPropsMsgDialog({
                 messages: messages.filter((message) => message.id !== id)
             })
         );
@@ -127,7 +128,7 @@ const useMessageDialog = () => {
             clonedMsg.push(new MessageItem(key, options));
 
             dispatch(
-                setProps({
+                setPropsMsgDialog({
                     messages: clonedMsg
                 })
             );

@@ -1,8 +1,9 @@
 .sidebar-container {
-    @apply flex flex-col h-full bg-bg-secondary min-w-sidebar-collapse max-w-sidebar-collapse divide-y-[2px] divide-border;
+    @apply flex flex-col h-full bg-bg-secondary-blur min-w-sidebar-collapse max-w-sidebar-collapse divide-y-[2px] divide-border;
+    @apply lg:hidden;
 
     &.expanded {
-        @apply min-w-sidebar-expand max-w-sidebar-expand;
+        @apply min-w-sidebar-expand max-w-sidebar-expand flex;
     }
 
     .sidebar-nav {

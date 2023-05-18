@@ -2,7 +2,7 @@
     @apply flex items-center justify-center h-screen;
 
     .errpage-child-1 {
-        @apply max-w-[80%] w-[800px] h-[600px] shadow-errpage shadow-primary rounded-[5%] px-[50px] py-[50px];
+        @apply max-w-[80%] w-[800px] h-[600px] shadow-errpage shadow-shadow-outline rounded-[5%] px-[50px] py-[50px];
 
         .errpage-code {
             @apply text-[100px] text-danger h-[30%];

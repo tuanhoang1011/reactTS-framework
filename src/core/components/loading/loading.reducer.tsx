@@ -10,7 +10,7 @@ export const LoadingSlice = createSlice({
     name: 'loading',
     initialState: initialState,
     reducers: {
-        setProps: (state, actions: PayloadAction<LoadingState>) => {
+        setPropsLoading: (state, actions: PayloadAction<LoadingState>) => {
             state = {
                 ...state,
                 ...actions.payload
@@ -20,5 +20,5 @@ export const LoadingSlice = createSlice({
     }
 });
 
-export const { setProps } = LoadingSlice.actions;
+export const { setPropsLoading } = LoadingSlice.actions;
 export default LoadingSlice.reducer;
