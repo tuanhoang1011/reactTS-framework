@@ -4589,10 +4589,11 @@ p-treeselect.p-treeselect-clearable .p-treeselect-clear-icon {
 }
 
 .p-dialog {
-    border-radius: 6px;
     box-shadow: 0px 11px 15px -7px rgba(0, 0, 0, 0.2), 0px 24px 38px 3px rgba(0, 0, 0, 0.14),
         0px 9px 46px 8px rgba(0, 0, 0, 0.12);
     border: 1px solid #3e4053;
+
+    @apply rounded-default;
 }
 .p-dialog .p-dialog-header {
     @apply bg-bg-secondary text-[20px] font-bold text-txt-default mt-0 p-3;
@@ -4634,7 +4635,7 @@ p-treeselect.p-treeselect-clearable .p-treeselect-clear-icon {
     border-top: 0 none;
     text-align: right;
 
-    @apply bg-bg-secondary text-fs-default text-txt-default p-6 pt-4;
+    @apply bg-bg-secondary text-fs-default text-txt-default;
 }
 .p-dialog .p-dialog-footer button {
 }

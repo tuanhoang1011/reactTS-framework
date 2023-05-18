@@ -1,5 +1,5 @@
 .msg-dialog-container {
-    @apply min-w-[600px] max-w-[800px] min-h-[200px] max-h-[350px] bg-bg-secondary w-fit h-fit #{!important};
+    @apply min-w-[600px] max-w-[800px] min-h-[200px] max-h-[350px] bg-bg-secondary w-fit h-fit rounded-[12px] #{!important};
 
     &.dlg-success {
         @apply bg-success #{!important};
@@ -26,7 +26,7 @@
     }
 
     .p-dialog-header {
-        @apply mt-4 py-0 border-none shadow-none #{!important};
+        @apply mt-4 py-0 border-none shadow-none rounded-none #{!important};
 
         .p-dialog-header-icon {
             @apply focus-visible:ring-2;
