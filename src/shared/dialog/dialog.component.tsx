@@ -96,7 +96,7 @@ const DialogComponent = (props: Props) => {
         const footer =
             props.children &&
             (React.Children.toArray(props.children) as ReactElement[]).find((child) => child.key === '.$footer');
-        return footer && <div className={`dl-footer ${props.footerClassName}`}>{footer}</div>;
+        return <div className={`dl-footer ${props.footerClassName}`}>{footer}</div>;
     };
 
     return (
