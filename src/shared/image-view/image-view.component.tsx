@@ -13,7 +13,7 @@ import ButtonComponent from '../button/button.component';
 interface Props extends CommonProps {
     src?: string;
     alt: string;
-    styleClass?: string;
+    className?: string;
     height: number;
     width: number;
     previewMode: boolean;
@@ -143,7 +143,7 @@ const ImageViewComponent = (props: Props) => {
     return (
         <>
             <div
-                className={`img-thumbnail-container ${props.styleClass} ${props.previewMode ? 'cursor-pointer' : ''}`}
+                className={`img-thumbnail-container ${props.className} ${props.previewMode ? 'cursor-pointer' : ''}`}
                 onClick={() => clickImage()}
             >
                 <img
@@ -180,28 +180,28 @@ const ImageViewComponent = (props: Props) => {
                         {props.transformMode && (
                             <>
                                 <ButtonComponent
-                                    styleClass="btn-icon"
+                                    className="btn-icon"
                                     isWriteLog={false}
                                     onClickAction={() => rotate(true)}
                                 >
                                     <i className="pi pi-refresh"></i>
                                 </ButtonComponent>
                                 <ButtonComponent
-                                    styleClass="btn-icon"
+                                    className="btn-icon"
                                     isWriteLog={false}
                                     onClickAction={() => rotate(false)}
                                 >
                                     <i className="pi pi-replay"></i>
                                 </ButtonComponent>
                                 <ButtonComponent
-                                    styleClass="btn-icon"
+                                    className="btn-icon"
                                     isWriteLog={false}
                                     onClickAction={() => zoom(true)}
                                 >
                                     <i className="pi pi-search-minus"></i>
                                 </ButtonComponent>
                                 <ButtonComponent
-                                    styleClass="btn-icon"
+                                    className="btn-icon"
                                     isWriteLog={false}
                                     onClickAction={() => zoom(false)}
                                 >
@@ -211,7 +211,7 @@ const ImageViewComponent = (props: Props) => {
                         )}
 
                         <ButtonComponent
-                            styleClass="btn-icon"
+                            className="btn-icon"
                             isWriteLog={false}
                             onClickAction={() => offPreviewMode()}
                         >

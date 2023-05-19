@@ -125,7 +125,7 @@ const ErrorPageComponent = () => {
                                 {error.isShowBackBtn && (
                                     <ButtonComponent
                                         content="BTN_0005"
-                                        styleClass="btn-secondary"
+                                        className="btn-secondary"
                                         onClickAction={() => back()}
                                     />
                                 )}
@@ -133,7 +133,7 @@ const ErrorPageComponent = () => {
                                 {error.isShowHomeBtn && (
                                     <ButtonComponent
                                         content="BTN_0006"
-                                        styleClass="btn-primary"
+                                        className="btn-primary"
                                         onClickAction={() => goHome()}
                                     />
                                 )}

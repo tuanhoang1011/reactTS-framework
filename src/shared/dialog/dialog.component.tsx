@@ -8,7 +8,7 @@ import { CommonProps } from '../../core/models/common-props.model';
 
 interface Props extends CommonProps {
     dialogId: string;
-    styleClass?: string;
+    className?: string;
     headerClassName?: string;
     contentClassName?: string;
     footerClassName?: string;
@@ -103,7 +103,7 @@ const DialogComponent = (props: Props) => {
         <Dialog
             ref={ref}
             key={props.dialogId ?? ''}
-            className={`dialog-container ${props.styleClass}`}
+            className={`dialog-container ${props.className}`}
             headerClassName="border-bottom"
             baseZIndex={99999}
             visible={true}

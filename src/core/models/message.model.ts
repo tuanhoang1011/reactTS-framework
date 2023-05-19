@@ -14,11 +14,11 @@ export interface MessageOptions {
     icon?: string;
     closable?: boolean;
     sticky?: boolean;
-    styleClass?: string;
-    contentStyleClass?: string;
-    iconStyleClass?: string;
-    detailStyleClass?: string;
-    footerStyleClass?: string;
+    className?: string;
+    contentClassName?: string;
+    iconClassName?: string;
+    detailClassName?: string;
+    footerClassName?: string;
     screenName?: string;
     variables?: any[];
     actions?: ActionItem[];

@@ -1,16 +1,14 @@
 import { format, fromUnixTime } from 'date-fns';
 import { find, floor, replace } from 'lodash';
-import { useTranslation } from 'react-i18next';
+import { Translation } from 'react-i18next';
 import { sprintf } from 'sprintf-js';
 
 import { CommonConstant } from '../constants/common.const';
-import { FormatTextType } from '../enums/format-text.enum';
+import { FormatTextType } from '../constants/format-text.const';
 import { FormBase } from '../models/form-basic.model';
 import { isNullOrUndefined } from './common-func.util';
 
-export const formatText = (data: any, config: FormBase): string => {
-    const { t } = useTranslation();
-
+export const formatText = (data: any, config: FormBase) => {
     const parseDateByType = (data: Date | number) => {
         if (data instanceof Date) {
             data = data as Date;
@@ -72,11 +70,17 @@ export const formatText = (data: any, config: FormBase): string => {
 
         case FormatTextType.Gender:
             try {
-                return t(
-                    !isNullOrUndefined(data)
-                        ? find(CommonConstant.Gender, (gender) => gender.value === data)?.label ??
-                              CommonConstant.Gender.Undefined.label
-                        : CommonConstant.Gender.Undefined.label
+                return (
+                    <Translation>
+                        {(t) =>
+                            t(
+                                !isNullOrUndefined(data)
+                                    ? find(CommonConstant.Gender, (gender) => gender.value === +data)?.label ??
+                                          CommonConstant.Gender.Undefined.label
+                                    : CommonConstant.Gender.Undefined.label
+                            )
+                        }
+                    </Translation>
                 );
             } catch (error) {
                 return '';

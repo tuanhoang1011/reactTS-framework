@@ -10,7 +10,7 @@ import withBaseComponent from '../base-component/base.component';
 
 interface Props extends CommonProps {
     content?: string;
-    styleClass?: string;
+    className?: string;
     disabled?: boolean;
     isWriteLog?: boolean;
     onClickAction?: () => void;
@@ -59,7 +59,7 @@ const ButtonComponent = (props: Props) => {
 
     return (
         <button
-            className={`btn ${props.styleClass}${props.disabled ? ' app-disabled' : ''}`}
+            className={`btn ${props.className}${props.disabled ? ' app-disabled' : ''}`}
             disabled={props.disabled}
             onPointerDown={($event) => clickAction($event)}
             onKeyUp={($event) => clickAction($event)}

@@ -1,4 +1,4 @@
-import { orderBy } from 'lodash';
+import { isEmpty, orderBy } from 'lodash';
 import { useEffect } from 'react';
 import { Subject } from 'rxjs';
 
@@ -79,7 +79,7 @@ const withBaseComponent =
                 try {
                     const tableWrapper = document.querySelectorAll(`#${baseProps.tableID} .p-datatable-wrapper`);
 
-                    if (tableWrapper && tableWrapper.length > 0) {
+                    if (!isEmpty(tableWrapper)) {
                         // scroll table to top
                         tableWrapper[0].scrollTop = 0;
                     }

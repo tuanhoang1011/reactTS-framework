@@ -1,0 +1,4 @@
+{
+  "props1": ["id", "label", "icon", "imgIcon", "imgIconAlt", "imgIconClassName", "disabled"],
+  "props2": ["formatTextType", "url", "className", "subMenuClassName", "expanded", "visible", "items", "click"]
+}

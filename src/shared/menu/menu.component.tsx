@@ -1,96 +1,110 @@
 import './menu.component.scss';
 
-import { memo, useMemo } from 'react';
-
+import { isEmpty } from 'lodash';
+import { Fragment, memo, useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+
 import { MenuItem } from '../../core/models/item.model';
+import { isNullOrUndefined } from '../../core/utils/common-func.util';
+import { formatText } from '../../core/utils/format-text.util';
 
 interface Props {
-    menus?: MenuItem[];
-    styleClass?: string;
-    subMenuStyleClass?: string;
+    menuItems: MenuItem[];
+    type?: 'panel' | 'dropdown';
+    orientation?: 'horizontal' | 'vertical';
+    className?: string;
     onClickMenu: (item: MenuItem) => void;
-    onClickSubMenu: (item: { menu: MenuItem; subMenu: MenuItem }) => void;
 }
 
 const MenuComponent = (props: Props) => {
     const { t } = useTranslation();
+    const [menuItems, setMenuItems] = useState([] as MenuItem[]);
 
-    const clickMenu = (menu: MenuItem) => {
-        props.onClickMenu(menu);
+    useEffect(() => {
+        if (!isEmpty(props.menuItems)) setMenuItems(props.menuItems!);
+    }, [props.menuItems]);
+
+    const clickMenu = (item: MenuItem, isParent: boolean) => {
+        if (props.type === 'panel' && isParent) {
+            item.expanded = !isNullOrUndefined(item.expanded) ? !item.expanded : true;
+
+            setMenuItems([...menuItems]);
+        } else if (!isParent) {
+            props.onClickMenu(item);
+        }
     };
 
-    const clickSubMenu = (menu: MenuItem, subMenu: MenuItem) => {
-        props.onClickSubMenu({ menu, subMenu });
+    const generateItemTemplate = (items: MenuItem[]) => {
+        return (
+            <>
+                {items?.map((item) =>
+                    item.visible === false ? (
+                        <Fragment key={item.id}></Fragment>
+                    ) : (
+                        <li
+                            key={item.id}
+                            id={item.id}
+                            className={`menu ${item.className} ${item.disabled ? 'app-disabled' : ''} ${
+                                !isEmpty(item.items) ? 'parent-item' : ''
+                            }`}
+                        >
+                            <div
+                                className="menu-title text-hover"
+                                onClick={() => (item.click ? item.click() : clickMenu(item, !isEmpty(item.items)))}
+                            >
+                                <div className="title">
+                                    {item.imgIcon && (
+                                        <img
+                                            src={item.imgIcon}
+                                            width="20"
+                                            height="0"
+                                            alt={item.imgIconAlt ?? ''}
+                                        />
+                                    )}
+                                    {item.icon && <i className={`pi ${item.icon}`}></i>}
+                                    <span>
+                                        {formatText(t(item.label ?? ''), { formatTextType: item.formatTextType! })}
+                                    </span>
+                                </div>
+                                {!isEmpty(item.items) && (
+                                    <i
+                                        className={`icon-expanded pi ${
+                                            props.type === 'panel' && item.expanded ? 'pi-angle-down' : 'pi-angle-right'
+                                        }`}
+                                    ></i>
+                                )}
+                            </div>
+
+                            {!isEmpty(item.items) && (
+                                <>
+                                    <ul
+                                        className={`submenu-container ${item.expanded ? 'expanded' : ''} ${
+                                            item.subMenuClassName
+                                        }`}
+                                    >
+                                        {generateItemTemplate(item.items! as MenuItem[])}
+                                    </ul>
+                                </>
+                            )}
+                        </li>
+                    )
+                )}
+            </>
+        );
     };
 
     return (
-        <ul className={`menu ${props.styleClass}`}>
-            {useMemo(
-                () =>
-                    props.menus?.map((menu) => {
-                        return (
-                            <li
-                                key={menu.id}
-                                id={menu.id}
-                                className={`text-hover ${menu.styleClass}${
-                                    menu.disabled
-                                        ? ' app-disabled'
-                                        : menu.subMenu && menu.subMenu.length > 0
-                                        ? ' submenu'
-                                        : ''
-                                }`}
-                                onClick={() => (menu.click ? menu.click() : clickMenu(menu))}
-                            >
-                                {menu.imgIcon && (
-                                    <img
-                                        src={menu.imgIcon}
-                                        width="20"
-                                        height="0"
-                                        alt={menu.imgIconAlt ?? ''}
-                                    />
-                                )}
-                                {menu.icon && <i className={`pi ${menu.icon}`}></i>}
-                                <span>{t(menu.label ?? '')}</span>
-
-                                {menu.subMenu && menu.subMenu.length > 0 && (
-                                    <ul className={`submenu-dropdown ${props.subMenuStyleClass}`}>
-                                        {menu.subMenu.map((sub) => (
-                                            <li
-                                                key={sub.id}
-                                                id={sub.id}
-                                                className={`text-hover ${sub.styleClass}${
-                                                    sub.disabled ? ' app-disabled' : ''
-                                                }`}
-                                                onClick={() => (sub.click ? sub.click() : clickSubMenu(menu, sub))}
-                                            >
-                                                {sub.imgIcon && (
-                                                    <img
-                                                        src={sub.imgIcon}
-                                                        width="20"
-                                                        height="0"
-                                                        alt={sub.imgIconAlt ?? ''}
-                                                    />
-                                                )}
-                                                {sub.icon && <i className={`pi ${sub.icon}`}></i>}
-                                                <span>{t(sub.label ?? '')}</span>
-                                            </li>
-                                        ))}
-                                    </ul>
-                                )}
-                            </li>
-                        );
-                    }),
-                [props.menus]
-            )}
+        <ul className={`menu-container ${props.type} ${props.orientation} ${props.className}`}>
+            {useMemo(() => generateItemTemplate(menuItems), [menuItems, t])}
         </ul>
     );
 };
 
 MenuComponent.defaultProps = {
-    menus: [],
-    onClickMenu: () => {},
-    onClickSubMenu: () => {}
+    items: [],
+    type: 'dropdown',
+    orientation: 'vertical',
+    onClickMenu: () => {}
 };
 
 export default memo(MenuComponent);

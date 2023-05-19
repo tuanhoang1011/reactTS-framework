@@ -21,8 +21,8 @@ const useMessageToast = () => {
                         life: GlobalVariables.messageLifeTimeMilSecond,
                         closable: options?.closable ?? true,
                         sticky: type === 'success' ? false : options?.sticky ?? true,
-                        className: options?.contentStyleClass,
-                        contentClassName: options?.contentStyleClass,
+                        className: options?.contentClassName,
+                        contentClassName: options?.contentClassName,
                         content: (
                             <div className="flex flex-col w-full gap-y-4">
                                 <div className="flex items-center gap-x-2">
@@ -31,7 +31,7 @@ const useMessageToast = () => {
                                         <Translation>{(t) => t(options?.header ?? '')}</Translation>
                                     </p>
                                 </div>
-                                <div className={`flex text-fs-msg ${options?.detailStyleClass}`}>
+                                <div className={`flex text-fs-msg ${options?.detailClassName}`}>
                                     <Translation>
                                         {(t) => sprintf(t(id || ''), ...(options?.variables ?? []))}
                                     </Translation>

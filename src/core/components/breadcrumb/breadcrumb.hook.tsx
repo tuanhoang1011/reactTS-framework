@@ -5,7 +5,7 @@ import { setPropsBreadcrumb } from './breadcrumb.reducer';
 
 const useBreadcrumb = () => {
     const dispatch = useAppDispatch();
-    const breadcrumbs = useAppSelector((state) => state.breadrumb.breadcrumbs);
+    const { breadcrumbs } = useAppSelector((state) => state.breadrumb);
 
     const setBreadcrumb = (breadcrumbs: BreadcrumbItemList) => {
         const state: LayoutState = {

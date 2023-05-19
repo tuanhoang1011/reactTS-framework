@@ -64,11 +64,11 @@ const MessageDialogComponent = () => {
                             <DialogComponent
                                 key={msgItem.id}
                                 dialogId={msgItem.id}
-                                styleClass={`msg-dialog-container ${msgItem.options?.styleClass}`}
-                                contentClassName={`rounded-b-none ${msgItem.options?.contentStyleClass} ${
+                                className={`msg-dialog-container ${msgItem.options?.className}`}
+                                contentClassName={`rounded-b-none ${msgItem.options?.contentClassName} ${
                                     msgItem.options?.header ? '' : 'rounded-t-default'
                                 }`}
-                                footerClassName={msgItem.options?.footerStyleClass}
+                                footerClassName={msgItem.options?.footerClassName}
                                 showHeader={!!msgItem.options?.header}
                                 draggable={false}
                                 closable={msgItem.options?.closable ?? true}
@@ -78,8 +78,8 @@ const MessageDialogComponent = () => {
                                 onHide={() => closeMessage(msgItem)}
                             >
                                 <Fragment key="content">
-                                    <div className={`msg-icon ${msgItem.options?.iconStyleClass}`}></div>
-                                    <div className={`msg-content ${msgItem.options?.detailStyleClass}`}>
+                                    <div className={`msg-icon ${msgItem.options?.iconClassName}`}></div>
+                                    <div className={`msg-content ${msgItem.options?.detailClassName}`}>
                                         <p>
                                             <Translation>
                                                 {(t) => sprintf(t(msgItem.key), ...(msgItem.options?.variables ?? ''))}
@@ -95,7 +95,7 @@ const MessageDialogComponent = () => {
                                                 <ButtonComponent
                                                     key={action.label}
                                                     content={action.label}
-                                                    styleClass={`dl-f-btn ${action.styleClass}`}
+                                                    className={`dl-f-btn ${action.className}`}
                                                     isWriteLog={false}
                                                     onClickAction={() => clickAction(msgItem, action)}
                                                 ></ButtonComponent>
@@ -105,7 +105,7 @@ const MessageDialogComponent = () => {
                                                 <ButtonComponent
                                                     key={action.label}
                                                     content={action.label}
-                                                    styleClass={`dl-f-btn ${action.styleClass}`}
+                                                    className={`dl-f-btn ${action.className}`}
                                                     isWriteLog={false}
                                                     onClickAction={() => clickAction(msgItem, action)}
                                                 ></ButtonComponent>

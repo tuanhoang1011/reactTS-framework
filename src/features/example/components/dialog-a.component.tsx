@@ -35,7 +35,7 @@ const DialogAComponent = (props: Props) => {
         <DialogComponent
             dialogId={props.dialogId}
             headerTitle={props.dialogId}
-            styleClass="dialogA-class"
+            className="dialogA-class"
             modal={false}
             maximizable={true}
             onHide={() => close()}
@@ -54,12 +54,12 @@ const DialogAComponent = (props: Props) => {
             <Fragment key="footer">
                 <ButtonComponent
                     content="Button A"
-                    styleClass="btn-secondary"
+                    className="btn-secondary"
                     onClickAction={clickAction('Button A')}
                 ></ButtonComponent>
                 <ButtonComponent
                     content="Button B"
-                    styleClass="btn-primary"
+                    className="btn-primary"
                     onClickAction={clickAction('Button B')}
                 ></ButtonComponent>
             </Fragment>

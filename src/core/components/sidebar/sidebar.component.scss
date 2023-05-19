@@ -1,19 +1,37 @@
 .sidebar-container {
-    @apply flex flex-col h-full bg-bg-secondary-blur min-w-sidebar-collapse max-w-sidebar-collapse divide-y-[2px] divide-border;
-    @apply lg:hidden;
-
-    &.expanded {
-        @apply min-w-sidebar-expand max-w-sidebar-expand flex;
-    }
+    @apply flex-col h-full bg-bg-secondary-blur min-w-sidebar-collapse max-w-sidebar-collapse divide-y-[2px] divide-border;
 
     .sidebar-nav {
-        @apply flex-1;
+        @apply py-5;
 
-        .sidebar-nav-menu {
-            @apply flex flex-col;
+        .menu-container > .menu > .menu-title {
+            @apply justify-center;
 
-            li {
-                @apply h-fit;
+            .icon-expanded,
+            .title span {
+                @apply hidden;
+            }
+        }
+    }
+
+    &.collapsed {
+        @apply hidden lg:flex;
+    }
+
+    &.expanded {
+        @apply flex w-screen min-w-screen max-w-screen;
+        @apply md:w-fit md:min-w-sidebar-expand md:max-w-sidebar-expand;
+
+        .sidebar-nav {
+            @apply flex-1 overflow-y-auto;
+
+            .menu-container > .menu > .menu-title {
+                @apply justify-between;
+
+                .icon-expanded,
+                .title span {
+                    @apply flex;
+                }
             }
         }
     }
