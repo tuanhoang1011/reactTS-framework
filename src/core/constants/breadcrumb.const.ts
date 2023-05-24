@@ -31,7 +31,7 @@ export const BreadcrumbRoutes = [
                 label: 'Screen1 Detail',
                 imgIcon: '../images/fw-user.svg',
                 imgIconAlt: '',
-                imgIconStyleClass: '',
+                imgIconClassName: '',
                 style: {
                     width: 20,
                     height: 20

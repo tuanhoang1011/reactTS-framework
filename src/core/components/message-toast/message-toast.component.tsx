@@ -17,7 +17,7 @@ const MessageToastComponent = () => {
     const toast = useRef<Toast>(null);
 
     const position = 'bottom-right';
-    const styleClass = '';
+    const className = '';
 
     useEffect(() => {
         try {
@@ -57,7 +57,7 @@ const MessageToastComponent = () => {
         <Toast
             ref={toast}
             position={position}
-            className={styleClass}
+            className={className}
         ></Toast>
     );
 };

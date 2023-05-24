@@ -4,7 +4,7 @@ export interface BaseItem {
     icon?: string;
     imgIcon?: string;
     imgIconAlt?: string;
-    imgIconStyleClass?: string;
+    imgIconClassName?: string;
     disabled?: boolean;
 }
 
@@ -15,26 +15,30 @@ export interface StorageItem {
 
 export interface MenuItem extends BaseItem {
     url?: string;
-    styleClass?: string;
-    subMenu?: MenuItem[];
-    click?: () => void;
+    className?: string;
+    subMenuClassName?: string;
+    expanded?: boolean;
+    visible?: boolean;
+    items?: MenuItem[] | MenuItem[][];
+    formatTextType?: string;
+    click?: (item?: MenuItem) => void;
 }
 
 export interface TabItem extends BaseItem {
     url?: string;
     activated?: boolean;
     templateRef?: any;
-    styleClass?: string;
+    className?: string;
     screen?: string;
     rendered?: boolean;
     closable?: boolean;
-    headerStyleClass?: string;
+    headerClassName?: string;
 }
 
 export interface ImageItem {
     src?: string;
     alt?: string;
-    styleClass?: string;
+    className?: string;
     height?: number;
     width?: number;
     previewMode?: boolean;
@@ -43,7 +47,7 @@ export interface ImageItem {
 
 export interface ActionItem {
     label: string;
-    styleClass?: string;
+    className?: string;
     isDefault?: boolean;
     click?: () => void;
 }

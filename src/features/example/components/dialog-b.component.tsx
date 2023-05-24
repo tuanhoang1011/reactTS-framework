@@ -25,7 +25,7 @@ const DialogBComponent = (props: Props) => {
         <DialogComponent
             dialogId={props.dialogId}
             headerTitle={props.dialogId}
-            styleClass="dialogB-class"
+            className="dialogB-class"
             modal={false}
             maximizable={true}
             onHide={() => close()}

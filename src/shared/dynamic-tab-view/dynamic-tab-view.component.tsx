@@ -1,5 +1,6 @@
 import './dynamic-tab-view.component.scss';
 
+import { isEmpty } from 'lodash';
 import { TabPanel, TabPanelHeaderTemplateOptions, TabView, TabViewTabChangeEvent } from 'primereact/tabview';
 import { memo, useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -14,7 +15,7 @@ import { TabItem } from '../../core/models/item.model';
 interface Props extends CommonProps {
     items: TabItem[];
     queryParamKey?: string;
-    styleClass?: string;
+    className?: string;
     layout?: 'horizontal' | 'vertical';
     isWriteLog?: boolean;
     onClickTab: (tab: TabItem) => void;
@@ -72,7 +73,7 @@ const DynamicTabViewComponent = (props: Props) => {
         });
 
         // default
-        if (props.items.length > 0 && props.items.every((x) => !x.activated)) {
+        if (!isEmpty(props.items) && props.items.every((x) => !x.activated)) {
             props.items[0].activated = true;
             props.items[0].rendered = true;
             setActiveIdx(0);
@@ -87,7 +88,7 @@ const DynamicTabViewComponent = (props: Props) => {
             >
                 {tab.imgIcon && (
                     <img
-                        className={tab.imgIconStyleClass}
+                        className={tab.imgIconClassName}
                         src={tab.imgIcon}
                         width="20"
                         height="0"
@@ -106,7 +107,7 @@ const DynamicTabViewComponent = (props: Props) => {
                 return (
                     <TabView
                         activeIndex={activeIdx}
-                        className={`${props.styleClass} ${props.layout}`}
+                        className={`${props.className} ${props.layout}`}
                         scrollable={false}
                         renderActiveOnly={false}
                         onTabChange={($event: TabViewTabChangeEvent) => clickTab($event)}
@@ -115,7 +116,7 @@ const DynamicTabViewComponent = (props: Props) => {
                             <TabPanel
                                 key={tab.id}
                                 closable={tab.closable ?? false}
-                                headerClassName={tab.headerStyleClass ?? ''}
+                                headerClassName={tab.headerClassName ?? ''}
                                 disabled={tab.disabled ?? false}
                                 headerTemplate={(opt) => generateHeader(opt, tab)}
                             >
@@ -138,7 +139,7 @@ const DynamicTabViewComponent = (props: Props) => {
 DynamicTabViewComponent.defaultProps = {
     items: [],
     queryParamKey: 'tab',
-    styleClass: '',
+    className: '',
     layout: 'horizontal',
     isWriteLog: true,
     onClickTab: () => {},

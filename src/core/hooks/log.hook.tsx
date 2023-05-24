@@ -19,9 +19,7 @@ let isPushingLog = false;
 let pendingKey: IDBValidKey = '';
 
 const useLog = () => {
-    const activeScreen = useAppSelector((state) => state.global.activeScreen);
-    const activeDialog = useAppSelector((state) => state.global.activeDialog);
-
+    const { activeScreen, activeDialog } = useAppSelector((state) => state.global);
     const indexedDBHook = useIndexedDB();
 
     useEffect(() => {

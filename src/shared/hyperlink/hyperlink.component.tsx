@@ -11,7 +11,7 @@ import { CommonProps } from '../../core/models/common-props.model';
 
 interface Props extends CommonProps {
     content?: string;
-    styleClass?: string;
+    className?: string;
     disabled?: boolean;
     isWriteLog?: boolean;
     onClickAction: () => void;
@@ -43,7 +43,7 @@ const HyperlinkComponent = (props: Props) => {
 
     return (
         <a
-            className={`${props.styleClass} hyper-link${props.disabled ? ' app-disabled' : ''}`}
+            className={`${props.className} hyper-link${props.disabled ? ' app-disabled' : ''}`}
             aria-current="page"
             tabIndex={0}
             onKeyUp={($event) => onClick($event)}

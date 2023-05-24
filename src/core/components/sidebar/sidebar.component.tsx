@@ -1,9 +1,12 @@
 import './sidebar.component.scss';
 
 import { memo, useEffect, useState } from 'react';
+import { Navigate } from 'react-router';
 
+import MenuComponent from '../../../shared/menu/menu.component';
 import useCommonFunc from '../../hooks/common-func.hook';
 import { MenuItem } from '../../models/item.model';
+import { GlobalVariables } from '../../utils/global-variables.util';
 import useSidebar from './sidebar.hook';
 
 const SidebarComponent = () => {
@@ -26,14 +29,29 @@ const SidebarComponent = () => {
         }
     }, []);
 
+    const clickMenu = (selectedItem: MenuItem) => {
+        try {
+            if (window.innerWidth < GlobalVariables.standardSize.lg) {
+                sidebarHook.setSidebarStatus(false);
+            }
+
+            if (selectedItem.url) {
+                Navigate({ to: selectedItem.url });
+            }
+        } catch (error) {
+            commonFuncHook.handleError(error);
+            throw error;
+        }
+    };
+
     return (
-        <div className={`sidebar-container ${sidebarHook.expandSidebar ? 'expanded' : ''}`}>
+        <div className={`sidebar-container ${sidebarHook.expandSidebar ? 'expanded' : 'collapsed'}`}>
             <div className="sidebar-nav">
-                {/* check later */}
-                {/* <app-menu [menus]="navMenu"
-                styleClass="sidebar-nav-menu"
-                subMenuStyleClass="sidebar-nav-submenu">
-            </app-menu>  */}
+                <MenuComponent
+                    menuItems={navMenu}
+                    type={sidebarHook.expandSidebar ? 'panel' : 'dropdown'}
+                    onClickMenu={($event) => clickMenu($event)}
+                />
             </div>
             {sidebarHook.expandSidebar && (
                 <div className="sidebar-info">

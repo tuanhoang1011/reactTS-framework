@@ -350,21 +350,21 @@ const ExampleComponent = (props: BaseProps) => {
                             actions: [
                                 {
                                     label: 'BTN_0005',
-                                    styleClass: 'btn-secondary',
+                                    className: 'btn-secondary',
                                     click: () => {
                                         alert(`Click ${t('BTN_0005')}`);
                                     }
                                 },
                                 {
                                     label: 'BTN_0006',
-                                    styleClass: 'btn-danger',
+                                    className: 'btn-danger',
                                     click: () => {
                                         alert(`Click ${t('BTN_0006')}`);
                                     }
                                 },
                                 {
                                     label: 'BTN_0001',
-                                    styleClass: 'btn-primary',
+                                    className: 'btn-primary',
                                     isDefault: true,
                                     click: () => {
                                         alert(`Click ${t('BTN_0001')}`);
@@ -552,17 +552,17 @@ const ExampleComponent = (props: BaseProps) => {
                     <div className="module-btn">
                         <ButtonComponent
                             content="Secondary"
-                            styleClass="btn-secondary"
+                            className="btn-secondary"
                             onClickAction={clickButton('Secondary')}
                         />
                         <ButtonComponent
                             content="Primary"
-                            styleClass="btn-primary"
+                            className="btn-primary"
                             onClickAction={clickButton('Primary')}
                         />
                         <ButtonComponent
                             content="Danger"
-                            styleClass="btn-danger"
+                            className="btn-danger"
                             onClickAction={clickButton('Danger')}
                         />
                         <HyperlinkComponent
@@ -575,19 +575,19 @@ const ExampleComponent = (props: BaseProps) => {
                     <div className="module-btn">
                         <ButtonComponent
                             content="Secondary"
-                            styleClass="btn-secondary"
+                            className="btn-secondary"
                             disabled={true}
                             onClickAction={clickButton('Secondary')}
                         />
                         <ButtonComponent
                             content="Primary"
-                            styleClass="btn-primary"
+                            className="btn-primary"
                             disabled={true}
                             onClickAction={clickButton('Primary')}
                         />
                         <ButtonComponent
                             content="Danger"
-                            styleClass="btn-danger"
+                            className="btn-danger"
                             disabled={true}
                             onClickAction={clickButton('Danger')}
                         />
@@ -607,17 +607,17 @@ const ExampleComponent = (props: BaseProps) => {
                     <div className="module-btn">
                         <ButtonComponent
                             content="Open Dialog A"
-                            styleClass="btn-primary"
+                            className="btn-primary"
                             onClickAction={openDialogA()}
                         />
                         <ButtonComponent
                             content="Open Dialog B"
-                            styleClass="btn-primary"
+                            className="btn-primary"
                             onClickAction={openDialogB()}
                         />
                         <ButtonComponent
                             content="Remove Dialog A"
-                            styleClass="btn-danger"
+                            className="btn-danger"
                             onClickAction={removeDialogA()}
                         />
                     </div>
@@ -669,27 +669,27 @@ const ExampleComponent = (props: BaseProps) => {
                     <div className="module-btn">
                         <ButtonComponent
                             content="Success"
-                            styleClass="btn-primary"
+                            className="btn-primary"
                             onClickAction={showMessageToast('success')}
                         />
                         <ButtonComponent
                             content="Error"
-                            styleClass="btn-danger"
+                            className="btn-danger"
                             onClickAction={showMessageToast('error')}
                         />
                         <ButtonComponent
                             content="Info"
-                            styleClass="btn-primary !bg-info !border-[#696cff]"
+                            className="btn-primary !bg-info !border-[#696cff]"
                             onClickAction={showMessageToast('info')}
                         />
                         <ButtonComponent
                             content="Warn"
-                            styleClass="btn-primary !bg-warn !border-warn"
+                            className="btn-primary !bg-warn !border-warn"
                             onClickAction={showMessageToast('warn')}
                         />
                         <ButtonComponent
                             content="Close All"
-                            styleClass="btn-danger"
+                            className="btn-danger"
                             onClickAction={showMessageToast('')}
                         />
                     </div>
@@ -703,32 +703,32 @@ const ExampleComponent = (props: BaseProps) => {
                     <div className="module-btn">
                         <ButtonComponent
                             content="Success"
-                            styleClass="btn-primary"
+                            className="btn-primary"
                             onClickAction={showMessageDialog('success')}
                         />
                         <ButtonComponent
                             content="Error"
-                            styleClass="btn-danger"
+                            className="btn-danger"
                             onClickAction={showMessageDialog('error')}
                         />
                         <ButtonComponent
                             content="Info"
-                            styleClass="btn-primary !bg-info !border-info"
+                            className="btn-primary !bg-info !border-info"
                             onClickAction={showMessageDialog('info')}
                         />
                         <ButtonComponent
                             content="Warn"
-                            styleClass="btn-primary !bg-warn !border-warn"
+                            className="btn-primary !bg-warn !border-warn"
                             onClickAction={showMessageDialog('warn')}
                         />
                         <ButtonComponent
                             content="Confirm"
-                            styleClass="btn-primary !bg-confirm !border-confirm"
+                            className="btn-primary !bg-confirm !border-confirm"
                             onClickAction={showMessageDialog('confirm')}
                         />
                         <ButtonComponent
                             content="Custom"
-                            styleClass="btn-primary !bg-bg-primary !border-bg-primary"
+                            className="btn-primary !bg-bg-primary !border-bg-primary"
                             onClickAction={showMessageDialog('custom')}
                         />
                     </div>
@@ -742,12 +742,12 @@ const ExampleComponent = (props: BaseProps) => {
                     <div className="module-btn">
                         <ButtonComponent
                             content="Loading"
-                            styleClass="btn-primary"
+                            className="btn-primary"
                             onClickAction={showLoadingSplashScreen(true)}
                         />
                         <ButtonComponent
                             content="Splash Screen"
-                            styleClass="btn-primary"
+                            className="btn-primary"
                             onClickAction={showLoadingSplashScreen(false)}
                         />
                     </div>
@@ -794,17 +794,17 @@ const ExampleComponent = (props: BaseProps) => {
                     <div className="module-btn">
                         <ButtonComponent
                             content="Write Log"
-                            styleClass="btn-primary"
+                            className="btn-primary"
                             onClickAction={processLog('write')}
                         />
                         <ButtonComponent
                             content="Push Logs"
-                            styleClass="btn-primary"
+                            className="btn-primary"
                             onClickAction={processLog('push')}
                         />
                         <ButtonComponent
                             content="Clear Logs"
-                            styleClass="btn-danger"
+                            className="btn-danger"
                             onClickAction={processLog('clear')}
                         />
                     </div>
@@ -820,7 +820,7 @@ const ExampleComponent = (props: BaseProps) => {
                             items={tabItems}
                             queryParamKey="tab"
                             layout="horizontal"
-                            styleClass="dynamic-tab"
+                            className="dynamic-tab"
                         >
                             <Component1Component key={'tab1'} />
                             <Component2Component key={'tab2'} />
@@ -831,7 +831,7 @@ const ExampleComponent = (props: BaseProps) => {
                             items={tabItems}
                             queryParamKey="tab"
                             layout="vertical"
-                            styleClass="dynamic-tab"
+                            className="dynamic-tab"
                         >
                             <Component1Component key={'tab1'} />
                             <Component2Component key={'tab2'} />
@@ -848,7 +848,7 @@ const ExampleComponent = (props: BaseProps) => {
                     <div className="module-btn">
                         <ButtonComponent
                             content="Export"
-                            styleClass="btn-primary"
+                            className="btn-primary"
                             onClickAction={exportPDF()}
                         />
                     </div>
@@ -862,19 +862,19 @@ const ExampleComponent = (props: BaseProps) => {
                     <div className="module-btn">
                         <ButtonComponent
                             content="API"
-                            styleClass="btn-primary"
+                            className="btn-primary"
                             disabled={true}
                             onClickAction={executeRequestServer('restfulAPI')}
                         />
                         <ButtonComponent
                             content="GraphQL"
-                            styleClass="btn-primary"
+                            className="btn-primary"
                             disabled={true}
                             onClickAction={executeRequestServer('graphQL')}
                         />
                         <ButtonComponent
                             content="WebSocket"
-                            styleClass="btn-primary"
+                            className="btn-primary"
                             disabled={true}
                             onClickAction={executeRequestServer('websocket')}
                         />
@@ -899,7 +899,7 @@ const ExampleComponent = (props: BaseProps) => {
                     <div className="module-btn">
                         <ButtonComponent
                             content="Create Form"
-                            styleClass="btn-primary"
+                            className="btn-primary"
                             disabled={true}
                         />
                     </div>
@@ -913,12 +913,12 @@ const ExampleComponent = (props: BaseProps) => {
                     <div className="module-btn">
                         <ButtonComponent
                             content="Static Table"
-                            styleClass="btn-primary"
+                            className="btn-primary"
                             disabled={true}
                         />
                         <ButtonComponent
                             content="Editable Table"
-                            styleClass="btn-primary"
+                            className="btn-primary"
                             disabled={true}
                         />
                     </div>

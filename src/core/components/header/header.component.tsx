@@ -6,7 +6,7 @@ import { Navigate } from 'react-router';
 
 import MenuComponent from '../../../shared/menu/menu.component';
 import { CommonConstant } from '../../constants/common.const';
-import { FormatTextType } from '../../enums/format-text.enum';
+import { FormatTextType } from '../../constants/format-text.const';
 import useCommonFunc from '../../hooks/common-func.hook';
 import { MenuItem } from '../../models/item.model';
 import { formatText } from '../../utils/format-text.util';
@@ -105,16 +105,10 @@ const HeaderComponent = () => {
         }
     };
 
-    const clickMenu = (selectedItem: MenuItem | { menu: MenuItem; subMenu: MenuItem }) => {
+    const clickMenu = (selectedItem: MenuItem) => {
         try {
-            // select menu
-            if (!(selectedItem as any).menu && (selectedItem as MenuItem).url) {
-                Navigate({ to: (selectedItem as MenuItem).url! });
-            }
-
-            // select submenu
-            if ((selectedItem as any).menu && (selectedItem as any).subMenu.url) {
-                Navigate({ to: (selectedItem as any).subMenu.url! });
+            if (selectedItem.url) {
+                Navigate({ to: selectedItem.url });
             }
         } catch (error) {
             commonFuncHook.handleError(error);
@@ -175,10 +169,9 @@ const HeaderComponent = () => {
                 <div className="h-line-item !h-7"></div>
                 <nav className="h-navbar">
                     <MenuComponent
-                        menus={navMenu}
-                        styleClass="h-nav-menu"
+                        menuItems={navMenu}
+                        orientation="horizontal"
                         onClickMenu={($event) => clickMenu($event)}
-                        onClickSubMenu={($event) => clickMenu($event)}
                     />
                 </nav>
             </div>
@@ -200,8 +193,8 @@ const HeaderComponent = () => {
                     ref={usr}
                 >
                     <MenuComponent
-                        menus={userMenu}
-                        styleClass="h-menu"
+                        menuItems={userMenu}
+                        className="h-menu"
                     />
                 </OverlayPanel>
                 {/* Language */}
@@ -218,8 +211,8 @@ const HeaderComponent = () => {
                 </div>
                 <OverlayPanel ref={lang}>
                     <MenuComponent
-                        menus={languages}
-                        styleClass="h-menu"
+                        menuItems={languages}
+                        className="h-menu"
                         onClickMenu={($event) => changeLanguage($event)}
                     />
                 </OverlayPanel>

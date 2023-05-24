@@ -3,6 +3,22 @@
 
     .footer-nav {
         @apply p-10;
+
+        .menu-container {
+            @apply flex-row;
+
+            .menu {
+                @apply max-w-[300px];
+
+                .icon-expanded {
+                    @apply hidden;
+                }
+            }
+
+            > .menu > .menu-title {
+                @apply pointer-events-none;
+            }
+        }
     }
 
     .footer-info {

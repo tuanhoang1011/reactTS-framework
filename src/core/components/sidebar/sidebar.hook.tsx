@@ -8,7 +8,7 @@ const root = '../json/';
 const sidebarJSON = `${root}items/sidebar.json`;
 
 const useSidebar = () => {
-    const state = useAppSelector((state) => state.sidebar.expandSidebar);
+    const { expandSidebar } = useAppSelector((state) => state.sidebar);
     const dispatch = useAppDispatch();
 
     const commonFuncHook = useCommonFunc();
@@ -33,7 +33,7 @@ const useSidebar = () => {
     };
 
     return {
-        expandSidebar: state,
+        expandSidebar,
         getNavMenu,
         setSidebarStatus
     };

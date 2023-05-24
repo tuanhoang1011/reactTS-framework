@@ -16,7 +16,7 @@ interface Props extends CommonProps {
     page: number;
     showIndicators: boolean;
     showNavigators: boolean;
-    styleClass?: string;
+    className?: string;
     contentClass?: string;
     indicatorsContentClass?: string;
     responsiveOptions: any[];
@@ -28,7 +28,7 @@ const ImageCarouselComponent = (props: Props) => {
             <ImageViewComponent
                 src={img.src}
                 alt={img.alt}
-                styleClass={img.styleClass}
+                className={img.className}
                 width={img.width}
                 height={img.height}
                 previewMode={false}
@@ -45,7 +45,7 @@ const ImageCarouselComponent = (props: Props) => {
             page={props.page}
             showIndicators={props.showIndicators}
             showNavigators={props.showNavigators}
-            containerClassName={props.styleClass}
+            containerClassName={props.className}
             contentClassName={props.contentClass}
             indicatorsContentClassName={props.indicatorsContentClass}
             responsiveOptions={props.responsiveOptions}

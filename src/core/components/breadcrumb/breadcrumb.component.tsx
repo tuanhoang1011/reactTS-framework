@@ -68,7 +68,7 @@ const BreadcrumbComponent = () => {
                                     >
                                         {item.imgIcon && (
                                             <img
-                                                className={item.imgIconStyleClass}
+                                                className={item.imgIconClassName}
                                                 src={item.imgIcon}
                                                 alt={item.imgIconAlt}
                                                 width={item.style?.width || 12}
@@ -88,7 +88,7 @@ const BreadcrumbComponent = () => {
                                     <div className="bc-item">
                                         {item.imgIcon && (
                                             <img
-                                                className={item.imgIconStyleClass}
+                                                className={item.imgIconClassName}
                                                 src={item.imgIcon}
                                                 alt={item.imgIconAlt}
                                                 width={item.style?.width || 12}

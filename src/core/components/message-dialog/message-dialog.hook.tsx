@@ -8,23 +8,23 @@ import { setPropsMsgDialog } from './message-dialog.reducer';
 
 const YES_BUTTON: ActionItem = {
     label: 'BTN_0001',
-    styleClass: 'btn-primary',
+    className: 'btn-primary',
     isDefault: true
 };
 const NO_BUTTON: ActionItem = {
     label: 'BTN_0002',
-    styleClass: 'btn-danger'
+    className: 'btn-danger'
 };
 
 const CLOSE_BUTTON: ActionItem = {
     label: 'BTN_0003',
-    styleClass: 'btn-secondary',
+    className: 'btn-secondary',
     isDefault: true
 };
 
 const CANCEL_BUTTON: ActionItem = {
     label: 'BTN_0004',
-    styleClass: 'btn-secondary'
+    className: 'btn-secondary'
 };
 
 const useMessageDialog = () => {
@@ -54,7 +54,7 @@ const useMessageDialog = () => {
     const success = (key: string, options?: MessageOptions, closeAction?: () => void) => {
         options = {
             ...options,
-            styleClass: options?.styleClass ? `${options?.styleClass} dlg-success` : 'dlg-success',
+            className: options?.className ? `${options?.className} dlg-success` : 'dlg-success',
             header: options?.header ?? 'MSG.TITLE_001'
         };
 
@@ -64,7 +64,7 @@ const useMessageDialog = () => {
     const info = (key: string, options?: MessageOptions, closeAction?: () => void) => {
         options = {
             ...options,
-            styleClass: options?.styleClass ? `${options?.styleClass} dlg-info` : 'dlg-info',
+            className: options?.className ? `${options?.className} dlg-info` : 'dlg-info',
             header: options?.header ?? 'MSG.TITLE_005'
         };
 
@@ -74,7 +74,7 @@ const useMessageDialog = () => {
     const error = (key: string, options?: MessageOptions, closeAction?: () => void) => {
         options = {
             ...options,
-            styleClass: options?.styleClass ? `${options?.styleClass} dlg-error` : 'dlg-error',
+            className: options?.className ? `${options?.className} dlg-error` : 'dlg-error',
             header: options?.header ?? 'MSG.TITLE_002'
         };
 
@@ -84,7 +84,7 @@ const useMessageDialog = () => {
     const warn = (key: string, options?: MessageOptions, closeAction?: () => void) => {
         options = {
             ...options,
-            styleClass: options?.styleClass ? `${options?.styleClass} dlg-warn` : 'dlg-warn',
+            className: options?.className ? `${options?.className} dlg-warn` : 'dlg-warn',
             header: options?.header ?? 'MSG.TITLE_003'
         };
 
@@ -100,7 +100,7 @@ const useMessageDialog = () => {
     ): void => {
         options = {
             ...options,
-            styleClass: options?.styleClass ? `${options?.styleClass} dlg-confirm` : 'dlg-confirm',
+            className: options?.className ? `${options?.className} dlg-confirm` : 'dlg-confirm',
             header: options?.header ?? 'MSG.TITLE_004',
             actions: [
                 { ...CANCEL_BUTTON, click: cancelAction },

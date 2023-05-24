@@ -7,7 +7,7 @@ import { useAppDispatch, useAppSelector } from '../../store/stores/store';
 import { isNullOrUndefined } from '../../utils/common-func.util';
 
 export const useErrorPage = () => {
-    const errorPage = useAppSelector((state) => state.global.errorPage);
+    const { errorPage } = useAppSelector((state) => state.global);
 
     const navigate = useNavigate();
     const dispatch = useAppDispatch();

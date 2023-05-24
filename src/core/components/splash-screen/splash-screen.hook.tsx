@@ -3,7 +3,7 @@ import { useAppDispatch, useAppSelector } from '../../store/stores/store';
 import { setPropsSplashScreen } from './splash-screen.reducer';
 
 const useSplashScreen = () => {
-    const isOn = useAppSelector((state) => state.splashScreen.isOn);
+    const { isOn } = useAppSelector((state) => state.splashScreen);
     const dispatch = useAppDispatch();
 
     const commonFuncHook = useCommonFunc();

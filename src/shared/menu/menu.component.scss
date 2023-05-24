@@ -1,23 +1,112 @@
-.menu {
-    @apply h-full;
+@keyframes openPanel {
+    0% {
+        transform: translateY(-20%);
+    }
 
-    li {
-        @apply flex h-full items-center p-2 gap-x-1;
+    100% {
+        transform: translateY(0);
+    }
+}
+
+@keyframes openDropdown {
+    0% {
+        transform: translateX(-20%);
+    }
+
+    100% {
+        transform: translateX(0);
+    }
+}
+
+.menu-container {
+    @apply flex h-full;
+
+    .menu {
+        @apply flex relative;
 
         img {
             @apply w-5;
         }
-    }
 
-    .submenu {
-        @apply relative;
+        .menu-title {
+            @apply flex items-center justify-between w-full py-3 px-4;
 
-        .submenu-dropdown {
-            @apply absolute hidden top-[44px] p-3 rounded-default bg-bg-secondary text-txt-default min-w-max;
+            .title {
+                @apply flex items-center gap-x-3;
+            }
         }
 
-        &:hover .submenu-dropdown {
-            @apply block;
+        .submenu-container {
+            @apply text-txt-default;
+        }
+    }
+
+    &.horizontal {
+        @apply flex-row;
+    }
+
+    &.vertical {
+        @apply flex-col;
+    }
+
+    &.dropdown {
+        .menu:hover > .submenu-container {
+            @apply flex;
+            animation-duration: 0.2s;
+            animation-name: openDropdown;
+        }
+
+        > .menu > .menu-title > .icon-expanded {
+            @apply hidden;
+        }
+
+        .submenu-container {
+            @apply absolute hidden rounded-default bg-bg-secondary min-w-max shadow-line shadow-black;
+            @apply flex-col py-3;
+
+            .menu {
+                @apply pl-1 min-w-[200px] max-w-[300px];
+            }
+        }
+
+        &.horizontal {
+            > .menu {
+                > .submenu-container {
+                    @apply top-full;
+
+                    .submenu-container {
+                        @apply top-0 left-full;
+                    }
+                }
+            }
+        }
+
+        &.vertical {
+            > .menu {
+                > .submenu-container {
+                    @apply top-0 left-full;
+
+                    .submenu-container {
+                        @apply top-0 left-full;
+                    }
+                }
+            }
+        }
+    }
+
+    &.panel {
+        .menu {
+            @apply flex-col;
+        }
+
+        .submenu-container {
+            @apply hidden ml-4;
+
+            &.expanded {
+                @apply flex flex-col;
+                animation-duration: 0.2s;
+                animation-name: openPanel;
+            }
         }
     }
 }

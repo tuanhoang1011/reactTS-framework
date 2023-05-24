@@ -1,9 +1,10 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 import { LayoutState } from '../../models/state.model';
+import { GlobalVariables } from '../../utils/global-variables.util';
 
 const initialState: LayoutState = {
-    expandSidebar: true
+    expandSidebar: window.innerWidth >= GlobalVariables.standardSize.lg
 };
 
 export const SidebarSlice = createSlice({
